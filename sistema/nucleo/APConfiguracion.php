@@ -53,7 +53,7 @@ define('ADICIONALES_VISTA', 'adicionales');
 define('Ap_TEMA_WEB', 'temas/web/parallax');
 
 /* Sedefine una CONSTANTE  con el NOMBRE del tema del sistema WEB */
-define('Ap_NOMBRE_TEMA_WEB', 'Parallax');
+define('Ap_NOMBRE_TEMA_WEB', 'Inspinia');
 
 /* Sedefine una CONSTANTE al directorio con el tema del sistema DASHBOARD*/
 define('Ap_TEMA_DASHBOARD', 'temas/dashboard/inspinia');
@@ -68,7 +68,7 @@ define('Ap_AP_SLOGAN', 'AgilContador como la liebre');
 define('Ap_AP_EMPRESA', '@efrasoft');
 
 /* Creditos de la aplicacion */
-define('Ap_AP_CREDITOS', 'CopyLeft 2018 Debeloped by www.webcol.net');
+define('Ap_AP_CREDITOS', 'CopyLeft 2019 Debeloped by AgilContador');
 
 #webcol seguridad
 
