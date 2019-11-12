@@ -1,0 +1,6 @@
+Aqui vamos a poner todos los archivos publicos vinculados con el proyecto
+es importante tener en cuenta que los archivos aqui puestos pertenecen a
+
+bootstrap 3.1.1 o algun sistema de estilos publico
+
+a futuro se pueden actualizar solo lo debes reemplazar

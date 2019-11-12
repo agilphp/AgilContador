@@ -1,0 +1,68 @@
+{
+	"name": "agilphp/agilcontador",
+	"description": "Software contable y tributario",
+	"type": "project",
+        "version": "1.0",
+	"keywords": ["Software Contable", "Php", "MVC", "oop", "Software para administracion contable y tributaria"],
+	"homepage": "http://AgilPhp.com",
+	"license": "MIT",
+	"authors": [
+            
+                {
+                        "name": "Efrain Restrepo",
+                        "email": "efrasoft@gmail.com",
+                        "homepage": "http://AgilPhp.com/autores",
+                        "role": "Desarrollador"
+                },                 
+                
+		{
+			"name": "AgilPhp Comunidad",
+			"homepage": "https://github.com/webcol/calima/graphs/contributors"
+		}
+	],
+	"support": {
+		"email": "info@AgilPhp.com",
+		"issues": "https://github.com/webcol/Calima/issues",
+		"blog": "http://AgilPhp.com/blog",
+		"source": "https://github.com/webcol/Calima"
+	},
+	
+	"bin": [
+		"sistema/nucleo/APBootstrap.php"
+	],
+	"require": {
+		"php": ">=5.4.0",
+                "propel/propel": "2.0.0-alpha8",
+                "swiftmailer/swiftmailer": "5.*",
+                "setasign/fpdf": "1.*",
+                "phpoffice/phpspreadsheet": "1.*",               
+                "league/csv": "7.*",
+                "siriusphp/upload": "2.*",                                
+				"monolog/monolog":  "*",
+				"elmijo/php-error-log": "2.0",
+				"chriskacerguis/codeigniter-restserver": "^3.0",
+                "smottt/wideimage": "*"
+                
+	},
+         
+        
+	"autoload": {
+		"files": ["vendor/bin/generated-conf/config.php"],		
+		"classmap" : [
+			"sistema/ayudantes/",
+			"vendor/bin/",			
+            "vendor/bin/Base/",
+            "vendor/bin/Map/"
+			
+		],
+                 "psr-4": {
+                    
+                    "sistema\\nucleo\\": "sistema/nucleo",
+                    "sistema\\ayudantes\\": "sistema/ayudantes"
+                    
+                    
+
+                }
+	}
+        
+}
