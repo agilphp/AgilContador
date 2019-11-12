@@ -1,4 +1,5 @@
-
+# Ignore el folder llamado log
+log/
 
 # Ignore todo .log
 *.log
