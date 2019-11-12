@@ -1,0 +1,34 @@
+{
+    "name": "siriusphp/upload",
+    "description": "Framework agnostic upload library",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "form",
+        "upload",
+        "validation",
+        "file"
+    ],
+    "authors": [
+        {
+            "name": "Adrian Miu",
+            "email": "adrian@adrianmiu.ro"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "siriusphp/validation": "~2.1"
+    },
+    "require-dev": {
+    	"phpunit/phpunit": "~4.8"
+    },
+    "suggest": {
+    	"league/flysystem": "To upload to different destinations, not just to the local file system",
+    	"knplabs/gaufrette": "Alternative filesystem abstraction library for upload destinations"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sirius\\Upload\\": "src/"
+        }
+    }
+}

@@ -1,0 +1,462 @@
+<?php
+
+namespace propel\propel\Map;
+
+use Propel\Runtime\Propel;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\InstancePoolTrait;
+use Propel\Runtime\Connection\ConnectionInterface;
+use Propel\Runtime\DataFetcher\DataFetcherInterface;
+use Propel\Runtime\Exception\PropelException;
+use Propel\Runtime\Map\RelationMap;
+use Propel\Runtime\Map\TableMap;
+use Propel\Runtime\Map\TableMapTrait;
+use propel\propel\Tblfacturadetalle;
+use propel\propel\TblfacturadetalleQuery;
+
+
+/**
+ * This class defines the structure of the 'tblfacturadetalle' table.
+ *
+ *
+ *
+ * This map class is used by Propel to do runtime db structure discovery.
+ * For example, the createSelectSql() method checks the type of a given column used in an
+ * ORDER BY clause to know whether it needs to apply SQL to make the ORDER BY case-insensitive
+ * (i.e. if it's a text column type).
+ *
+ */
+class TblfacturadetalleTableMap extends TableMap
+{
+    use InstancePoolTrait;
+    use TableMapTrait;
+
+    /**
+     * The (dot-path) name of this class
+     */
+    const CLASS_NAME = 'propel.propel.Map.TblfacturadetalleTableMap';
+
+    /**
+     * The default database name for this class
+     */
+    const DATABASE_NAME = 'default';
+
+    /**
+     * The table name for this class
+     */
+    const TABLE_NAME = 'tblfacturadetalle';
+
+    /**
+     * The related Propel class for this table
+     */
+    const OM_CLASS = '\\propel\\propel\\Tblfacturadetalle';
+
+    /**
+     * A class that can be returned by this tableMap
+     */
+    const CLASS_DEFAULT = 'propel.propel.Tblfacturadetalle';
+
+    /**
+     * The total number of columns
+     */
+    const NUM_COLUMNS = 7;
+
+    /**
+     * The number of lazy-loaded columns
+     */
+    const NUM_LAZY_LOAD_COLUMNS = 0;
+
+    /**
+     * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
+     */
+    const NUM_HYDRATE_COLUMNS = 7;
+
+    /**
+     * the column name for the facturaDetalleId field
+     */
+    const COL_FACTURADETALLEID = 'tblfacturadetalle.facturaDetalleId';
+
+    /**
+     * the column name for the facturaId field
+     */
+    const COL_FACTURAID = 'tblfacturadetalle.facturaId';
+
+    /**
+     * the column name for the productoId field
+     */
+    const COL_PRODUCTOID = 'tblfacturadetalle.productoId';
+
+    /**
+     * the column name for the cantidad field
+     */
+    const COL_CANTIDAD = 'tblfacturadetalle.cantidad';
+
+    /**
+     * the column name for the precio field
+     */
+    const COL_PRECIO = 'tblfacturadetalle.precio';
+
+    /**
+     * the column name for the tblfactura_facturaId field
+     */
+    const COL_TBLFACTURA_FACTURAID = 'tblfacturadetalle.tblfactura_facturaId';
+
+    /**
+     * the column name for the TblProductos_productoId field
+     */
+    const COL_TBLPRODUCTOS_PRODUCTOID = 'tblfacturadetalle.TblProductos_productoId';
+
+    /**
+     * The default string format for model objects of the related table
+     */
+    const DEFAULT_STRING_FORMAT = 'YAML';
+
+    /**
+     * holds an array of fieldnames
+     *
+     * first dimension keys are the type constants
+     * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
+     */
+    protected static $fieldNames = array (
+        self::TYPE_PHPNAME       => array('Facturadetalleid', 'Facturaid', 'Productoid', 'Cantidad', 'Precio', 'TblfacturaFacturaid', 'TblproductosProductoid', ),
+        self::TYPE_CAMELNAME     => array('facturadetalleid', 'facturaid', 'productoid', 'cantidad', 'precio', 'tblfacturaFacturaid', 'tblproductosProductoid', ),
+        self::TYPE_COLNAME       => array(TblfacturadetalleTableMap::COL_FACTURADETALLEID, TblfacturadetalleTableMap::COL_FACTURAID, TblfacturadetalleTableMap::COL_PRODUCTOID, TblfacturadetalleTableMap::COL_CANTIDAD, TblfacturadetalleTableMap::COL_PRECIO, TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID, TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, ),
+        self::TYPE_FIELDNAME     => array('facturaDetalleId', 'facturaId', 'productoId', 'cantidad', 'precio', 'tblfactura_facturaId', 'TblProductos_productoId', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+    );
+
+    /**
+     * holds an array of keys for quick access to the fieldnames array
+     *
+     * first dimension keys are the type constants
+     * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
+     */
+    protected static $fieldKeys = array (
+        self::TYPE_PHPNAME       => array('Facturadetalleid' => 0, 'Facturaid' => 1, 'Productoid' => 2, 'Cantidad' => 3, 'Precio' => 4, 'TblfacturaFacturaid' => 5, 'TblproductosProductoid' => 6, ),
+        self::TYPE_CAMELNAME     => array('facturadetalleid' => 0, 'facturaid' => 1, 'productoid' => 2, 'cantidad' => 3, 'precio' => 4, 'tblfacturaFacturaid' => 5, 'tblproductosProductoid' => 6, ),
+        self::TYPE_COLNAME       => array(TblfacturadetalleTableMap::COL_FACTURADETALLEID => 0, TblfacturadetalleTableMap::COL_FACTURAID => 1, TblfacturadetalleTableMap::COL_PRODUCTOID => 2, TblfacturadetalleTableMap::COL_CANTIDAD => 3, TblfacturadetalleTableMap::COL_PRECIO => 4, TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID => 5, TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID => 6, ),
+        self::TYPE_FIELDNAME     => array('facturaDetalleId' => 0, 'facturaId' => 1, 'productoId' => 2, 'cantidad' => 3, 'precio' => 4, 'tblfactura_facturaId' => 5, 'TblProductos_productoId' => 6, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+    );
+
+    /**
+     * Initialize the table attributes and columns
+     * Relations are not initialized by this method since they are lazy loaded
+     *
+     * @return void
+     * @throws PropelException
+     */
+    public function initialize()
+    {
+        // attributes
+        $this->setName('tblfacturadetalle');
+        $this->setPhpName('Tblfacturadetalle');
+        $this->setIdentifierQuoting(false);
+        $this->setClassName('\\propel\\propel\\Tblfacturadetalle');
+        $this->setPackage('propel.propel');
+        $this->setUseIdGenerator(true);
+        // columns
+        $this->addPrimaryKey('facturaDetalleId', 'Facturadetalleid', 'BIGINT', true, null, null);
+        $this->addColumn('facturaId', 'Facturaid', 'BIGINT', false, null, null);
+        $this->addColumn('productoId', 'Productoid', 'BIGINT', false, null, null);
+        $this->addColumn('cantidad', 'Cantidad', 'DECIMAL', false, 10, null);
+        $this->addColumn('precio', 'Precio', 'DECIMAL', false, 10, null);
+        $this->addForeignKey('tblfactura_facturaId', 'TblfacturaFacturaid', 'BIGINT', 'tblfactura', 'facturaId', true, null, null);
+        $this->addForeignKey('TblProductos_productoId', 'TblproductosProductoid', 'BIGINT', 'tblproductos', 'productoId', true, null, null);
+    } // initialize()
+
+    /**
+     * Build the RelationMap objects for this table relationships
+     */
+    public function buildRelations()
+    {
+        $this->addRelation('Tblproductos', '\\propel\\propel\\Tblproductos', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':TblProductos_productoId',
+    1 => ':productoId',
+  ),
+), null, null, null, false);
+        $this->addRelation('Tblfactura', '\\propel\\propel\\Tblfactura', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':tblfactura_facturaId',
+    1 => ':facturaId',
+  ),
+), null, null, null, false);
+    } // buildRelations()
+
+    /**
+     * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
+     *
+     * For tables with a single-column primary key, that simple pkey value will be returned.  For tables with
+     * a multi-column primary key, a serialize()d version of the primary key will be returned.
+     *
+     * @param array  $row       resultset row.
+     * @param int    $offset    The 0-based offset for reading from the resultset row.
+     * @param string $indexType One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
+     *                           TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM
+     *
+     * @return string The primary key hash of the row
+     */
+    public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
+    {
+        // If the PK cannot be derived from the row, return NULL.
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Facturadetalleid', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+            return null;
+        }
+
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Facturadetalleid', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Facturadetalleid', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Facturadetalleid', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Facturadetalleid', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Facturadetalleid', TableMap::TYPE_PHPNAME, $indexType)];
+    }
+
+    /**
+     * Retrieves the primary key from the DB resultset row
+     * For tables with a single-column primary key, that simple pkey value will be returned.  For tables with
+     * a multi-column primary key, an array of the primary key columns will be returned.
+     *
+     * @param array  $row       resultset row.
+     * @param int    $offset    The 0-based offset for reading from the resultset row.
+     * @param string $indexType One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
+     *                           TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM
+     *
+     * @return mixed The primary key of the row
+     */
+    public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
+    {
+        return (string) $row[
+            $indexType == TableMap::TYPE_NUM
+                ? 0 + $offset
+                : self::translateFieldName('Facturadetalleid', TableMap::TYPE_PHPNAME, $indexType)
+        ];
+    }
+
+    /**
+     * The class that the tableMap will make instances of.
+     *
+     * If $withPrefix is true, the returned path
+     * uses a dot-path notation which is translated into a path
+     * relative to a location on the PHP include_path.
+     * (e.g. path.to.MyClass -> 'path/to/MyClass.php')
+     *
+     * @param boolean $withPrefix Whether or not to return the path with the class name
+     * @return string path.to.ClassName
+     */
+    public static function getOMClass($withPrefix = true)
+    {
+        return $withPrefix ? TblfacturadetalleTableMap::CLASS_DEFAULT : TblfacturadetalleTableMap::OM_CLASS;
+    }
+
+    /**
+     * Populates an object of the default type or an object that inherit from the default.
+     *
+     * @param array  $row       row returned by DataFetcher->fetch().
+     * @param int    $offset    The 0-based offset for reading from the resultset row.
+     * @param string $indexType The index type of $row. Mostly DataFetcher->getIndexType().
+                                 One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
+     *                           TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
+     *
+     * @throws PropelException Any exceptions caught during processing will be
+     *                         rethrown wrapped into a PropelException.
+     * @return array           (Tblfacturadetalle object, last column rank)
+     */
+    public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
+    {
+        $key = TblfacturadetalleTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = TblfacturadetalleTableMap::getInstanceFromPool($key))) {
+            // We no longer rehydrate the object, since this can cause data loss.
+            // See http://www.propelorm.org/ticket/509
+            // $obj->hydrate($row, $offset, true); // rehydrate
+            $col = $offset + TblfacturadetalleTableMap::NUM_HYDRATE_COLUMNS;
+        } else {
+            $cls = TblfacturadetalleTableMap::OM_CLASS;
+            /** @var Tblfacturadetalle $obj */
+            $obj = new $cls();
+            $col = $obj->hydrate($row, $offset, false, $indexType);
+            TblfacturadetalleTableMap::addInstanceToPool($obj, $key);
+        }
+
+        return array($obj, $col);
+    }
+
+    /**
+     * The returned array will contain objects of the default type or
+     * objects that inherit from the default.
+     *
+     * @param DataFetcherInterface $dataFetcher
+     * @return array
+     * @throws PropelException Any exceptions caught during processing will be
+     *                         rethrown wrapped into a PropelException.
+     */
+    public static function populateObjects(DataFetcherInterface $dataFetcher)
+    {
+        $results = array();
+
+        // set the class once to avoid overhead in the loop
+        $cls = static::getOMClass(false);
+        // populate the object(s)
+        while ($row = $dataFetcher->fetch()) {
+            $key = TblfacturadetalleTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = TblfacturadetalleTableMap::getInstanceFromPool($key))) {
+                // We no longer rehydrate the object, since this can cause data loss.
+                // See http://www.propelorm.org/ticket/509
+                // $obj->hydrate($row, 0, true); // rehydrate
+                $results[] = $obj;
+            } else {
+                /** @var Tblfacturadetalle $obj */
+                $obj = new $cls();
+                $obj->hydrate($row);
+                $results[] = $obj;
+                TblfacturadetalleTableMap::addInstanceToPool($obj, $key);
+            } // if key exists
+        }
+
+        return $results;
+    }
+    /**
+     * Add all the columns needed to create a new object.
+     *
+     * Note: any columns that were marked with lazyLoad="true" in the
+     * XML schema will not be added to the select list and only loaded
+     * on demand.
+     *
+     * @param Criteria $criteria object containing the columns to add.
+     * @param string   $alias    optional table alias
+     * @throws PropelException Any exceptions caught during processing will be
+     *                         rethrown wrapped into a PropelException.
+     */
+    public static function addSelectColumns(Criteria $criteria, $alias = null)
+    {
+        if (null === $alias) {
+            $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_FACTURADETALLEID);
+            $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_FACTURAID);
+            $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_PRODUCTOID);
+            $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_CANTIDAD);
+            $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_PRECIO);
+            $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID);
+            $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID);
+        } else {
+            $criteria->addSelectColumn($alias . '.facturaDetalleId');
+            $criteria->addSelectColumn($alias . '.facturaId');
+            $criteria->addSelectColumn($alias . '.productoId');
+            $criteria->addSelectColumn($alias . '.cantidad');
+            $criteria->addSelectColumn($alias . '.precio');
+            $criteria->addSelectColumn($alias . '.tblfactura_facturaId');
+            $criteria->addSelectColumn($alias . '.TblProductos_productoId');
+        }
+    }
+
+    /**
+     * Returns the TableMap related to this object.
+     * This method is not needed for general use but a specific application could have a need.
+     * @return TableMap
+     * @throws PropelException Any exceptions caught during processing will be
+     *                         rethrown wrapped into a PropelException.
+     */
+    public static function getTableMap()
+    {
+        return Propel::getServiceContainer()->getDatabaseMap(TblfacturadetalleTableMap::DATABASE_NAME)->getTable(TblfacturadetalleTableMap::TABLE_NAME);
+    }
+
+    /**
+     * Add a TableMap instance to the database for this tableMap class.
+     */
+    public static function buildTableMap()
+    {
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(TblfacturadetalleTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(TblfacturadetalleTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new TblfacturadetalleTableMap());
+        }
+    }
+
+    /**
+     * Performs a DELETE on the database, given a Tblfacturadetalle or Criteria object OR a primary key value.
+     *
+     * @param mixed               $values Criteria or Tblfacturadetalle object or primary key or array of primary keys
+     *              which is used to create the DELETE statement
+     * @param  ConnectionInterface $con the connection to use
+     * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
+     *                         if supported by native driver or if emulated using Propel.
+     * @throws PropelException Any exceptions caught during processing will be
+     *                         rethrown wrapped into a PropelException.
+     */
+     public static function doDelete($values, ConnectionInterface $con = null)
+     {
+        if (null === $con) {
+            $con = Propel::getServiceContainer()->getWriteConnection(TblfacturadetalleTableMap::DATABASE_NAME);
+        }
+
+        if ($values instanceof Criteria) {
+            // rename for clarity
+            $criteria = $values;
+        } elseif ($values instanceof \propel\propel\Tblfacturadetalle) { // it's a model object
+            // create criteria based on pk values
+            $criteria = $values->buildPkeyCriteria();
+        } else { // it's a primary key, or an array of pks
+            $criteria = new Criteria(TblfacturadetalleTableMap::DATABASE_NAME);
+            $criteria->add(TblfacturadetalleTableMap::COL_FACTURADETALLEID, (array) $values, Criteria::IN);
+        }
+
+        $query = TblfacturadetalleQuery::create()->mergeWith($criteria);
+
+        if ($values instanceof Criteria) {
+            TblfacturadetalleTableMap::clearInstancePool();
+        } elseif (!is_object($values)) { // it's a primary key, or an array of pks
+            foreach ((array) $values as $singleval) {
+                TblfacturadetalleTableMap::removeInstanceFromPool($singleval);
+            }
+        }
+
+        return $query->delete($con);
+    }
+
+    /**
+     * Deletes all rows from the tblfacturadetalle table.
+     *
+     * @param ConnectionInterface $con the connection to use
+     * @return int The number of affected rows (if supported by underlying database driver).
+     */
+    public static function doDeleteAll(ConnectionInterface $con = null)
+    {
+        return TblfacturadetalleQuery::create()->doDeleteAll($con);
+    }
+
+    /**
+     * Performs an INSERT on the database, given a Tblfacturadetalle or Criteria object.
+     *
+     * @param mixed               $criteria Criteria or Tblfacturadetalle object containing data that is used to create the INSERT statement.
+     * @param ConnectionInterface $con the ConnectionInterface connection to use
+     * @return mixed           The new primary key.
+     * @throws PropelException Any exceptions caught during processing will be
+     *                         rethrown wrapped into a PropelException.
+     */
+    public static function doInsert($criteria, ConnectionInterface $con = null)
+    {
+        if (null === $con) {
+            $con = Propel::getServiceContainer()->getWriteConnection(TblfacturadetalleTableMap::DATABASE_NAME);
+        }
+
+        if ($criteria instanceof Criteria) {
+            $criteria = clone $criteria; // rename for clarity
+        } else {
+            $criteria = $criteria->buildCriteria(); // build Criteria from Tblfacturadetalle object
+        }
+
+        if ($criteria->containsKey(TblfacturadetalleTableMap::COL_FACTURADETALLEID) && $criteria->keyContainsValue(TblfacturadetalleTableMap::COL_FACTURADETALLEID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.TblfacturadetalleTableMap::COL_FACTURADETALLEID.')');
+        }
+
+
+        // Set the correct dbName
+        $query = TblfacturadetalleQuery::create()->mergeWith($criteria);
+
+        // use transaction because $criteria could contain info
+        // for more than one table (I guess, conceivably)
+        return $con->transaction(function () use ($con, $query) {
+            return $query->doInsert($con);
+        });
+    }
+
+} // TblfacturadetalleTableMap
+// This is the static code needed to register the TableMap for this table with the main Propel class.
+//
+TblfacturadetalleTableMap::buildTableMap();

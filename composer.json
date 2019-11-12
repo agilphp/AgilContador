@@ -1,20 +1,26 @@
 {
-	"name": "agilphp/agilcontador",
-	"description": "Software contable y tributario",
+	"name": "webcol/calima",
+	"description": "Framework PHP en español",
 	"type": "project",
-        "version": "1.0",
-	"keywords": ["Software Contable", "Php", "MVC", "oop", "Software para administracion contable y tributaria"],
+        "version": "1.1.5",
+	"keywords": ["framework", "Php", "MVC", "oop", "Framework php hispano"],
 	"homepage": "http://AgilPhp.com",
 	"license": "MIT",
 	"authors": [
             
                 {
                         "name": "Efrain Restrepo",
-                        "email": "efrasoft@gmail.com",
+                        "email": "efrasoft@outlook.com",
                         "homepage": "http://AgilPhp.com/autores",
-                        "role": "Desarrollador"
-                },                 
-                
+                        "role": "Pionero - Desarrollador"
+                },
+                 
+                {
+                        "name": "Ramon Serrano",
+                        "email": "ramon.calle.88@gmail.com",
+                        "homepage": "http://AgilPhp.com/autores",
+                        "role": "Desarrollador - nucleo"
+                },
 		{
 			"name": "AgilPhp Comunidad",
 			"homepage": "https://github.com/webcol/calima/graphs/contributors"
@@ -38,21 +44,20 @@
                 "phpoffice/phpspreadsheet": "1.*",               
                 "league/csv": "7.*",
                 "siriusphp/upload": "2.*",                                
-				"monolog/monolog":  "*",
-				"elmijo/php-error-log": "2.0",
-				"chriskacerguis/codeigniter-restserver": "^3.0",
+		"monolog/monolog":  "*",
+		"elmijo/php-error-log": "2.0",
                 "smottt/wideimage": "*"
                 
 	},
          
         
 	"autoload": {
-		"files": ["vendor/bin/generated-conf/config.php"],		
+		"files": ["vendor/bin/generated-conf/config.php"],
 		"classmap" : [
 			"sistema/ayudantes/",
-			"vendor/bin/",			
-            "vendor/bin/Base/",
-            "vendor/bin/Map/"
+			"vendor/bin/",
+        	"vendor/bin/models/propel/propel/Base/",
+        	"vendor/bin/models/propel/propel/Map/"
 			
 		],
                  "psr-4": {

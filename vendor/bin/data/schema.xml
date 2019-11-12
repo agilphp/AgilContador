@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="true" namespace="propel" defaultPhpNamingMethod="underscore">
+  <table name="menu" idMethod="native" phpName="Menu" namespace="propel">
+    <column name="id" phpName="Id" type="INTEGER" size="5" required="true"/>
+    <column name="menu" phpName="Menu" type="VARCHAR" size="50" required="true"/>
+    <column name="url" phpName="Url" type="VARCHAR" size="120" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="sesion_usuario" idMethod="native" phpName="SesionUsuario" namespace="propel">
+    <column name="id_sesion" phpName="IdSesion" type="BIGINT" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_usuario" phpName="IdUsuario" type="INTEGER" size="10" required="true"/>
+    <column name="fecha_sesion" phpName="FechaSesion" type="VARCHAR" size="20" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="sesiones" idMethod="native" phpName="Sesiones" namespace="propel">
+    <column name="id" phpName="Id" type="CHAR" size="128" primaryKey="true" required="true"/>
+    <column name="set_time" phpName="SetTime" type="CHAR" size="10" required="true"/>
+    <column name="data" phpName="Data" type="LONGVARCHAR" required="true"/>
+    <column name="session_key" phpName="SessionKey" type="CHAR" size="128" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tblcliente" identifierQuoting="true" idMethod="native" phpName="Tblcliente" namespace="propel">
+    <column name="clienteId" phpName="Clienteid" type="BIGINT" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="codigo" phpName="Codigo" type="VARCHAR" size="50" required="true"/>
+    <column name="nombre" phpName="Nombre" type="VARCHAR" size="300" required="true"/>
+    <column name="direccion" phpName="Direccion" type="VARCHAR" size="150" required="true"/>
+    <column name="telefono" phpName="Telefono" type="VARCHAR" size="150" required="true"/>
+    <column name="ciudadId" phpName="Ciudadid" type="INTEGER" size="10" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tblegreso" idMethod="native" phpName="Tblegreso" namespace="propel">
+    <column name="egresoId" phpName="Egresoid" type="BIGINT" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="numero" phpName="Numero" type="INTEGER"/>
+    <column name="fecha" phpName="Fecha" type="TIMESTAMP"/>
+    <column name="comentario" phpName="Comentario" type="LONGVARCHAR"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tblegresodetalle" idMethod="native" phpName="Tblegresodetalle" namespace="propel">
+    <column name="egresoDetalleId" phpName="Egresodetalleid" type="BIGINT" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="egresoId" phpName="Egresoid" type="BIGINT"/>
+    <column name="productoId" phpName="Productoid" type="BIGINT"/>
+    <column name="cantidad" phpName="Cantidad" type="DECIMAL" size="10" scale="2"/>
+    <column name="TblEgreso_egresoId" phpName="TblegresoEgresoid" type="BIGINT" required="true"/>
+    <column name="TblProductos_productoId" phpName="TblproductosProductoid" type="BIGINT" required="true"/>
+    <foreign-key foreignTable="tblegreso" name="fk_TblEgresoDetalle_TblEgreso1">
+      <reference local="TblEgreso_egresoId" foreign="egresoId"/>
+    </foreign-key>
+    <foreign-key foreignTable="tblproductos" name="fk_TblEgresoDetalle_TblProductos1">
+      <reference local="TblProductos_productoId" foreign="productoId"/>
+    </foreign-key>
+    <index name="fk_TblEgresoDetalle_TblEgreso1_idx">
+      <index-column name="TblEgreso_egresoId"/>
+    </index>
+    <index name="fk_TblEgresoDetalle_TblProductos1_idx">
+      <index-column name="TblProductos_productoId"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tblfactura" identifierQuoting="true" idMethod="native" phpName="Tblfactura" namespace="propel">
+    <column name="facturaId" phpName="Facturaid" type="BIGINT" primaryKey="true" autoIncrement="true" />
+    <column name="numero" phpName="Numero" type="BIGINT" />
+    <column name="clienteId" phpName="Clienteid" type="BIGINT" required="true"/>
+    <column name="fecha" phpName="Fecha" type="TIMESTAMP" required="true"/>
+    <column name="tblcliente_clienteId" phpName="TblclienteClienteid" type="BIGINT" required="true"/>
+    <index name="fk_tblfactura_tblcliente_idx">
+      <index-column name="tblcliente_clienteId"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tblfacturadetalle" idMethod="native" phpName="Tblfacturadetalle" namespace="propel">
+    <column name="facturaDetalleId" phpName="Facturadetalleid" type="BIGINT" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="facturaId" phpName="Facturaid" type="BIGINT"/>
+    <column name="productoId" phpName="Productoid" type="BIGINT"/>
+    <column name="cantidad" phpName="Cantidad" type="DECIMAL" size="10" scale="2"/>
+    <column name="precio" phpName="Precio" type="DECIMAL" size="10" scale="2"/>
+    <column name="tblfactura_facturaId" phpName="TblfacturaFacturaid" type="BIGINT" required="true"/>
+    <column name="TblProductos_productoId" phpName="TblproductosProductoid" type="BIGINT" required="true"/>
+    <foreign-key foreignTable="tblproductos" name="fk_TblFacturaDetalle_TblProductos1">
+      <reference local="TblProductos_productoId" foreign="productoId"/>
+    </foreign-key>
+    <foreign-key foreignTable="tblfactura" name="fk_TblFacturaDetalle_tblfactura1">
+      <reference local="tblfactura_facturaId" foreign="facturaId"/>
+    </foreign-key>
+    <index name="fk_TblFacturaDetalle_tblfactura1_idx">
+      <index-column name="tblfactura_facturaId"/>
+    </index>
+    <index name="fk_TblFacturaDetalle_TblProductos1_idx">
+      <index-column name="TblProductos_productoId"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tblingreso" idMethod="native" phpName="Tblingreso" namespace="propel">
+    <column name="ingresoId" phpName="Ingresoid" type="BIGINT" primaryKey="true" required="true"/>
+    <column name="numero" phpName="Numero" type="INTEGER"/>
+    <column name="fecha" phpName="Fecha" type="TIMESTAMP"/>
+    <column name="comentario" phpName="Comentario" type="LONGVARCHAR"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tblingresodetalle" idMethod="native" phpName="Tblingresodetalle" namespace="propel">
+    <column name="ingresoDetalleId" phpName="Ingresodetalleid" type="BIGINT" primaryKey="true" required="true"/>
+    <column name="ingresoId" phpName="Ingresoid" type="BIGINT"/>
+    <column name="productoId" phpName="Productoid" type="BIGINT"/>
+    <column name="cantidad" phpName="Cantidad" type="DECIMAL" size="10" scale="2"/>
+    <column name="TblProductos_productoId" phpName="TblproductosProductoid" type="BIGINT" required="true"/>
+    <column name="TblIngreso_ingresoId" phpName="TblingresoIngresoid" type="BIGINT" required="true"/>
+    <foreign-key foreignTable="tblingreso" name="fk_TblIngresoDetalle_TblIngreso1">
+      <reference local="TblIngreso_ingresoId" foreign="ingresoId"/>
+    </foreign-key>
+    <foreign-key foreignTable="tblproductos" name="fk_TblIngresoDetalle_TblProductos1">
+      <reference local="TblProductos_productoId" foreign="productoId"/>
+    </foreign-key>
+    <index name="fk_TblIngresoDetalle_TblProductos1_idx">
+      <index-column name="TblProductos_productoId"/>
+    </index>
+    <index name="fk_TblIngresoDetalle_TblIngreso1_idx">
+      <index-column name="TblIngreso_ingresoId"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tbllinea" idMethod="native" phpName="Tbllinea" namespace="propel">
+    <column name="LineaId" phpName="Lineaid" type="INTEGER" size="5" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="codigo" phpName="Codigo" type="VARCHAR" size="45"/>
+    <column name="nombre" phpName="Nombre" type="VARCHAR" size="45"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tblproductocosto" idMethod="native" phpName="Tblproductocosto" namespace="propel">
+    <column name="productoPrecioId" phpName="Productoprecioid" type="BIGINT" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="productoId" phpName="Productoid" type="BIGINT"/>
+    <column name="costo" phpName="Costo" type="DECIMAL" size="10" scale="2"/>
+    <column name="fecha" phpName="Fecha" type="TIMESTAMP"/>
+    <column name="TblProductos_productoId" phpName="TblproductosProductoid" type="BIGINT" required="true"/>
+    <foreign-key foreignTable="tblproductos" name="fk_TblProductoPrecio_TblProductos10">
+      <reference local="TblProductos_productoId" foreign="productoId"/>
+    </foreign-key>
+    <index name="fk_TblProductoPrecio_TblProductos1_idx">
+      <index-column name="TblProductos_productoId"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tblproductoprecio" idMethod="native" phpName="Tblproductoprecio" namespace="propel">
+    <column name="productoPrecioId" phpName="Productoprecioid" type="BIGINT" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="productoId" phpName="Productoid" type="BIGINT"/>
+    <column name="precio" phpName="Precio" type="DECIMAL" size="10" scale="2"/>
+    <column name="fecha" phpName="Fecha" type="TIMESTAMP"/>
+    <column name="TblProductos_productoId" phpName="TblproductosProductoid" type="BIGINT" required="true"/>
+    <foreign-key foreignTable="tblproductos" name="fk_TblProductoPrecio_TblProductos1">
+      <reference local="TblProductos_productoId" foreign="productoId"/>
+    </foreign-key>
+    <index name="fk_TblProductoPrecio_TblProductos1_idx">
+      <index-column name="TblProductos_productoId"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tblproductos" idMethod="native" phpName="Tblproductos" namespace="propel">
+    <column name="productoId" phpName="Productoid" type="BIGINT" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="codigo" phpName="Codigo" type="VARCHAR" size="45"/>
+    <column name="nombre" phpName="Nombre" type="VARCHAR" size="250"/>
+    <column name="lineaId" phpName="Lineaid" type="INTEGER" size="5"/>
+    <column name="TblLinea_LineaId" phpName="TbllineaLineaid" type="INTEGER" size="5" required="true"/>
+    <foreign-key foreignTable="tbllinea" name="fk_TblProductos_TblLinea1">
+      <reference local="TblLinea_LineaId" foreign="LineaId"/>
+    </foreign-key>
+    <index name="fk_TblProductos_TblLinea1_idx">
+      <index-column name="TblLinea_LineaId"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="usuarios" idMethod="native" phpName="Usuarios" namespace="propel">
+    <column name="id_usuario" phpName="IdUsuario" type="INTEGER" size="10" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="nombre" phpName="Nombre" type="VARCHAR" size="100" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="100" required="true"/>
+    <column name="nivel" phpName="Nivel" type="CHAR" required="true"/>
+    <column name="clave" phpName="Clave" type="VARCHAR" size="60" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>
