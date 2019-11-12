@@ -1,4 +1,4 @@
-#Agilphp  Vs 1.1#
+#AgilContador  Vs 1.0#
 ===========================
 
 [![Join the chat at https://gitter.im/webcol/Calima](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/webcol/Calima?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -39,6 +39,7 @@ ejemplo_bd/             Ejemplo de la base de datos .sql
 sistema/                Ayudantes, librerias, servicios, nucleo
 temporal/               Información temporal 
 log/                    Registro de error_log de la aplicación
+vendor/                 Repositorio de Composer
 ```
 
 
@@ -63,8 +64,8 @@ Multiplataforma
 ##COLABORA##
 -----------------
 
-Si crees que puedes ayudar de alguna manera no lo dudes y ponte en contacto con la comunidad Cf
-Cf cree que tu apoyo es demasiado importante sin pensar en lo mínimo que sea,  con tu ayuda hacemos de esta herramienta cada día una excelente opción de desarrollo para la comunidad  de habla hispana.
+Si crees que puedes ayudar de alguna manera no lo dudes y ponte en contacto con la comunidad AgilPhp.
+AgilPhp cree que tu apoyo es demasiado importante sin pensar en lo mínimo que sea,  con tu ayuda hacemos de esta herramienta cada día una excelente opción libre para la mediana y pequeña empresa en crecimiento.
 
 Tu puede colaborar con:
 
@@ -87,7 +88,7 @@ Top 10 de participantes no dejes de estar aquí:
 
 
 * [Efrain Restrepo](https://www.linkedin.com/in/efrasoft)
-	- Desarrollador Fundador
+	- Desarrollador 
 
 	
 	
@@ -117,4 +118,4 @@ http://www.meetup.com/AgilPhp/members/ <br>
 ##Licencia##
 -----------------
 
-AgilPhp framework Ap es software openSourced bajo [Licencia Mit] (http://es.wikipedia.org/wiki/Licencia_MIT)
+AgilContador  es software libre bajo [Licencia Mit] (http://es.wikipedia.org/wiki/Licencia_MIT)
