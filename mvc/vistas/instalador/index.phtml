@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+
+    <title>Justified Nav Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+   <link href="<?PHP ECHO Ap_BASE_URL ?>/public_/inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?PHP ECHO Ap_BASE_URL ?>/public_/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Toastr style -->
+    <link href="<?PHP ECHO Ap_BASE_URL ?>/public_/inspinia/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+    <!-- Gritter -->
+    <link href="<?PHP ECHO Ap_BASE_URL ?>/public_/inspinia/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
+    <link href="<?PHP ECHO Ap_BASE_URL ?>/public_/inspinia/css/animate.css" rel="stylesheet">
+    <link href="<?PHP ECHO Ap_BASE_URL ?>/public_/inspinia/css/style.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+      
+          
+          
+
+    <div class="container">
+
+     <div class="masthead">
+        <h3 class="text-muted">Bienvenido Instalador AP</h3>
+        
+      </div>
+
+      <!-- Jumbotron -->
+      <div class="jumbotron">
+        <h1>Calima Framework Versión 1.5.0</h1>
+        <p class="lead">A continuación usted podrá instalar las tablas de configuración de AP llenando los campos del formulario.<br>usted debe de tener previamente creada la base de datos y la constante Ap_BASE_URL configurada con su URL que esta en la ruta: sistema/nucleo/APConfiguracion.php.</p><p>Si usted no sabe como crear la base de datos debe ver el siguiente .<a target="_blank" href="https://www.youtube.com/watch?v=xo1Y4h6t-yM">video en youtube<br></a></p>
+        
+      </div>
+      <?php if(isset($_GET['error'])){ ?>
+        <div class="alert alert-danger" role="alert"><?php echo $_GET['error']; ?></div>
+      <?php } ?>
+      <!-- Example row of columns -->
+      
+      
+      
+      <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Instalador <small>Configuración de base de datos.</small></h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config option 1</a>
+                                    </li>
+                                    <li><a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+      
+      
+      
+      
+      
+      <form method="post" action="instalador/verificarBd"  class="form-horizontal">
+    <div class="form-group has-success">
+        <label class="col-xs-2 control-label" for="inputSuccess">Usuario</label>
+        
+        <div class="col-xs-4" >
+            <input name="usuariobd" type="text" id="inputSuccess" class="form-control" placeholder="Usuario Base de datos" autofocus required>
+            <span class="help-block">Usuario BD</span>
+        </div>
+        
+        <label class="col-xs-2 control-label" for="inputSuccess">Clave</label>
+        <div class="col-xs-4">
+            <input name="clavebd" type="text" id="inputSuccess" class="form-control" placeholder="Clave de Usuario Base de datos" >
+            <span class="help-block">Clave de Usuario Bd</span>
+        </div>
+            
+    </div>
+    
+    
+          
+    <div class="form-group has-success">
+        <label class="col-xs-2 control-label" for="inputSuccess">Base de datos</label>
+        <div class="col-xs-4">
+            <input name="nombrebd" type="text" id="inputSuccess" class="form-control" placeholder="Nombre de la Base de datos" required>
+            <span class="help-block">Nombre de la Bd</span>
+        </div>
+        
+        <label class="col-xs-2 control-label" for="inputSuccess">Host</label>
+        <div class="col-xs-4">
+            <input name="hostbd" type="text" id="inputSuccess" class="form-control" placeholder="Localhost" required>
+            <span class="help-block">Host</span>
+        </div>
+    </div>
+          
+    
+          
+    <div class="form-group has-success">
+        <label class="col-xs-2 control-label" for="inputSuccess">Analytics</label>
+        <div class="col-xs-4">
+            <input name="analytics" type="text" id="inputSuccess" class="form-control" placeholder="UA-56990391-1">
+            <span class="help-block">Analytics</span>
+        </div>
+        
+        <label class="col-xs-2 control-label" for="inputSuccess">Directorio Root</label>
+        <div class="col-xs-4">
+            <input   type="text" id="inputSuccess" class="form-control" placeholder="<?php echo substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['REQUEST_URI'], "/")+1); ?>" disabled>
+            <input value="<?php echo substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['REQUEST_URI'], "/")+1); ?>" name="proyecto" type="hidden">
+            <span class="help-block">Root</span>
+        </div>
+        <input name="config" type="hidden" value="true"   >
+    </div>
+          
+    <hr>
+    
+    <div class="checkbox">
+        <label>
+            <input name="acepto" type="checkbox" required> Acepto Instalar Calima Framework y su <a target="_blank"  href="http://AgilPhp.com/politica">politica</a> de uso
+        </label>
+    </div>
+    <hr>
+     <button type="submit" class="btn btn-danger">Generar Tablas</button>
+    
+</form>
+      
+      
+      
+      </div>
+                    </div>
+                </div>
+            </div>
+      
+      
+      
+
+      <!-- Site footer -->
+     
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>

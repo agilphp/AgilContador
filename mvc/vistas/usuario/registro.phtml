@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ap | Login</title>
+
+    <link href="<?PHP ECHO Ap_BASE_URL ?>/public_/<?PHP ECHO Ap_TEMA_DASHBOARD ?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?PHP ECHO Ap_BASE_URL ?>/public_/<?PHP ECHO Ap_TEMA_DASHBOARD ?>/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="<?PHP ECHO Ap_BASE_URL ?>/public_/<?PHP ECHO Ap_TEMA_DASHBOARD ?>/css/animate.css" rel="stylesheet">
+    <link href="<?PHP ECHO Ap_BASE_URL ?>/public_/<?PHP ECHO Ap_TEMA_DASHBOARD ?>/css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">Ap</h1>
+
+            </div>
+            <h3>Registro de usuarios</h3>
+            <p>Registrate esperamos por ti.</p>
+            <form method="post" action="<?PHP ECHO Ap_BASE_URL ?>usuario/crearRegistro" class="m-t" role="form" >
+                <div class="form-group">
+                    <input name="nombre" type="text" class="form-control" placeholder="Nombre" required="">
+                </div>
+                <div class="form-group">
+                    <input name="email" type="email" class="form-control" placeholder="Email" required="">
+                </div>
+                <div class="form-group">
+                    <input name="clave" type="password" class="form-control" placeholder="Password" required="">
+                </div>
+                <div class="form-group">
+                        <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Acepto los terminos y condiciones </label></div>
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Registro</button>
+
+                <p class="text-muted text-center"><small>Ya tienes una cuenta?</small></p>
+                <a class="btn btn-sm btn-white btn-block" href="<?PHP ECHO Ap_BASE_URL ?>usuario/login">Login</a>
+            </form>
+            
+        </div>
+    </div>
+   
+
+    <!-- Mainly scripts -->
+    <script src="<?PHP ECHO Ap_BASE_URL ?>/public_/<?PHP ECHO Ap_TEMA_DASHBOARD ?>/js/jquery-2.1.1.js"></script>
+    <script src="<?PHP ECHO Ap_BASE_URL ?>/public_/<?PHP ECHO Ap_TEMA_DASHBOARD ?>/js/bootstrap.min.js"></script>
+    <script src="<?PHP ECHO Ap_BASE_URL ?>/public_/<?PHP ECHO Ap_TEMA_DASHBOARD ?>/js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+</body>
+
+</html>

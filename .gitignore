@@ -1,0 +1,7 @@
+
+
+# Ignore todo .log
+*.log
+
+# Ignore todo .txt
+*.txt

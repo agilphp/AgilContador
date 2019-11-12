@@ -41,10 +41,10 @@ define('Ap_PATH_DATA', dirname(__FILE__) . '/AP-data');
 #Configuracion Basica
 
 /* La siguiente CONSTANTE permite el apuntapiento para archivos js, css, imagenes desde la vista hacia el directorio _public */
-define('Ap_BASE_URL', 'http://localhost/agilphp/');
+define('Ap_BASE_URL', 'http://localhost/agilcontador/');
 
 /* definimos un controlador inicial en nuestro proyecto */
-define('CONTROLADOR_INICIAL', 'index');
+define('CONTROLADOR_INICIAL', 'usuario');
 
 /* Sedefine una CONSTANTE al directorio adicionales en la vista */
 define('ADICIONALES_VISTA', 'adicionales');
@@ -59,10 +59,10 @@ define('Ap_NOMBRE_TEMA_WEB', 'Parallax');
 define('Ap_TEMA_DASHBOARD', 'temas/dashboard/inspinia');
 
 /* Definimos una CONSTANTE como nombre de aplicacion */
-define('Ap_AP_NOMBRE', 'Agilphp');
+define('Ap_AP_NOMBRE', 'Agilcontador');
 
 /* Definimos un Slogan para la aplicacion web */
-define('Ap_AP_SLOGAN', 'Tu Framework php MVC hispano ');
+define('Ap_AP_SLOGAN', 'AgilContador como la liebre');
 
 /* Empresa de la aplicacion */
 define('Ap_AP_EMPRESA', '@efrasoft');
@@ -91,7 +91,7 @@ define('publicador','2233');
 
 /* Configuracion de tu base de datos */
 define('AP_BD_HOST', 'localhost');
-define('AP_BD_NOMBRE', 'agil');
+define('AP_BD_NOMBRE', 'agilcontador');
 define('AP_BD_USUARIO', 'root');
 define('AP_BD_CLAVE', '');
 define('AP_BD_CHAR', 'utf8');
