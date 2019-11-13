@@ -32,42 +32,48 @@ if (version_compare(PHP_VERSION, '5.3.20', '<'))
 
 //Cargamos los Espacios de nombres para el nucleo y los ayudantes
 //Utilizamos un alias
+
+use mvc\controladores\ventas\Factura;
 use sistema\nucleo as Sisnuc;
 use sistema\ayudantes as Sisayu;
+//use vendor\bin\
 
+require_once 'factura/FacturaGs.php';
 
-class dashboardControlador extends Sisnuc\APControlador
+class FacturaControlador extends Sisnuc\APControlador 
 {
-    private $_exc;
-    private $_ayuda;
-    private $_seg;
-    private $_sesion;
-    
-    public function __construct() {
-        parent::__construct();
-       
-        $this->_ayuda= new Sisayu\APPHPAyuda;
-        //$this->cargaAyudante('APPHPAyuda');
-		//$this->cargaAyudante('APPHPSeguridad');
-        $this->_seg= new Sisayu\APPHPSeguridad;
+	private $_factura;
+	private $_datos;
+	public function __construct() {
+        parent::__construct();       
         
-       $this->_sesion=new sistema\nucleo\APSesion(); 
-         
-    }
-    
-    public function index()
-    { 
-            
-        $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
-            if($_SESSION['nivel']==1){            
-                $this->_vista->titulo = 'AgilContador';      
-                echo $_SESSION['menu'];    
-                exit();  
-                $this->_vista->imprimirVista('index', 'dashboard');
-            }else{
-                $this->_ayuda->redireccionUrl('usuario');
-            }
-            
-       
-    } 
+        $this->_ayuda= new Sisayu\APPHPAyuda;        
+        $this->_seg= new Sisayu\APPHPSeguridad;
+        //https://packagist.org/packages/elmijo/php-error-log
+        $this->_logger = new PHPTools\PHPErrorLog\PHPErrorLog();               
+        $this->_sesion=new Sisnuc\APSesion();         
+	}
+	
+	public function listar()
+    {     
+		$this->_datos='{"id": 1,"nombre": "Efrain","descripcion": "desc","precio": "2000"}';	
+		$this->llamarFactura();
+	}
+	
+	public function llamarFactura()
+	{
+		$this->_factura=new Factura($this->_datos); 
+		$prueba = new Tblcliente();
+		
+		$prueba->setCodigo('1');
+		$prueba->setNombre('Erika garcia');
+		$prueba->setDireccion('cra 41i sur');
+		$prueba->setTelefono('3128409929');
+		
+		
+		$prueba->save();
+
+		echo $this->_factura->listarFactura();     
+	}
+
 }

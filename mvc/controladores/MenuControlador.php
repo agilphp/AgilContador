@@ -36,38 +36,43 @@ use sistema\nucleo as Sisnuc;
 use sistema\ayudantes as Sisayu;
 
 
-class dashboardControlador extends Sisnuc\APControlador
+class MenuControlador extends Sisnuc\APControlador
 {
     private $_exc;
     private $_ayuda;
     private $_seg;
-    private $_sesion;
+    private $_sesion;    
     
     public function __construct() {
-        parent::__construct();
-       
-        $this->_ayuda= new Sisayu\APPHPAyuda;
-        //$this->cargaAyudante('APPHPAyuda');
-		//$this->cargaAyudante('APPHPSeguridad');
-        $this->_seg= new Sisayu\APPHPSeguridad;
-        
-       $this->_sesion=new sistema\nucleo\APSesion(); 
-         
+        parent::__construct();       
+        $this->_ayuda= new Sisayu\APPHPAyuda;        
+        $this->_seg= new Sisayu\APPHPSeguridad;        
+       $this->_sesion=new sistema\nucleo\APSesion();       
+             
     }
     
     public function index()
-    { 
-            
+    {             
         $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
-            if($_SESSION['nivel']==1){            
-                $this->_vista->titulo = 'AgilContador';      
-                echo $_SESSION['menu'];    
-                exit();  
-                $this->_vista->imprimirVista('index', 'dashboard');
+            $roll=$_SESSION['roll'];           
+            if($_SESSION['nivel']==$roll){            
+                $this->_vista->titulo = 'Menus'; 
+                $this->_vista->imprimirVista('index', 'menu');
             }else{
                 $this->_ayuda->redireccionUrl('usuario');
-            }
-            
-       
+            }  
+    } 
+    /**
+     * CREACION DE MENUS
+     */
+    public function crearMenu()
+    {             
+        $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
+            if($_SESSION['nivel']==$this->_roll){            
+                $this->_vista->titulo = 'Menus'; 
+                $this->_vista->imprimirVista('index', 'menu');
+            }else{
+                $this->_ayuda->redireccionUrl('usuario');
+            }  
     } 
 }

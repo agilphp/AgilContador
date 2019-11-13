@@ -18,8 +18,8 @@ class usuarioControlador extends \sistema\nucleo\APControlador
     public function index(){     
         $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
         session_destroy();
-        $this->_vista->titulo = 'AgilPhp Login';
-        $this->_vista->error = 'AgilPhp Login';
+        $this->_vista->titulo = 'AgilControlador Login';
+        $this->_vista->error = 'AgilControlador Login';
         $this->_vista->imprimirVista('index', 'usuario');
     }  
     
@@ -53,23 +53,17 @@ class usuarioControlador extends \sistema\nucleo\APControlador
     public function valida(){
         if(isset($_POST['usuario'])){
         $usuario=$_POST['usuario'];
-        $clave=$this->_seg->cifrado($this->_seg->filtrarTexto($_POST['clave']));
-        
+        $clave=$this->_seg->cifrado($this->_seg->filtrarTexto($_POST['clave']));        
         $datosUser = $this->cargaModelo('usuario');
-        $valida=$datosUser->seleccionUsuario($usuario, $clave);  
-        
-              
-        if(isset($valida)){
-            
-            
-
+        $valida=$datosUser->seleccionUsuario($usuario, $clave); 
+        if(isset($valida)){    
             $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
             $_SESSION['usuario']=$usuario;             
-             $_SESSION['id_usuario']=$valida['id_usuario'];
-            
-             $_SESSION['nivel']=$valida['nivel'];       
-               
-            $this->_ayuda->redireccionUrl('dashboard/index');         
+            $_SESSION['id_usuario']=$valida['id_usuario'];            
+             $_SESSION['nivel']=$valida['nivel']; 
+             $_SESSION['roll']=$valida['rolId'];
+             $_SESSION['menu']=$valida['menuId'];
+             $this->_ayuda->redireccionUrl('dashboard/index');         
         }
        $this->_ayuda->redireccionUrl('usuario');
         

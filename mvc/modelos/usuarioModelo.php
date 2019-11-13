@@ -25,7 +25,7 @@ class usuarioModelo extends sistema\nucleo\APModelo
         //echo DB_HOST;
         
         //$datosQuery="select usuario, email, nivel from usuarios where usuario = :usuario";
-        $gsent=$this->_bd->consulta('select id_usuario, nombre, email, nivel from usuarios where email = :email and clave = :clave');
+        $gsent=$this->_bd->consulta('select id_usuario, nombre, email, nivel, rolId, menuId from usuarios where email = :email and clave = :clave');
         $gsent=$this->_bd->enlace(':email', $email);
         $gsent=$this->_bd->enlace(':clave', $clave);
         //$gsent=$this->_bd->ejecucion();
