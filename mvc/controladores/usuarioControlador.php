@@ -15,9 +15,8 @@ class usuarioControlador extends \sistema\nucleo\APControlador
         $this->_sesion=new sistema\nucleo\APSesion();       
     }    
     
-    public function index(){     
-        $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
-        session_destroy();
+    public function index(){   
+        
         $this->_vista->titulo = 'AgilControlador Login';
         $this->_vista->error = 'AgilControlador Login';
         $this->_vista->imprimirVista('index', 'usuario');
@@ -60,9 +59,9 @@ class usuarioControlador extends \sistema\nucleo\APControlador
             $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
             $_SESSION['usuario']=$usuario;             
             $_SESSION['id_usuario']=$valida['id_usuario'];            
-             $_SESSION['nivel']=$valida['nivel']; 
+           echo $_SESSION['nivel']=$valida['nivel']; 
              $_SESSION['roll']=$valida['rolId'];
-             $_SESSION['menu']=$valida['menuId'];
+             $_SESSION['menu']=$valida['menuId'];         
              $this->_ayuda->redireccionUrl('dashboard/index');         
         }
        $this->_ayuda->redireccionUrl('usuario');

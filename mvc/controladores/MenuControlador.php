@@ -70,9 +70,36 @@ class MenuControlador extends Sisnuc\APControlador
         $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
             if($_SESSION['nivel']==$this->_roll){            
                 $this->_vista->titulo = 'Menus'; 
-                $this->_vista->imprimirVista('index', 'menu');
+                $this->_vista->imprimirVista('crear', 'menu');
             }else{
                 $this->_ayuda->redireccionUrl('usuario');
             }  
-    } 
+    }
+    /**
+     * LISTAR MENUS PADRES
+     */
+    public function listarMenusP()
+    {             
+        $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
+            if($_SESSION['nivel']==$this->_roll){            
+                $this->_vista->titulo = 'Menus'; 
+                $this->_vista->imprimirVista('listarMenusP', 'menu');
+            }else{
+                $this->_ayuda->redireccionUrl('usuario');
+            }  
+    }
+
+    /**
+     * LISTAR MENUS HIJOS
+     */
+    public function listarMenusH()
+    {             
+        $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
+            if($_SESSION['nivel']==$this->_roll){            
+                $this->_vista->titulo = 'Menus'; 
+                $this->_vista->imprimirVista('listarMenusH', 'menu');
+            }else{
+                $this->_ayuda->redireccionUrl('usuario');
+            }  
+    }
 }

@@ -32,7 +32,9 @@ class APVista
     public function __construct(APSolicitud $peticion) {
         $this->_controlador = $peticion->getControlador();
     }
-    
+    /**
+     * @param string $vista
+     */      
     public function imprimirVista($vista, $item = false)
     {            
             

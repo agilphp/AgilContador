@@ -56,13 +56,16 @@ class dashboardControlador extends Sisnuc\APControlador
     }
     
     public function index()
-    { 
-            
+    {        
+         
         $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
-            if($_SESSION['nivel']==1){            
+        
+         
+         $roll=$_SESSION['roll'];           
+         if($_SESSION['nivel']==$roll){            
                 $this->_vista->titulo = 'AgilContador';      
                 echo $_SESSION['menu'];    
-                exit();  
+                  
                 $this->_vista->imprimirVista('index', 'dashboard');
             }else{
                 $this->_ayuda->redireccionUrl('usuario');

@@ -49,7 +49,7 @@ class APSesion
       register_shutdown_function('session_write_close');      
    }   
   /* public function __destruct() {
-      session_regenerate_id(true);
+      session_regenerate_id(false);
    }*/
       function iniciarSesion($session_name, $secure) {
       // Make sure the session cookie is not accessable via javascript.
@@ -82,7 +82,7 @@ class APSesion
      
       // This line regenerates the session and delete the old one. 
       // It also generates a new encryption key in the database. 
-      // session_regenerate_id(true);
+       //session_regenerate_id(false);
    }
 
 // ingrese la informacion de conexion a su base de datos, debe ser igual a la que esta en CFConfiguracion.php
