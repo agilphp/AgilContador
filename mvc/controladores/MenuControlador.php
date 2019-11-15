@@ -105,10 +105,11 @@ class MenuControlador extends Sisnuc\APControlador
                 $this->_vista->titulo = 'Menus'; 
                 $lMenu= $this->cargaModelo('Menu');
                $jMneus= $lMenu->listarMenusM();
-               foreach($jMneus as $author) {
+               $this->_vista->vMenu=$jMneus;
+              /* foreach($jMneus as $author) {
                 echo $author->getMenu();
-              }
-                exit();
+              }*/
+                
                 $this->_vista->imprimirVista('listarMenusP', 'menu');
             }else{
                 $this->_ayuda->redireccionUrl('usuario');
