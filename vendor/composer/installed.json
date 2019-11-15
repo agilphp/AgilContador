@@ -509,17 +509,17 @@
     },
     {
         "name": "propel/propel",
-        "version": "2.0.0-alpha8",
-        "version_normalized": "2.0.0.0-alpha8",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/propelorm/Propel2.git",
-            "reference": "4c309e3e5adaba077f54c0fab93c34995d7c9b3d"
+            "reference": "297473a6ddf0dcbbd6f88cb852c2c549814f908e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/propelorm/Propel2/zipball/4c309e3e5adaba077f54c0fab93c34995d7c9b3d",
-            "reference": "4c309e3e5adaba077f54c0fab93c34995d7c9b3d",
+            "url": "https://api.github.com/repos/propelorm/Propel2/zipball/297473a6ddf0dcbbd6f88cb852c2c549814f908e",
+            "reference": "297473a6ddf0dcbbd6f88cb852c2c549814f908e",
             "shasum": ""
         },
         "require": {
@@ -539,7 +539,7 @@
         "suggest": {
             "monolog/monolog": "The recommended logging library to use with Propel."
         },
-        "time": "2018-02-19T12:58:55+00:00",
+        "time": "2019-11-08T13:12:55+00:00",
         "bin": [
             "bin/propel"
         ],
@@ -549,7 +549,7 @@
                 "dev-master": "2.0-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-0": {
                 "Propel": "src/"

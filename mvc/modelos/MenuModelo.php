@@ -1,6 +1,7 @@
 <?php
 use vendor\bin;
 use propel\propel\Tblmenu;
+use propel\propel\Base\TblmenuQuery;
 
 class MenuModelo extends sistema\nucleo\APModelo
 {
@@ -15,9 +16,21 @@ class MenuModelo extends sistema\nucleo\APModelo
 
     public function listarMenusM()
     {
-        $menusGet = new Tblmenu();        
-        $salidaMenus = $menusGet->getMenu();
-        return $salidaMenus;
+       /* $menusGet = new Tblmenu();        
+        $salidaMenus = $menusGet->toArray();
+        return $salidaMenus; */
+        $lMenu = TblmenuQuery::create()  
+        ->limit(10)      
+        ->find();
+        return $lMenu;
+       
+    }
+
+    public function listarMenusMPk($id)
+    {       
+        $lMenu = TblmenuQuery::create()
+        ->findPk($id);
+        return $lMenu;       
     }
 
     function ValidarUsuario($email,$password){          //  Consulta Mysql para buscar en la tabla Usuario aquellos usuarios que coincidan con el mail y password ingresados en pantalla de login

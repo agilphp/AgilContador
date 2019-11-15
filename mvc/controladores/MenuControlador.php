@@ -36,19 +36,20 @@ use sistema\nucleo as Sisnuc;
 use sistema\ayudantes as Sisayu;
 
 
+
 class MenuControlador extends Sisnuc\APControlador
 {
     private $_exc;
     private $_ayuda;
     private $_seg;
-    private $_sesion;    
+    private $_sesion;   
+    private $_libre; 
     
     public function __construct() {
         parent::__construct();       
-        $this->_ayuda= new Sisayu\APPHPAyuda;        
+        $this->_ayuda= new Sisayu\APPHPAyuda;            
         $this->_seg= new Sisayu\APPHPSeguridad;        
-       $this->_sesion=new sistema\nucleo\APSesion();       
-             
+       $this->_sesion=new sistema\nucleo\APSesion();
     }
     
     public function index()
@@ -87,7 +88,7 @@ class MenuControlador extends Sisnuc\APControlador
         try{
             $rMenu->registrarMenuM($nombre, $url, $estado);
         //REALIZAMOS EL REDIRECIONAMIENTO
-            $this->_ayuda->redireccionUrl('usuario');
+            $this->_ayuda->redireccionUrl('menu/listarMenusP');
         }catch(Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
 
@@ -104,9 +105,10 @@ class MenuControlador extends Sisnuc\APControlador
                 $this->_vista->titulo = 'Menus'; 
                 $lMenu= $this->cargaModelo('Menu');
                $jMneus= $lMenu->listarMenusM();
-               echo "<pre>";
-               print_r($jMneus);
-               echo "<pre>"; exit();
+               foreach($jMneus as $author) {
+                echo $author->getMenu();
+              }
+                exit();
                 $this->_vista->imprimirVista('listarMenusP', 'menu');
             }else{
                 $this->_ayuda->redireccionUrl('usuario');

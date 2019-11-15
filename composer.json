@@ -38,35 +38,30 @@
 	],
 	"require": {
 		"php": ">=5.4.0",
-                "propel/propel": "2.0.0-alpha8",
+				"propel/propel": "~2.0@dev",				
                 "swiftmailer/swiftmailer": "5.*",
                 "setasign/fpdf": "1.*",
                 "phpoffice/phpspreadsheet": "1.*",               
                 "league/csv": "7.*",
                 "siriusphp/upload": "2.*",                                
-		"monolog/monolog":  "*",
-		"elmijo/php-error-log": "2.0",
-                "smottt/wideimage": "*"
-                
+				"monolog/monolog":  "*",
+				"elmijo/php-error-log": "2.0",
+                "smottt/wideimage": "*"                
 	},
          
         
 	"autoload": {
 		"files": ["vendor/bin/generated-conf/config.php"],
 		"classmap" : [
-			"sistema/ayudantes/",
+			"sistema/ayudantes/",			
 			"vendor/bin/",
         	"vendor/bin/models/propel/propel/Base/",
         	"vendor/bin/models/propel/propel/Map/"
 			
 		],
-                 "psr-4": {
-                    
+                 "psr-4": {                    
                     "sistema\\nucleo\\": "sistema/nucleo",
-                    "sistema\\ayudantes\\": "sistema/ayudantes"
-                    
-                    
-
+					"sistema\\ayudantes\\": "sistema/ayudantes"
                 }
 	}
         
