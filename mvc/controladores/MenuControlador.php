@@ -76,6 +76,25 @@ class MenuControlador extends Sisnuc\APControlador
             }  
     }
     /**
+     * Envia al modelo los datos para ser registrado en la base de datos un nuevo menú
+     */
+    public function registrarMenu()
+    {        
+        $nombre = $this->_seg->filtrarTexto($_POST['nombre']);
+        $url =  $this->_seg->filtrarTexto($_POST['url']);
+        $estado = $this->_seg->filtrarTexto($_POST['estado']);
+        $rMenu=$this->cargaModelo('Menu');
+        try{
+            $rMenu->registrarMenuM($nombre, $url, $estado);
+        //REALIZAMOS EL REDIRECIONAMIENTO
+            $this->_ayuda->redireccionUrl('usuario');
+        }catch(Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+
+        }   
+    }
+
+    /**
      * LISTAR MENUS PADRES
      */
     public function listarMenusP()
@@ -83,6 +102,11 @@ class MenuControlador extends Sisnuc\APControlador
         $this->_sesion->iniciarSesion('_s', Ap_SESION_PARAMETRO_SEGURO);
             if($_SESSION['nivel']==$this->_roll){            
                 $this->_vista->titulo = 'Menus'; 
+                $lMenu= $this->cargaModelo('Menu');
+               $jMneus= $lMenu->listarMenusM();
+               echo "<pre>";
+               print_r($jMneus);
+               echo "<pre>"; exit();
                 $this->_vista->imprimirVista('listarMenusP', 'menu');
             }else{
                 $this->_ayuda->redireccionUrl('usuario');

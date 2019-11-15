@@ -9,28 +9,33 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use propel\propel\MenuQuery as ChildMenuQuery;
-use propel\propel\Map\MenuTableMap;
+use propel\propel\Tblfactura as ChildTblfactura;
+use propel\propel\TblfacturaQuery as ChildTblfacturaQuery;
+use propel\propel\Tblmetodopago as ChildTblmetodopago;
+use propel\propel\TblmetodopagoQuery as ChildTblmetodopagoQuery;
+use propel\propel\Map\TblfacturaTableMap;
+use propel\propel\Map\TblmetodopagoTableMap;
 
 /**
- * Base class that represents a row from the 'menu' table.
+ * Base class that represents a row from the 'tblmetodopago' table.
  *
  *
  *
  * @package    propel.generator.propel.propel.Base
  */
-abstract class Menu implements ActiveRecordInterface
+abstract class Tblmetodopago implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\propel\\propel\\Map\\MenuTableMap';
+    const TABLE_MAP = '\\propel\\propel\\Map\\TblmetodopagoTableMap';
 
 
     /**
@@ -60,25 +65,31 @@ abstract class Menu implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the id field.
+     * The value for the metodopagoid field.
      *
      * @var        int
      */
-    protected $id;
+    protected $metodopagoid;
 
     /**
-     * The value for the menu field.
+     * The value for the nombre field.
      *
      * @var        string
      */
-    protected $menu;
+    protected $nombre;
 
     /**
-     * The value for the url field.
+     * The value for the detalle field.
      *
      * @var        string
      */
-    protected $url;
+    protected $detalle;
+
+    /**
+     * @var        ObjectCollection|ChildTblfactura[] Collection to store aggregation of ChildTblfactura objects.
+     */
+    protected $collTblfacturas;
+    protected $collTblfacturasPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -89,7 +100,13 @@ abstract class Menu implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of propel\propel\Base\Menu object.
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildTblfactura[]
+     */
+    protected $tblfacturasScheduledForDeletion = null;
+
+    /**
+     * Initializes internal state of propel\propel\Base\Tblmetodopago object.
      */
     public function __construct()
     {
@@ -184,9 +201,9 @@ abstract class Menu implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Menu</code> instance.  If
-     * <code>obj</code> is an instance of <code>Menu</code>, delegates to
-     * <code>equals(Menu)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Tblmetodopago</code> instance.  If
+     * <code>obj</code> is an instance of <code>Tblmetodopago</code>, delegates to
+     * <code>equals(Tblmetodopago)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -252,7 +269,7 @@ abstract class Menu implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Menu The current object, for fluid interface
+     * @return $this|Tblmetodopago The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -314,94 +331,94 @@ abstract class Menu implements ActiveRecordInterface
     }
 
     /**
-     * Get the [id] column value.
+     * Get the [metodopagoid] column value.
      *
      * @return int
      */
-    public function getId()
+    public function getMetodopagoid()
     {
-        return $this->id;
+        return $this->metodopagoid;
     }
 
     /**
-     * Get the [menu] column value.
+     * Get the [nombre] column value.
      *
      * @return string
      */
-    public function getMenu()
+    public function getNombre()
     {
-        return $this->menu;
+        return $this->nombre;
     }
 
     /**
-     * Get the [url] column value.
+     * Get the [detalle] column value.
      *
      * @return string
      */
-    public function getUrl()
+    public function getDetalle()
     {
-        return $this->url;
+        return $this->detalle;
     }
 
     /**
-     * Set the value of [id] column.
+     * Set the value of [metodopagoid] column.
      *
      * @param int $v new value
-     * @return $this|\propel\propel\Menu The current object (for fluent API support)
+     * @return $this|\propel\propel\Tblmetodopago The current object (for fluent API support)
      */
-    public function setId($v)
+    public function setMetodopagoid($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->id !== $v) {
-            $this->id = $v;
-            $this->modifiedColumns[MenuTableMap::COL_ID] = true;
+        if ($this->metodopagoid !== $v) {
+            $this->metodopagoid = $v;
+            $this->modifiedColumns[TblmetodopagoTableMap::COL_METODOPAGOID] = true;
         }
 
         return $this;
-    } // setId()
+    } // setMetodopagoid()
 
     /**
-     * Set the value of [menu] column.
+     * Set the value of [nombre] column.
      *
      * @param string $v new value
-     * @return $this|\propel\propel\Menu The current object (for fluent API support)
+     * @return $this|\propel\propel\Tblmetodopago The current object (for fluent API support)
      */
-    public function setMenu($v)
+    public function setNombre($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->menu !== $v) {
-            $this->menu = $v;
-            $this->modifiedColumns[MenuTableMap::COL_MENU] = true;
+        if ($this->nombre !== $v) {
+            $this->nombre = $v;
+            $this->modifiedColumns[TblmetodopagoTableMap::COL_NOMBRE] = true;
         }
 
         return $this;
-    } // setMenu()
+    } // setNombre()
 
     /**
-     * Set the value of [url] column.
+     * Set the value of [detalle] column.
      *
      * @param string $v new value
-     * @return $this|\propel\propel\Menu The current object (for fluent API support)
+     * @return $this|\propel\propel\Tblmetodopago The current object (for fluent API support)
      */
-    public function setUrl($v)
+    public function setDetalle($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->url !== $v) {
-            $this->url = $v;
-            $this->modifiedColumns[MenuTableMap::COL_URL] = true;
+        if ($this->detalle !== $v) {
+            $this->detalle = $v;
+            $this->modifiedColumns[TblmetodopagoTableMap::COL_DETALLE] = true;
         }
 
         return $this;
-    } // setUrl()
+    } // setDetalle()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -439,14 +456,14 @@ abstract class Menu implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : MenuTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : TblmetodopagoTableMap::translateFieldName('Metodopagoid', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->metodopagoid = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MenuTableMap::translateFieldName('Menu', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->menu = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : TblmetodopagoTableMap::translateFieldName('Nombre', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->nombre = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MenuTableMap::translateFieldName('Url', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->url = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : TblmetodopagoTableMap::translateFieldName('Detalle', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->detalle = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -455,10 +472,10 @@ abstract class Menu implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = MenuTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 3; // 3 = TblmetodopagoTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Menu'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Tblmetodopago'), 0, $e);
         }
     }
 
@@ -500,13 +517,13 @@ abstract class Menu implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(MenuTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(TblmetodopagoTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildMenuQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildTblmetodopagoQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -515,6 +532,8 @@ abstract class Menu implements ActiveRecordInterface
         $this->hydrate($row, 0, true, $dataFetcher->getIndexType()); // rehydrate
 
         if ($deep) {  // also de-associate any related objects?
+
+            $this->collTblfacturas = null;
 
         } // if (deep)
     }
@@ -525,8 +544,8 @@ abstract class Menu implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Menu::setDeleted()
-     * @see Menu::isDeleted()
+     * @see Tblmetodopago::setDeleted()
+     * @see Tblmetodopago::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -535,11 +554,11 @@ abstract class Menu implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MenuTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblmetodopagoTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildMenuQuery::create()
+            $deleteQuery = ChildTblmetodopagoQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -574,7 +593,7 @@ abstract class Menu implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MenuTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblmetodopagoTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -593,7 +612,7 @@ abstract class Menu implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                MenuTableMap::addInstanceToPool($this);
+                TblmetodopagoTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -630,6 +649,24 @@ abstract class Menu implements ActiveRecordInterface
                 $this->resetModified();
             }
 
+            if ($this->tblfacturasScheduledForDeletion !== null) {
+                if (!$this->tblfacturasScheduledForDeletion->isEmpty()) {
+                    foreach ($this->tblfacturasScheduledForDeletion as $tblfactura) {
+                        // need to save related object because we set the relation to null
+                        $tblfactura->save($con);
+                    }
+                    $this->tblfacturasScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collTblfacturas !== null) {
+                foreach ($this->collTblfacturas as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             $this->alreadyInSave = false;
 
         }
@@ -650,20 +687,24 @@ abstract class Menu implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
+        $this->modifiedColumns[TblmetodopagoTableMap::COL_METODOPAGOID] = true;
+        if (null !== $this->metodopagoid) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . TblmetodopagoTableMap::COL_METODOPAGOID . ')');
+        }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(MenuTableMap::COL_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'id';
+        if ($this->isColumnModified(TblmetodopagoTableMap::COL_METODOPAGOID)) {
+            $modifiedColumns[':p' . $index++]  = 'metodopagoId';
         }
-        if ($this->isColumnModified(MenuTableMap::COL_MENU)) {
-            $modifiedColumns[':p' . $index++]  = 'menu';
+        if ($this->isColumnModified(TblmetodopagoTableMap::COL_NOMBRE)) {
+            $modifiedColumns[':p' . $index++]  = 'nombre';
         }
-        if ($this->isColumnModified(MenuTableMap::COL_URL)) {
-            $modifiedColumns[':p' . $index++]  = 'url';
+        if ($this->isColumnModified(TblmetodopagoTableMap::COL_DETALLE)) {
+            $modifiedColumns[':p' . $index++]  = 'detalle';
         }
 
         $sql = sprintf(
-            'INSERT INTO menu (%s) VALUES (%s)',
+            'INSERT INTO tblmetodopago (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -672,14 +713,14 @@ abstract class Menu implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':
-                        $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
+                    case 'metodopagoId':
+                        $stmt->bindValue($identifier, $this->metodopagoid, PDO::PARAM_INT);
                         break;
-                    case 'menu':
-                        $stmt->bindValue($identifier, $this->menu, PDO::PARAM_STR);
+                    case 'nombre':
+                        $stmt->bindValue($identifier, $this->nombre, PDO::PARAM_STR);
                         break;
-                    case 'url':
-                        $stmt->bindValue($identifier, $this->url, PDO::PARAM_STR);
+                    case 'detalle':
+                        $stmt->bindValue($identifier, $this->detalle, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -688,6 +729,13 @@ abstract class Menu implements ActiveRecordInterface
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), 0, $e);
         }
+
+        try {
+            $pk = $con->lastInsertId();
+        } catch (Exception $e) {
+            throw new PropelException('Unable to get autoincrement id.', 0, $e);
+        }
+        $this->setMetodopagoid($pk);
 
         $this->setNew(false);
     }
@@ -720,7 +768,7 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = MenuTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = TblmetodopagoTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -737,13 +785,13 @@ abstract class Menu implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getId();
+                return $this->getMetodopagoid();
                 break;
             case 1:
-                return $this->getMenu();
+                return $this->getNombre();
                 break;
             case 2:
-                return $this->getUrl();
+                return $this->getDetalle();
                 break;
             default:
                 return null;
@@ -762,27 +810,45 @@ abstract class Menu implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Menu'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Tblmetodopago'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Menu'][$this->hashCode()] = true;
-        $keys = MenuTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Tblmetodopago'][$this->hashCode()] = true;
+        $keys = TblmetodopagoTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getId(),
-            $keys[1] => $this->getMenu(),
-            $keys[2] => $this->getUrl(),
+            $keys[0] => $this->getMetodopagoid(),
+            $keys[1] => $this->getNombre(),
+            $keys[2] => $this->getDetalle(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
+        if ($includeForeignObjects) {
+            if (null !== $this->collTblfacturas) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'tblfacturas';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'tblfacturas';
+                        break;
+                    default:
+                        $key = 'Tblfacturas';
+                }
+
+                $result[$key] = $this->collTblfacturas->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+        }
 
         return $result;
     }
@@ -796,11 +862,11 @@ abstract class Menu implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\propel\propel\Menu
+     * @return $this|\propel\propel\Tblmetodopago
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = MenuTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = TblmetodopagoTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -811,19 +877,19 @@ abstract class Menu implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\propel\propel\Menu
+     * @return $this|\propel\propel\Tblmetodopago
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setId($value);
+                $this->setMetodopagoid($value);
                 break;
             case 1:
-                $this->setMenu($value);
+                $this->setNombre($value);
                 break;
             case 2:
-                $this->setUrl($value);
+                $this->setDetalle($value);
                 break;
         } // switch()
 
@@ -849,16 +915,16 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = MenuTableMap::getFieldNames($keyType);
+        $keys = TblmetodopagoTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setId($arr[$keys[0]]);
+            $this->setMetodopagoid($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setMenu($arr[$keys[1]]);
+            $this->setNombre($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setUrl($arr[$keys[2]]);
+            $this->setDetalle($arr[$keys[2]]);
         }
     }
 
@@ -879,7 +945,7 @@ abstract class Menu implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\propel\propel\Menu The current object, for fluid interface
+     * @return $this|\propel\propel\Tblmetodopago The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -899,16 +965,16 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(MenuTableMap::DATABASE_NAME);
+        $criteria = new Criteria(TblmetodopagoTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(MenuTableMap::COL_ID)) {
-            $criteria->add(MenuTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(TblmetodopagoTableMap::COL_METODOPAGOID)) {
+            $criteria->add(TblmetodopagoTableMap::COL_METODOPAGOID, $this->metodopagoid);
         }
-        if ($this->isColumnModified(MenuTableMap::COL_MENU)) {
-            $criteria->add(MenuTableMap::COL_MENU, $this->menu);
+        if ($this->isColumnModified(TblmetodopagoTableMap::COL_NOMBRE)) {
+            $criteria->add(TblmetodopagoTableMap::COL_NOMBRE, $this->nombre);
         }
-        if ($this->isColumnModified(MenuTableMap::COL_URL)) {
-            $criteria->add(MenuTableMap::COL_URL, $this->url);
+        if ($this->isColumnModified(TblmetodopagoTableMap::COL_DETALLE)) {
+            $criteria->add(TblmetodopagoTableMap::COL_DETALLE, $this->detalle);
         }
 
         return $criteria;
@@ -926,7 +992,8 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        throw new LogicException('The Menu object has no primary key');
+        $criteria = ChildTblmetodopagoQuery::create();
+        $criteria->add(TblmetodopagoTableMap::COL_METODOPAGOID, $this->metodopagoid);
 
         return $criteria;
     }
@@ -939,7 +1006,7 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = false;
+        $validPk = null !== $this->getMetodopagoid();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -954,27 +1021,23 @@ abstract class Menu implements ActiveRecordInterface
     }
 
     /**
-     * Returns NULL since this table doesn't have a primary key.
-     * This method exists only for BC and is deprecated!
-     * @return null
+     * Returns the primary key for this object (row).
+     * @return int
      */
     public function getPrimaryKey()
     {
-        return null;
+        return $this->getMetodopagoid();
     }
 
     /**
-     * Dummy primary key setter.
+     * Generic method to set the primary key (metodopagoid column).
      *
-     * This function only exists to preserve backwards compatibility.  It is no longer
-     * needed or required by the Persistent interface.  It will be removed in next BC-breaking
-     * release of Propel.
-     *
-     * @deprecated
+     * @param       int $key Primary key.
+     * @return void
      */
-    public function setPrimaryKey($pk)
+    public function setPrimaryKey($key)
     {
-        // do nothing, because this object doesn't have any primary keys
+        $this->setMetodopagoid($key);
     }
 
     /**
@@ -983,7 +1046,7 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return ;
+        return null === $this->getMetodopagoid();
     }
 
     /**
@@ -992,18 +1055,32 @@ abstract class Menu implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \propel\propel\Menu (or compatible) type.
+     * @param      object $copyObj An object of \propel\propel\Tblmetodopago (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setId($this->getId());
-        $copyObj->setMenu($this->getMenu());
-        $copyObj->setUrl($this->getUrl());
+        $copyObj->setNombre($this->getNombre());
+        $copyObj->setDetalle($this->getDetalle());
+
+        if ($deepCopy) {
+            // important: temporarily setNew(false) because this affects the behavior of
+            // the getter/setter methods for fkey referrer objects.
+            $copyObj->setNew(false);
+
+            foreach ($this->getTblfacturas() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addTblfactura($relObj->copy($deepCopy));
+                }
+            }
+
+        } // if ($deepCopy)
+
         if ($makeNew) {
             $copyObj->setNew(true);
+            $copyObj->setMetodopagoid(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1016,7 +1093,7 @@ abstract class Menu implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \propel\propel\Menu Clone of current object.
+     * @return \propel\propel\Tblmetodopago Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1029,6 +1106,298 @@ abstract class Menu implements ActiveRecordInterface
         return $copyObj;
     }
 
+
+    /**
+     * Initializes a collection based on the name of a relation.
+     * Avoids crafting an 'init[$relationName]s' method name
+     * that wouldn't work when StandardEnglishPluralizer is used.
+     *
+     * @param      string $relationName The name of the relation to initialize
+     * @return void
+     */
+    public function initRelation($relationName)
+    {
+        if ('Tblfactura' == $relationName) {
+            $this->initTblfacturas();
+            return;
+        }
+    }
+
+    /**
+     * Clears out the collTblfacturas collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addTblfacturas()
+     */
+    public function clearTblfacturas()
+    {
+        $this->collTblfacturas = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collTblfacturas collection loaded partially.
+     */
+    public function resetPartialTblfacturas($v = true)
+    {
+        $this->collTblfacturasPartial = $v;
+    }
+
+    /**
+     * Initializes the collTblfacturas collection.
+     *
+     * By default this just sets the collTblfacturas collection to an empty array (like clearcollTblfacturas());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initTblfacturas($overrideExisting = true)
+    {
+        if (null !== $this->collTblfacturas && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = TblfacturaTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collTblfacturas = new $collectionClassName;
+        $this->collTblfacturas->setModel('\propel\propel\Tblfactura');
+    }
+
+    /**
+     * Gets an array of ChildTblfactura objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildTblmetodopago is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildTblfactura[] List of ChildTblfactura objects
+     * @throws PropelException
+     */
+    public function getTblfacturas(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTblfacturasPartial && !$this->isNew();
+        if (null === $this->collTblfacturas || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collTblfacturas) {
+                // return empty collection
+                $this->initTblfacturas();
+            } else {
+                $collTblfacturas = ChildTblfacturaQuery::create(null, $criteria)
+                    ->filterByTblmetodopago($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collTblfacturasPartial && count($collTblfacturas)) {
+                        $this->initTblfacturas(false);
+
+                        foreach ($collTblfacturas as $obj) {
+                            if (false == $this->collTblfacturas->contains($obj)) {
+                                $this->collTblfacturas->append($obj);
+                            }
+                        }
+
+                        $this->collTblfacturasPartial = true;
+                    }
+
+                    return $collTblfacturas;
+                }
+
+                if ($partial && $this->collTblfacturas) {
+                    foreach ($this->collTblfacturas as $obj) {
+                        if ($obj->isNew()) {
+                            $collTblfacturas[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collTblfacturas = $collTblfacturas;
+                $this->collTblfacturasPartial = false;
+            }
+        }
+
+        return $this->collTblfacturas;
+    }
+
+    /**
+     * Sets a collection of ChildTblfactura objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $tblfacturas A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildTblmetodopago The current object (for fluent API support)
+     */
+    public function setTblfacturas(Collection $tblfacturas, ConnectionInterface $con = null)
+    {
+        /** @var ChildTblfactura[] $tblfacturasToDelete */
+        $tblfacturasToDelete = $this->getTblfacturas(new Criteria(), $con)->diff($tblfacturas);
+
+
+        $this->tblfacturasScheduledForDeletion = $tblfacturasToDelete;
+
+        foreach ($tblfacturasToDelete as $tblfacturaRemoved) {
+            $tblfacturaRemoved->setTblmetodopago(null);
+        }
+
+        $this->collTblfacturas = null;
+        foreach ($tblfacturas as $tblfactura) {
+            $this->addTblfactura($tblfactura);
+        }
+
+        $this->collTblfacturas = $tblfacturas;
+        $this->collTblfacturasPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Tblfactura objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Tblfactura objects.
+     * @throws PropelException
+     */
+    public function countTblfacturas(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTblfacturasPartial && !$this->isNew();
+        if (null === $this->collTblfacturas || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collTblfacturas) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getTblfacturas());
+            }
+
+            $query = ChildTblfacturaQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByTblmetodopago($this)
+                ->count($con);
+        }
+
+        return count($this->collTblfacturas);
+    }
+
+    /**
+     * Method called to associate a ChildTblfactura object to this object
+     * through the ChildTblfactura foreign key attribute.
+     *
+     * @param  ChildTblfactura $l ChildTblfactura
+     * @return $this|\propel\propel\Tblmetodopago The current object (for fluent API support)
+     */
+    public function addTblfactura(ChildTblfactura $l)
+    {
+        if ($this->collTblfacturas === null) {
+            $this->initTblfacturas();
+            $this->collTblfacturasPartial = true;
+        }
+
+        if (!$this->collTblfacturas->contains($l)) {
+            $this->doAddTblfactura($l);
+
+            if ($this->tblfacturasScheduledForDeletion and $this->tblfacturasScheduledForDeletion->contains($l)) {
+                $this->tblfacturasScheduledForDeletion->remove($this->tblfacturasScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildTblfactura $tblfactura The ChildTblfactura object to add.
+     */
+    protected function doAddTblfactura(ChildTblfactura $tblfactura)
+    {
+        $this->collTblfacturas[]= $tblfactura;
+        $tblfactura->setTblmetodopago($this);
+    }
+
+    /**
+     * @param  ChildTblfactura $tblfactura The ChildTblfactura object to remove.
+     * @return $this|ChildTblmetodopago The current object (for fluent API support)
+     */
+    public function removeTblfactura(ChildTblfactura $tblfactura)
+    {
+        if ($this->getTblfacturas()->contains($tblfactura)) {
+            $pos = $this->collTblfacturas->search($tblfactura);
+            $this->collTblfacturas->remove($pos);
+            if (null === $this->tblfacturasScheduledForDeletion) {
+                $this->tblfacturasScheduledForDeletion = clone $this->collTblfacturas;
+                $this->tblfacturasScheduledForDeletion->clear();
+            }
+            $this->tblfacturasScheduledForDeletion[]= $tblfactura;
+            $tblfactura->setTblmetodopago(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Tblmetodopago is new, it will return
+     * an empty collection; or if this Tblmetodopago has previously
+     * been saved, it will retrieve related Tblfacturas from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Tblmetodopago.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildTblfactura[] List of ChildTblfactura objects
+     */
+    public function getTblfacturasJoinTblcliente(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildTblfacturaQuery::create(null, $criteria);
+        $query->joinWith('Tblcliente', $joinBehavior);
+
+        return $this->getTblfacturas($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Tblmetodopago is new, it will return
+     * an empty collection; or if this Tblmetodopago has previously
+     * been saved, it will retrieve related Tblfacturas from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Tblmetodopago.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildTblfactura[] List of ChildTblfactura objects
+     */
+    public function getTblfacturasJoinUsuarios(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildTblfacturaQuery::create(null, $criteria);
+        $query->joinWith('Usuarios', $joinBehavior);
+
+        return $this->getTblfacturas($query, $con);
+    }
+
     /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
@@ -1036,9 +1405,9 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->id = null;
-        $this->menu = null;
-        $this->url = null;
+        $this->metodopagoid = null;
+        $this->nombre = null;
+        $this->detalle = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1057,8 +1426,14 @@ abstract class Menu implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collTblfacturas) {
+                foreach ($this->collTblfacturas as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
+        $this->collTblfacturas = null;
     }
 
     /**
@@ -1068,7 +1443,7 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(MenuTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(TblmetodopagoTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

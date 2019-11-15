@@ -9,13 +9,22 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
+use propel\propel\Tblfactura as ChildTblfactura;
+use propel\propel\TblfacturaQuery as ChildTblfacturaQuery;
+use propel\propel\Tblmenu as ChildTblmenu;
+use propel\propel\TblmenuQuery as ChildTblmenuQuery;
+use propel\propel\Tblrol as ChildTblrol;
+use propel\propel\TblrolQuery as ChildTblrolQuery;
+use propel\propel\Usuarios as ChildUsuarios;
 use propel\propel\UsuariosQuery as ChildUsuariosQuery;
+use propel\propel\Map\TblfacturaTableMap;
 use propel\propel\Map\UsuariosTableMap;
 
 /**
@@ -62,7 +71,7 @@ abstract class Usuarios implements ActiveRecordInterface
     /**
      * The value for the id_usuario field.
      *
-     * @var        int
+     * @var        string
      */
     protected $id_usuario;
 
@@ -95,12 +104,48 @@ abstract class Usuarios implements ActiveRecordInterface
     protected $clave;
 
     /**
+     * The value for the rolid field.
+     *
+     * @var        int
+     */
+    protected $rolid;
+
+    /**
+     * The value for the menuid field.
+     *
+     * @var        int
+     */
+    protected $menuid;
+
+    /**
+     * @var        ChildTblmenu
+     */
+    protected $aTblmenu;
+
+    /**
+     * @var        ChildTblrol
+     */
+    protected $aTblrol;
+
+    /**
+     * @var        ObjectCollection|ChildTblfactura[] Collection to store aggregation of ChildTblfactura objects.
+     */
+    protected $collTblfacturas;
+    protected $collTblfacturasPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
      * @var boolean
      */
     protected $alreadyInSave = false;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildTblfactura[]
+     */
+    protected $tblfacturasScheduledForDeletion = null;
 
     /**
      * Initializes internal state of propel\propel\Base\Usuarios object.
@@ -330,7 +375,7 @@ abstract class Usuarios implements ActiveRecordInterface
     /**
      * Get the [id_usuario] column value.
      *
-     * @return int
+     * @return string
      */
     public function getIdUsuario()
     {
@@ -378,15 +423,35 @@ abstract class Usuarios implements ActiveRecordInterface
     }
 
     /**
+     * Get the [rolid] column value.
+     *
+     * @return int
+     */
+    public function getRolid()
+    {
+        return $this->rolid;
+    }
+
+    /**
+     * Get the [menuid] column value.
+     *
+     * @return int
+     */
+    public function getMenuid()
+    {
+        return $this->menuid;
+    }
+
+    /**
      * Set the value of [id_usuario] column.
      *
-     * @param int $v new value
+     * @param string $v new value
      * @return $this|\propel\propel\Usuarios The current object (for fluent API support)
      */
     public function setIdUsuario($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
         if ($this->id_usuario !== $v) {
@@ -478,6 +543,54 @@ abstract class Usuarios implements ActiveRecordInterface
     } // setClave()
 
     /**
+     * Set the value of [rolid] column.
+     *
+     * @param int $v new value
+     * @return $this|\propel\propel\Usuarios The current object (for fluent API support)
+     */
+    public function setRolid($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->rolid !== $v) {
+            $this->rolid = $v;
+            $this->modifiedColumns[UsuariosTableMap::COL_ROLID] = true;
+        }
+
+        if ($this->aTblrol !== null && $this->aTblrol->getRolid() !== $v) {
+            $this->aTblrol = null;
+        }
+
+        return $this;
+    } // setRolid()
+
+    /**
+     * Set the value of [menuid] column.
+     *
+     * @param int $v new value
+     * @return $this|\propel\propel\Usuarios The current object (for fluent API support)
+     */
+    public function setMenuid($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->menuid !== $v) {
+            $this->menuid = $v;
+            $this->modifiedColumns[UsuariosTableMap::COL_MENUID] = true;
+        }
+
+        if ($this->aTblmenu !== null && $this->aTblmenu->getMenuid() !== $v) {
+            $this->aTblmenu = null;
+        }
+
+        return $this;
+    } // setMenuid()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -514,7 +627,7 @@ abstract class Usuarios implements ActiveRecordInterface
         try {
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UsuariosTableMap::translateFieldName('IdUsuario', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->id_usuario = (null !== $col) ? (int) $col : null;
+            $this->id_usuario = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UsuariosTableMap::translateFieldName('Nombre', TableMap::TYPE_PHPNAME, $indexType)];
             $this->nombre = (null !== $col) ? (string) $col : null;
@@ -527,6 +640,12 @@ abstract class Usuarios implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UsuariosTableMap::translateFieldName('Clave', TableMap::TYPE_PHPNAME, $indexType)];
             $this->clave = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : UsuariosTableMap::translateFieldName('Rolid', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->rolid = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : UsuariosTableMap::translateFieldName('Menuid', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->menuid = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -535,7 +654,7 @@ abstract class Usuarios implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = UsuariosTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = UsuariosTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Usuarios'), 0, $e);
@@ -557,6 +676,12 @@ abstract class Usuarios implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aTblrol !== null && $this->rolid !== $this->aTblrol->getRolid()) {
+            $this->aTblrol = null;
+        }
+        if ($this->aTblmenu !== null && $this->menuid !== $this->aTblmenu->getMenuid()) {
+            $this->aTblmenu = null;
+        }
     } // ensureConsistency
 
     /**
@@ -595,6 +720,10 @@ abstract class Usuarios implements ActiveRecordInterface
         $this->hydrate($row, 0, true, $dataFetcher->getIndexType()); // rehydrate
 
         if ($deep) {  // also de-associate any related objects?
+
+            $this->aTblmenu = null;
+            $this->aTblrol = null;
+            $this->collTblfacturas = null;
 
         } // if (deep)
     }
@@ -699,6 +828,25 @@ abstract class Usuarios implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aTblmenu !== null) {
+                if ($this->aTblmenu->isModified() || $this->aTblmenu->isNew()) {
+                    $affectedRows += $this->aTblmenu->save($con);
+                }
+                $this->setTblmenu($this->aTblmenu);
+            }
+
+            if ($this->aTblrol !== null) {
+                if ($this->aTblrol->isModified() || $this->aTblrol->isNew()) {
+                    $affectedRows += $this->aTblrol->save($con);
+                }
+                $this->setTblrol($this->aTblrol);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -708,6 +856,24 @@ abstract class Usuarios implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
+            }
+
+            if ($this->tblfacturasScheduledForDeletion !== null) {
+                if (!$this->tblfacturasScheduledForDeletion->isEmpty()) {
+                    foreach ($this->tblfacturasScheduledForDeletion as $tblfactura) {
+                        // need to save related object because we set the relation to null
+                        $tblfactura->save($con);
+                    }
+                    $this->tblfacturasScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collTblfacturas !== null) {
+                foreach ($this->collTblfacturas as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
             }
 
             $this->alreadyInSave = false;
@@ -751,6 +917,12 @@ abstract class Usuarios implements ActiveRecordInterface
         if ($this->isColumnModified(UsuariosTableMap::COL_CLAVE)) {
             $modifiedColumns[':p' . $index++]  = 'clave';
         }
+        if ($this->isColumnModified(UsuariosTableMap::COL_ROLID)) {
+            $modifiedColumns[':p' . $index++]  = 'rolId';
+        }
+        if ($this->isColumnModified(UsuariosTableMap::COL_MENUID)) {
+            $modifiedColumns[':p' . $index++]  = 'menuId';
+        }
 
         $sql = sprintf(
             'INSERT INTO usuarios (%s) VALUES (%s)',
@@ -776,6 +948,12 @@ abstract class Usuarios implements ActiveRecordInterface
                         break;
                     case 'clave':
                         $stmt->bindValue($identifier, $this->clave, PDO::PARAM_STR);
+                        break;
+                    case 'rolId':
+                        $stmt->bindValue($identifier, $this->rolid, PDO::PARAM_INT);
+                        break;
+                    case 'menuId':
+                        $stmt->bindValue($identifier, $this->menuid, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -854,6 +1032,12 @@ abstract class Usuarios implements ActiveRecordInterface
             case 4:
                 return $this->getClave();
                 break;
+            case 5:
+                return $this->getRolid();
+                break;
+            case 6:
+                return $this->getMenuid();
+                break;
             default:
                 return null;
                 break;
@@ -871,10 +1055,11 @@ abstract class Usuarios implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
         if (isset($alreadyDumpedObjects['Usuarios'][$this->hashCode()])) {
@@ -888,12 +1073,61 @@ abstract class Usuarios implements ActiveRecordInterface
             $keys[2] => $this->getEmail(),
             $keys[3] => $this->getNivel(),
             $keys[4] => $this->getClave(),
+            $keys[5] => $this->getRolid(),
+            $keys[6] => $this->getMenuid(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
+        if ($includeForeignObjects) {
+            if (null !== $this->aTblmenu) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'tblmenu';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'tblmenu';
+                        break;
+                    default:
+                        $key = 'Tblmenu';
+                }
+
+                $result[$key] = $this->aTblmenu->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aTblrol) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'tblrol';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'tblrol';
+                        break;
+                    default:
+                        $key = 'Tblrol';
+                }
+
+                $result[$key] = $this->aTblrol->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->collTblfacturas) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'tblfacturas';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'tblfacturas';
+                        break;
+                    default:
+                        $key = 'Tblfacturas';
+                }
+
+                $result[$key] = $this->collTblfacturas->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+        }
 
         return $result;
     }
@@ -942,6 +1176,12 @@ abstract class Usuarios implements ActiveRecordInterface
             case 4:
                 $this->setClave($value);
                 break;
+            case 5:
+                $this->setRolid($value);
+                break;
+            case 6:
+                $this->setMenuid($value);
+                break;
         } // switch()
 
         return $this;
@@ -982,6 +1222,12 @@ abstract class Usuarios implements ActiveRecordInterface
         }
         if (array_key_exists($keys[4], $arr)) {
             $this->setClave($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setRolid($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setMenuid($arr[$keys[6]]);
         }
     }
 
@@ -1039,6 +1285,12 @@ abstract class Usuarios implements ActiveRecordInterface
         if ($this->isColumnModified(UsuariosTableMap::COL_CLAVE)) {
             $criteria->add(UsuariosTableMap::COL_CLAVE, $this->clave);
         }
+        if ($this->isColumnModified(UsuariosTableMap::COL_ROLID)) {
+            $criteria->add(UsuariosTableMap::COL_ROLID, $this->rolid);
+        }
+        if ($this->isColumnModified(UsuariosTableMap::COL_MENUID)) {
+            $criteria->add(UsuariosTableMap::COL_MENUID, $this->menuid);
+        }
 
         return $criteria;
     }
@@ -1085,7 +1337,7 @@ abstract class Usuarios implements ActiveRecordInterface
 
     /**
      * Returns the primary key for this object (row).
-     * @return int
+     * @return string
      */
     public function getPrimaryKey()
     {
@@ -1095,7 +1347,7 @@ abstract class Usuarios implements ActiveRecordInterface
     /**
      * Generic method to set the primary key (id_usuario column).
      *
-     * @param       int $key Primary key.
+     * @param       string $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
@@ -1129,6 +1381,22 @@ abstract class Usuarios implements ActiveRecordInterface
         $copyObj->setEmail($this->getEmail());
         $copyObj->setNivel($this->getNivel());
         $copyObj->setClave($this->getClave());
+        $copyObj->setRolid($this->getRolid());
+        $copyObj->setMenuid($this->getMenuid());
+
+        if ($deepCopy) {
+            // important: temporarily setNew(false) because this affects the behavior of
+            // the getter/setter methods for fkey referrer objects.
+            $copyObj->setNew(false);
+
+            foreach ($this->getTblfacturas() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addTblfactura($relObj->copy($deepCopy));
+                }
+            }
+
+        } // if ($deepCopy)
+
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setIdUsuario(NULL); // this is a auto-increment column, so set to default value
@@ -1158,17 +1426,419 @@ abstract class Usuarios implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildTblmenu object.
+     *
+     * @param  ChildTblmenu $v
+     * @return $this|\propel\propel\Usuarios The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setTblmenu(ChildTblmenu $v = null)
+    {
+        if ($v === null) {
+            $this->setMenuid(NULL);
+        } else {
+            $this->setMenuid($v->getMenuid());
+        }
+
+        $this->aTblmenu = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildTblmenu object, it will not be re-added.
+        if ($v !== null) {
+            $v->addUsuarios($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildTblmenu object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildTblmenu The associated ChildTblmenu object.
+     * @throws PropelException
+     */
+    public function getTblmenu(ConnectionInterface $con = null)
+    {
+        if ($this->aTblmenu === null && ($this->menuid != 0)) {
+            $this->aTblmenu = ChildTblmenuQuery::create()->findPk($this->menuid, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aTblmenu->addUsuarioss($this);
+             */
+        }
+
+        return $this->aTblmenu;
+    }
+
+    /**
+     * Declares an association between this object and a ChildTblrol object.
+     *
+     * @param  ChildTblrol $v
+     * @return $this|\propel\propel\Usuarios The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setTblrol(ChildTblrol $v = null)
+    {
+        if ($v === null) {
+            $this->setRolid(NULL);
+        } else {
+            $this->setRolid($v->getRolid());
+        }
+
+        $this->aTblrol = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildTblrol object, it will not be re-added.
+        if ($v !== null) {
+            $v->addUsuarios($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildTblrol object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildTblrol The associated ChildTblrol object.
+     * @throws PropelException
+     */
+    public function getTblrol(ConnectionInterface $con = null)
+    {
+        if ($this->aTblrol === null && ($this->rolid != 0)) {
+            $this->aTblrol = ChildTblrolQuery::create()->findPk($this->rolid, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aTblrol->addUsuarioss($this);
+             */
+        }
+
+        return $this->aTblrol;
+    }
+
+
+    /**
+     * Initializes a collection based on the name of a relation.
+     * Avoids crafting an 'init[$relationName]s' method name
+     * that wouldn't work when StandardEnglishPluralizer is used.
+     *
+     * @param      string $relationName The name of the relation to initialize
+     * @return void
+     */
+    public function initRelation($relationName)
+    {
+        if ('Tblfactura' == $relationName) {
+            $this->initTblfacturas();
+            return;
+        }
+    }
+
+    /**
+     * Clears out the collTblfacturas collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addTblfacturas()
+     */
+    public function clearTblfacturas()
+    {
+        $this->collTblfacturas = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collTblfacturas collection loaded partially.
+     */
+    public function resetPartialTblfacturas($v = true)
+    {
+        $this->collTblfacturasPartial = $v;
+    }
+
+    /**
+     * Initializes the collTblfacturas collection.
+     *
+     * By default this just sets the collTblfacturas collection to an empty array (like clearcollTblfacturas());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initTblfacturas($overrideExisting = true)
+    {
+        if (null !== $this->collTblfacturas && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = TblfacturaTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collTblfacturas = new $collectionClassName;
+        $this->collTblfacturas->setModel('\propel\propel\Tblfactura');
+    }
+
+    /**
+     * Gets an array of ChildTblfactura objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildUsuarios is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildTblfactura[] List of ChildTblfactura objects
+     * @throws PropelException
+     */
+    public function getTblfacturas(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTblfacturasPartial && !$this->isNew();
+        if (null === $this->collTblfacturas || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collTblfacturas) {
+                // return empty collection
+                $this->initTblfacturas();
+            } else {
+                $collTblfacturas = ChildTblfacturaQuery::create(null, $criteria)
+                    ->filterByUsuarios($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collTblfacturasPartial && count($collTblfacturas)) {
+                        $this->initTblfacturas(false);
+
+                        foreach ($collTblfacturas as $obj) {
+                            if (false == $this->collTblfacturas->contains($obj)) {
+                                $this->collTblfacturas->append($obj);
+                            }
+                        }
+
+                        $this->collTblfacturasPartial = true;
+                    }
+
+                    return $collTblfacturas;
+                }
+
+                if ($partial && $this->collTblfacturas) {
+                    foreach ($this->collTblfacturas as $obj) {
+                        if ($obj->isNew()) {
+                            $collTblfacturas[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collTblfacturas = $collTblfacturas;
+                $this->collTblfacturasPartial = false;
+            }
+        }
+
+        return $this->collTblfacturas;
+    }
+
+    /**
+     * Sets a collection of ChildTblfactura objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $tblfacturas A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildUsuarios The current object (for fluent API support)
+     */
+    public function setTblfacturas(Collection $tblfacturas, ConnectionInterface $con = null)
+    {
+        /** @var ChildTblfactura[] $tblfacturasToDelete */
+        $tblfacturasToDelete = $this->getTblfacturas(new Criteria(), $con)->diff($tblfacturas);
+
+
+        $this->tblfacturasScheduledForDeletion = $tblfacturasToDelete;
+
+        foreach ($tblfacturasToDelete as $tblfacturaRemoved) {
+            $tblfacturaRemoved->setUsuarios(null);
+        }
+
+        $this->collTblfacturas = null;
+        foreach ($tblfacturas as $tblfactura) {
+            $this->addTblfactura($tblfactura);
+        }
+
+        $this->collTblfacturas = $tblfacturas;
+        $this->collTblfacturasPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Tblfactura objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Tblfactura objects.
+     * @throws PropelException
+     */
+    public function countTblfacturas(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTblfacturasPartial && !$this->isNew();
+        if (null === $this->collTblfacturas || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collTblfacturas) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getTblfacturas());
+            }
+
+            $query = ChildTblfacturaQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByUsuarios($this)
+                ->count($con);
+        }
+
+        return count($this->collTblfacturas);
+    }
+
+    /**
+     * Method called to associate a ChildTblfactura object to this object
+     * through the ChildTblfactura foreign key attribute.
+     *
+     * @param  ChildTblfactura $l ChildTblfactura
+     * @return $this|\propel\propel\Usuarios The current object (for fluent API support)
+     */
+    public function addTblfactura(ChildTblfactura $l)
+    {
+        if ($this->collTblfacturas === null) {
+            $this->initTblfacturas();
+            $this->collTblfacturasPartial = true;
+        }
+
+        if (!$this->collTblfacturas->contains($l)) {
+            $this->doAddTblfactura($l);
+
+            if ($this->tblfacturasScheduledForDeletion and $this->tblfacturasScheduledForDeletion->contains($l)) {
+                $this->tblfacturasScheduledForDeletion->remove($this->tblfacturasScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildTblfactura $tblfactura The ChildTblfactura object to add.
+     */
+    protected function doAddTblfactura(ChildTblfactura $tblfactura)
+    {
+        $this->collTblfacturas[]= $tblfactura;
+        $tblfactura->setUsuarios($this);
+    }
+
+    /**
+     * @param  ChildTblfactura $tblfactura The ChildTblfactura object to remove.
+     * @return $this|ChildUsuarios The current object (for fluent API support)
+     */
+    public function removeTblfactura(ChildTblfactura $tblfactura)
+    {
+        if ($this->getTblfacturas()->contains($tblfactura)) {
+            $pos = $this->collTblfacturas->search($tblfactura);
+            $this->collTblfacturas->remove($pos);
+            if (null === $this->tblfacturasScheduledForDeletion) {
+                $this->tblfacturasScheduledForDeletion = clone $this->collTblfacturas;
+                $this->tblfacturasScheduledForDeletion->clear();
+            }
+            $this->tblfacturasScheduledForDeletion[]= $tblfactura;
+            $tblfactura->setUsuarios(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Usuarios is new, it will return
+     * an empty collection; or if this Usuarios has previously
+     * been saved, it will retrieve related Tblfacturas from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Usuarios.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildTblfactura[] List of ChildTblfactura objects
+     */
+    public function getTblfacturasJoinTblcliente(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildTblfacturaQuery::create(null, $criteria);
+        $query->joinWith('Tblcliente', $joinBehavior);
+
+        return $this->getTblfacturas($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Usuarios is new, it will return
+     * an empty collection; or if this Usuarios has previously
+     * been saved, it will retrieve related Tblfacturas from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Usuarios.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildTblfactura[] List of ChildTblfactura objects
+     */
+    public function getTblfacturasJoinTblmetodopago(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildTblfacturaQuery::create(null, $criteria);
+        $query->joinWith('Tblmetodopago', $joinBehavior);
+
+        return $this->getTblfacturas($query, $con);
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
+        if (null !== $this->aTblmenu) {
+            $this->aTblmenu->removeUsuarios($this);
+        }
+        if (null !== $this->aTblrol) {
+            $this->aTblrol->removeUsuarios($this);
+        }
         $this->id_usuario = null;
         $this->nombre = null;
         $this->email = null;
         $this->nivel = null;
         $this->clave = null;
+        $this->rolid = null;
+        $this->menuid = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1187,8 +1857,16 @@ abstract class Usuarios implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collTblfacturas) {
+                foreach ($this->collTblfacturas as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
+        $this->collTblfacturas = null;
+        $this->aTblmenu = null;
+        $this->aTblrol = null;
     }
 
     /**

@@ -164,6 +164,13 @@ class TblclienteTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Tblfactura', '\\propel\\propel\\Tblfactura', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':clienteId',
+    1 => ':clienteId',
+  ),
+), null, null, 'Tblfacturas', false);
     } // buildRelations()
 
     /**

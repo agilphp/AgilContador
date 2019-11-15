@@ -2,10 +2,10 @@
 
 namespace propel\propel;
 
-use propel\propel\Base\TbllineaQuery as BaseTbllineaQuery;
+use propel\propel\Base\TblmenuitensQuery as BaseTblmenuitensQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'tbllinea' table.
+ * Skeleton subclass for performing query and update operations on the 'tblmenuitens' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use propel\propel\Base\TbllineaQuery as BaseTbllineaQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class TbllineaQuery extends BaseTbllineaQuery
+class TblmenuitensQuery extends BaseTblmenuitensQuery
 {
 
 }

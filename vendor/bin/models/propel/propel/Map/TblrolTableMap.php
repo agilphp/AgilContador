@@ -11,12 +11,12 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Map\TableMapTrait;
-use propel\propel\Tbllinea;
-use propel\propel\TbllineaQuery;
+use propel\propel\Tblrol;
+use propel\propel\TblrolQuery;
 
 
 /**
- * This class defines the structure of the 'tbllinea' table.
+ * This class defines the structure of the 'tblrol' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use propel\propel\TbllineaQuery;
  * (i.e. if it's a text column type).
  *
  */
-class TbllineaTableMap extends TableMap
+class TblrolTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class TbllineaTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'propel.propel.Map.TbllineaTableMap';
+    const CLASS_NAME = 'propel.propel.Map.TblrolTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class TbllineaTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'tbllinea';
+    const TABLE_NAME = 'tblrol';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\propel\\propel\\Tbllinea';
+    const OM_CLASS = '\\propel\\propel\\Tblrol';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'propel.propel.Tbllinea';
+    const CLASS_DEFAULT = 'propel.propel.Tblrol';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,22 +69,27 @@ class TbllineaTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
-     * the column name for the LineaId field
+     * the column name for the rolId field
      */
-    const COL_LINEAID = 'tbllinea.LineaId';
-
-    /**
-     * the column name for the codigo field
-     */
-    const COL_CODIGO = 'tbllinea.codigo';
+    const COL_ROLID = 'tblrol.rolId';
 
     /**
      * the column name for the nombre field
      */
-    const COL_NOMBRE = 'tbllinea.nombre';
+    const COL_NOMBRE = 'tblrol.nombre';
+
+    /**
+     * the column name for the estado field
+     */
+    const COL_ESTADO = 'tblrol.estado';
+
+    /**
+     * the column name for the fecha field
+     */
+    const COL_FECHA = 'tblrol.fecha';
 
     /**
      * The default string format for model objects of the related table
@@ -98,11 +103,11 @@ class TbllineaTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Lineaid', 'Codigo', 'Nombre', ),
-        self::TYPE_CAMELNAME     => array('lineaid', 'codigo', 'nombre', ),
-        self::TYPE_COLNAME       => array(TbllineaTableMap::COL_LINEAID, TbllineaTableMap::COL_CODIGO, TbllineaTableMap::COL_NOMBRE, ),
-        self::TYPE_FIELDNAME     => array('LineaId', 'codigo', 'nombre', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Rolid', 'Nombre', 'Estado', 'Fecha', ),
+        self::TYPE_CAMELNAME     => array('rolid', 'nombre', 'estado', 'fecha', ),
+        self::TYPE_COLNAME       => array(TblrolTableMap::COL_ROLID, TblrolTableMap::COL_NOMBRE, TblrolTableMap::COL_ESTADO, TblrolTableMap::COL_FECHA, ),
+        self::TYPE_FIELDNAME     => array('rolId', 'nombre', 'estado', 'fecha', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -112,11 +117,11 @@ class TbllineaTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Lineaid' => 0, 'Codigo' => 1, 'Nombre' => 2, ),
-        self::TYPE_CAMELNAME     => array('lineaid' => 0, 'codigo' => 1, 'nombre' => 2, ),
-        self::TYPE_COLNAME       => array(TbllineaTableMap::COL_LINEAID => 0, TbllineaTableMap::COL_CODIGO => 1, TbllineaTableMap::COL_NOMBRE => 2, ),
-        self::TYPE_FIELDNAME     => array('LineaId' => 0, 'codigo' => 1, 'nombre' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Rolid' => 0, 'Nombre' => 1, 'Estado' => 2, 'Fecha' => 3, ),
+        self::TYPE_CAMELNAME     => array('rolid' => 0, 'nombre' => 1, 'estado' => 2, 'fecha' => 3, ),
+        self::TYPE_COLNAME       => array(TblrolTableMap::COL_ROLID => 0, TblrolTableMap::COL_NOMBRE => 1, TblrolTableMap::COL_ESTADO => 2, TblrolTableMap::COL_FECHA => 3, ),
+        self::TYPE_FIELDNAME     => array('rolId' => 0, 'nombre' => 1, 'estado' => 2, 'fecha' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -129,16 +134,17 @@ class TbllineaTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('tbllinea');
-        $this->setPhpName('Tbllinea');
+        $this->setName('tblrol');
+        $this->setPhpName('Tblrol');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\propel\\propel\\Tbllinea');
+        $this->setClassName('\\propel\\propel\\Tblrol');
         $this->setPackage('propel.propel');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('LineaId', 'Lineaid', 'INTEGER', true, 5, null);
-        $this->addColumn('codigo', 'Codigo', 'VARCHAR', false, 45, null);
-        $this->addColumn('nombre', 'Nombre', 'VARCHAR', false, 45, null);
+        $this->addPrimaryKey('rolId', 'Rolid', 'INTEGER', true, null, null);
+        $this->addColumn('nombre', 'Nombre', 'VARCHAR', false, 100, null);
+        $this->addColumn('estado', 'Estado', 'CHAR', false, null, null);
+        $this->addColumn('fecha', 'Fecha', 'TIMESTAMP', false, null, null);
     } // initialize()
 
     /**
@@ -146,13 +152,13 @@ class TbllineaTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Tblproductos', '\\propel\\propel\\Tblproductos', RelationMap::ONE_TO_MANY, array (
+        $this->addRelation('Usuarios', '\\propel\\propel\\Usuarios', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':TblLinea_LineaId',
-    1 => ':LineaId',
+    0 => ':rolId',
+    1 => ':rolId',
   ),
-), null, null, 'Tblproductoss', false);
+), null, null, 'Usuarioss', false);
     } // buildRelations()
 
     /**
@@ -171,11 +177,11 @@ class TbllineaTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Rolid', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)];
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Rolid', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Rolid', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Rolid', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Rolid', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Rolid', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -195,7 +201,7 @@ class TbllineaTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Rolid', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -212,7 +218,7 @@ class TbllineaTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? TbllineaTableMap::CLASS_DEFAULT : TbllineaTableMap::OM_CLASS;
+        return $withPrefix ? TblrolTableMap::CLASS_DEFAULT : TblrolTableMap::OM_CLASS;
     }
 
     /**
@@ -226,22 +232,22 @@ class TbllineaTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Tbllinea object, last column rank)
+     * @return array           (Tblrol object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = TbllineaTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = TbllineaTableMap::getInstanceFromPool($key))) {
+        $key = TblrolTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = TblrolTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + TbllineaTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + TblrolTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = TbllineaTableMap::OM_CLASS;
-            /** @var Tbllinea $obj */
+            $cls = TblrolTableMap::OM_CLASS;
+            /** @var Tblrol $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            TbllineaTableMap::addInstanceToPool($obj, $key);
+            TblrolTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -264,18 +270,18 @@ class TbllineaTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = TbllineaTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = TbllineaTableMap::getInstanceFromPool($key))) {
+            $key = TblrolTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = TblrolTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Tbllinea $obj */
+                /** @var Tblrol $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                TbllineaTableMap::addInstanceToPool($obj, $key);
+                TblrolTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -296,13 +302,15 @@ class TbllineaTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(TbllineaTableMap::COL_LINEAID);
-            $criteria->addSelectColumn(TbllineaTableMap::COL_CODIGO);
-            $criteria->addSelectColumn(TbllineaTableMap::COL_NOMBRE);
+            $criteria->addSelectColumn(TblrolTableMap::COL_ROLID);
+            $criteria->addSelectColumn(TblrolTableMap::COL_NOMBRE);
+            $criteria->addSelectColumn(TblrolTableMap::COL_ESTADO);
+            $criteria->addSelectColumn(TblrolTableMap::COL_FECHA);
         } else {
-            $criteria->addSelectColumn($alias . '.LineaId');
-            $criteria->addSelectColumn($alias . '.codigo');
+            $criteria->addSelectColumn($alias . '.rolId');
             $criteria->addSelectColumn($alias . '.nombre');
+            $criteria->addSelectColumn($alias . '.estado');
+            $criteria->addSelectColumn($alias . '.fecha');
         }
     }
 
@@ -315,7 +323,7 @@ class TbllineaTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(TbllineaTableMap::DATABASE_NAME)->getTable(TbllineaTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(TblrolTableMap::DATABASE_NAME)->getTable(TblrolTableMap::TABLE_NAME);
     }
 
     /**
@@ -323,16 +331,16 @@ class TbllineaTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(TbllineaTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(TbllineaTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new TbllineaTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(TblrolTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(TblrolTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new TblrolTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Tbllinea or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Tblrol or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Tbllinea object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Tblrol object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -343,27 +351,27 @@ class TbllineaTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TbllineaTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblrolTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \propel\propel\Tbllinea) { // it's a model object
+        } elseif ($values instanceof \propel\propel\Tblrol) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(TbllineaTableMap::DATABASE_NAME);
-            $criteria->add(TbllineaTableMap::COL_LINEAID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(TblrolTableMap::DATABASE_NAME);
+            $criteria->add(TblrolTableMap::COL_ROLID, (array) $values, Criteria::IN);
         }
 
-        $query = TbllineaQuery::create()->mergeWith($criteria);
+        $query = TblrolQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            TbllineaTableMap::clearInstancePool();
+            TblrolTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                TbllineaTableMap::removeInstanceFromPool($singleval);
+                TblrolTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -371,20 +379,20 @@ class TbllineaTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the tbllinea table.
+     * Deletes all rows from the tblrol table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return TbllineaQuery::create()->doDeleteAll($con);
+        return TblrolQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Tbllinea or Criteria object.
+     * Performs an INSERT on the database, given a Tblrol or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Tbllinea object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Tblrol object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -393,22 +401,22 @@ class TbllineaTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TbllineaTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblrolTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Tbllinea object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Tblrol object
         }
 
-        if ($criteria->containsKey(TbllineaTableMap::COL_LINEAID) && $criteria->keyContainsValue(TbllineaTableMap::COL_LINEAID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.TbllineaTableMap::COL_LINEAID.')');
+        if ($criteria->containsKey(TblrolTableMap::COL_ROLID) && $criteria->keyContainsValue(TblrolTableMap::COL_ROLID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.TblrolTableMap::COL_ROLID.')');
         }
 
 
         // Set the correct dbName
-        $query = TbllineaQuery::create()->mergeWith($criteria);
+        $query = TblrolQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -417,7 +425,7 @@ class TbllineaTableMap extends TableMap
         });
     }
 
-} // TbllineaTableMap
+} // TblrolTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-TbllineaTableMap::buildTableMap();
+TblrolTableMap::buildTableMap();

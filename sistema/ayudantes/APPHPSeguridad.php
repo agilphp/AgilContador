@@ -36,7 +36,11 @@ class APPHPSeguridad {
     function xecho($texto){
        echo xsseguro($texto);
     }
-    
+    /**
+     * Elimina las etiquetas HTML
+     * @param recibe texto como paramentro y lo filtra quitando etiquetas html
+     * @return retorna texto filtrado
+     */
     public function filtrarTexto($texto){
         return strip_tags($texto);
     }

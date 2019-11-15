@@ -24,15 +24,11 @@ use propel\propel\Map\TblingresodetalleTableMap;
  * @method     ChildTblingresodetalleQuery orderByIngresoid($order = Criteria::ASC) Order by the ingresoId column
  * @method     ChildTblingresodetalleQuery orderByProductoid($order = Criteria::ASC) Order by the productoId column
  * @method     ChildTblingresodetalleQuery orderByCantidad($order = Criteria::ASC) Order by the cantidad column
- * @method     ChildTblingresodetalleQuery orderByTblproductosProductoid($order = Criteria::ASC) Order by the TblProductos_productoId column
- * @method     ChildTblingresodetalleQuery orderByTblingresoIngresoid($order = Criteria::ASC) Order by the TblIngreso_ingresoId column
  *
  * @method     ChildTblingresodetalleQuery groupByIngresodetalleid() Group by the ingresoDetalleId column
  * @method     ChildTblingresodetalleQuery groupByIngresoid() Group by the ingresoId column
  * @method     ChildTblingresodetalleQuery groupByProductoid() Group by the productoId column
  * @method     ChildTblingresodetalleQuery groupByCantidad() Group by the cantidad column
- * @method     ChildTblingresodetalleQuery groupByTblproductosProductoid() Group by the TblProductos_productoId column
- * @method     ChildTblingresodetalleQuery groupByTblingresoIngresoid() Group by the TblIngreso_ingresoId column
  *
  * @method     ChildTblingresodetalleQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildTblingresodetalleQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -70,9 +66,7 @@ use propel\propel\Map\TblingresodetalleTableMap;
  * @method     ChildTblingresodetalle findOneByIngresodetalleid(string $ingresoDetalleId) Return the first ChildTblingresodetalle filtered by the ingresoDetalleId column
  * @method     ChildTblingresodetalle findOneByIngresoid(string $ingresoId) Return the first ChildTblingresodetalle filtered by the ingresoId column
  * @method     ChildTblingresodetalle findOneByProductoid(string $productoId) Return the first ChildTblingresodetalle filtered by the productoId column
- * @method     ChildTblingresodetalle findOneByCantidad(string $cantidad) Return the first ChildTblingresodetalle filtered by the cantidad column
- * @method     ChildTblingresodetalle findOneByTblproductosProductoid(string $TblProductos_productoId) Return the first ChildTblingresodetalle filtered by the TblProductos_productoId column
- * @method     ChildTblingresodetalle findOneByTblingresoIngresoid(string $TblIngreso_ingresoId) Return the first ChildTblingresodetalle filtered by the TblIngreso_ingresoId column *
+ * @method     ChildTblingresodetalle findOneByCantidad(string $cantidad) Return the first ChildTblingresodetalle filtered by the cantidad column *
 
  * @method     ChildTblingresodetalle requirePk($key, ConnectionInterface $con = null) Return the ChildTblingresodetalle by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblingresodetalle requireOne(ConnectionInterface $con = null) Return the first ChildTblingresodetalle matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -81,16 +75,12 @@ use propel\propel\Map\TblingresodetalleTableMap;
  * @method     ChildTblingresodetalle requireOneByIngresoid(string $ingresoId) Return the first ChildTblingresodetalle filtered by the ingresoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblingresodetalle requireOneByProductoid(string $productoId) Return the first ChildTblingresodetalle filtered by the productoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblingresodetalle requireOneByCantidad(string $cantidad) Return the first ChildTblingresodetalle filtered by the cantidad column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTblingresodetalle requireOneByTblproductosProductoid(string $TblProductos_productoId) Return the first ChildTblingresodetalle filtered by the TblProductos_productoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTblingresodetalle requireOneByTblingresoIngresoid(string $TblIngreso_ingresoId) Return the first ChildTblingresodetalle filtered by the TblIngreso_ingresoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildTblingresodetalle[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildTblingresodetalle objects based on current ModelCriteria
  * @method     ChildTblingresodetalle[]|ObjectCollection findByIngresodetalleid(string $ingresoDetalleId) Return ChildTblingresodetalle objects filtered by the ingresoDetalleId column
  * @method     ChildTblingresodetalle[]|ObjectCollection findByIngresoid(string $ingresoId) Return ChildTblingresodetalle objects filtered by the ingresoId column
  * @method     ChildTblingresodetalle[]|ObjectCollection findByProductoid(string $productoId) Return ChildTblingresodetalle objects filtered by the productoId column
  * @method     ChildTblingresodetalle[]|ObjectCollection findByCantidad(string $cantidad) Return ChildTblingresodetalle objects filtered by the cantidad column
- * @method     ChildTblingresodetalle[]|ObjectCollection findByTblproductosProductoid(string $TblProductos_productoId) Return ChildTblingresodetalle objects filtered by the TblProductos_productoId column
- * @method     ChildTblingresodetalle[]|ObjectCollection findByTblingresoIngresoid(string $TblIngreso_ingresoId) Return ChildTblingresodetalle objects filtered by the TblIngreso_ingresoId column
  * @method     ChildTblingresodetalle[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -189,7 +179,7 @@ abstract class TblingresodetalleQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT ingresoDetalleId, ingresoId, productoId, cantidad, TblProductos_productoId, TblIngreso_ingresoId FROM tblingresodetalle WHERE ingresoDetalleId = :p0';
+        $sql = 'SELECT ingresoDetalleId, ingresoId, productoId, cantidad FROM tblingresodetalle WHERE ingresoDetalleId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -330,6 +320,8 @@ abstract class TblingresodetalleQuery extends ModelCriteria
      * $query->filterByIngresoid(array('min' => 12)); // WHERE ingresoId > 12
      * </code>
      *
+     * @see       filterByTblingreso()
+     *
      * @param     mixed $ingresoid The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
@@ -370,6 +362,8 @@ abstract class TblingresodetalleQuery extends ModelCriteria
      * $query->filterByProductoid(array(12, 34)); // WHERE productoId IN (12, 34)
      * $query->filterByProductoid(array('min' => 12)); // WHERE productoId > 12
      * </code>
+     *
+     * @see       filterByTblproductos()
      *
      * @param     mixed $productoid The value to use as filter.
      *              Use scalar values for equality.
@@ -444,92 +438,6 @@ abstract class TblingresodetalleQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the TblProductos_productoId column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByTblproductosProductoid(1234); // WHERE TblProductos_productoId = 1234
-     * $query->filterByTblproductosProductoid(array(12, 34)); // WHERE TblProductos_productoId IN (12, 34)
-     * $query->filterByTblproductosProductoid(array('min' => 12)); // WHERE TblProductos_productoId > 12
-     * </code>
-     *
-     * @see       filterByTblproductos()
-     *
-     * @param     mixed $tblproductosProductoid The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildTblingresodetalleQuery The current query, for fluid interface
-     */
-    public function filterByTblproductosProductoid($tblproductosProductoid = null, $comparison = null)
-    {
-        if (is_array($tblproductosProductoid)) {
-            $useMinMax = false;
-            if (isset($tblproductosProductoid['min'])) {
-                $this->addUsingAlias(TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($tblproductosProductoid['max'])) {
-                $this->addUsingAlias(TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid, $comparison);
-    }
-
-    /**
-     * Filter the query on the TblIngreso_ingresoId column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByTblingresoIngresoid(1234); // WHERE TblIngreso_ingresoId = 1234
-     * $query->filterByTblingresoIngresoid(array(12, 34)); // WHERE TblIngreso_ingresoId IN (12, 34)
-     * $query->filterByTblingresoIngresoid(array('min' => 12)); // WHERE TblIngreso_ingresoId > 12
-     * </code>
-     *
-     * @see       filterByTblingreso()
-     *
-     * @param     mixed $tblingresoIngresoid The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildTblingresodetalleQuery The current query, for fluid interface
-     */
-    public function filterByTblingresoIngresoid($tblingresoIngresoid = null, $comparison = null)
-    {
-        if (is_array($tblingresoIngresoid)) {
-            $useMinMax = false;
-            if (isset($tblingresoIngresoid['min'])) {
-                $this->addUsingAlias(TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID, $tblingresoIngresoid['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($tblingresoIngresoid['max'])) {
-                $this->addUsingAlias(TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID, $tblingresoIngresoid['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID, $tblingresoIngresoid, $comparison);
-    }
-
-    /**
      * Filter the query by a related \propel\propel\Tblingreso object
      *
      * @param \propel\propel\Tblingreso|ObjectCollection $tblingreso The related object(s) to use as filter
@@ -543,14 +451,14 @@ abstract class TblingresodetalleQuery extends ModelCriteria
     {
         if ($tblingreso instanceof \propel\propel\Tblingreso) {
             return $this
-                ->addUsingAlias(TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID, $tblingreso->getIngresoid(), $comparison);
+                ->addUsingAlias(TblingresodetalleTableMap::COL_INGRESOID, $tblingreso->getIngresoid(), $comparison);
         } elseif ($tblingreso instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID, $tblingreso->toKeyValue('PrimaryKey', 'Ingresoid'), $comparison);
+                ->addUsingAlias(TblingresodetalleTableMap::COL_INGRESOID, $tblingreso->toKeyValue('PrimaryKey', 'Ingresoid'), $comparison);
         } else {
             throw new PropelException('filterByTblingreso() only accepts arguments of type \propel\propel\Tblingreso or Collection');
         }
@@ -564,7 +472,7 @@ abstract class TblingresodetalleQuery extends ModelCriteria
      *
      * @return $this|ChildTblingresodetalleQuery The current query, for fluid interface
      */
-    public function joinTblingreso($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblingreso($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblingreso');
@@ -599,7 +507,7 @@ abstract class TblingresodetalleQuery extends ModelCriteria
      *
      * @return \propel\propel\TblingresoQuery A secondary query class using the current class as primary query
      */
-    public function useTblingresoQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblingresoQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblingreso($relationAlias, $joinType)
@@ -620,14 +528,14 @@ abstract class TblingresodetalleQuery extends ModelCriteria
     {
         if ($tblproductos instanceof \propel\propel\Tblproductos) {
             return $this
-                ->addUsingAlias(TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductos->getProductoid(), $comparison);
+                ->addUsingAlias(TblingresodetalleTableMap::COL_PRODUCTOID, $tblproductos->getProductoid(), $comparison);
         } elseif ($tblproductos instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductos->toKeyValue('PrimaryKey', 'Productoid'), $comparison);
+                ->addUsingAlias(TblingresodetalleTableMap::COL_PRODUCTOID, $tblproductos->toKeyValue('PrimaryKey', 'Productoid'), $comparison);
         } else {
             throw new PropelException('filterByTblproductos() only accepts arguments of type \propel\propel\Tblproductos or Collection');
         }
@@ -641,7 +549,7 @@ abstract class TblingresodetalleQuery extends ModelCriteria
      *
      * @return $this|ChildTblingresodetalleQuery The current query, for fluid interface
      */
-    public function joinTblproductos($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblproductos($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblproductos');
@@ -676,7 +584,7 @@ abstract class TblingresodetalleQuery extends ModelCriteria
      *
      * @return \propel\propel\TblproductosQuery A secondary query class using the current class as primary query
      */
-    public function useTblproductosQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblproductosQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblproductos($relationAlias, $joinType)

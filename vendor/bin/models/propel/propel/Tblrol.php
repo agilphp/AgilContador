@@ -2,10 +2,10 @@
 
 namespace propel\propel;
 
-use propel\propel\Base\MenuQuery as BaseMenuQuery;
+use propel\propel\Base\Tblrol as BaseTblrol;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'menu' table.
+ * Skeleton subclass for representing a row from the 'tblrol' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use propel\propel\Base\MenuQuery as BaseMenuQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class MenuQuery extends BaseMenuQuery
+class Tblrol extends BaseTblrol
 {
 
 }

@@ -2,10 +2,10 @@
 
 namespace propel\propel;
 
-use propel\propel\Base\SesionUsuarioQuery as BaseSesionUsuarioQuery;
+use propel\propel\Base\TblcategoriaQuery as BaseTblcategoriaQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'sesion_usuario' table.
+ * Skeleton subclass for performing query and update operations on the 'tblcategoria' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use propel\propel\Base\SesionUsuarioQuery as BaseSesionUsuarioQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class SesionUsuarioQuery extends BaseSesionUsuarioQuery
+class TblcategoriaQuery extends BaseTblcategoriaQuery
 {
 
 }

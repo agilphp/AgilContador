@@ -45,7 +45,8 @@ class APPHPAyuda {
     
      // filtros Email
     
-    function filtroEmail($email){
+    function filtroEmail($email)
+    {
         if (!filter_input(INPUT_POST, $email, FILTER_VALIDATE_EMAIL)){
             echo "E-Mail no es valido";
         }
@@ -58,51 +59,47 @@ class APPHPAyuda {
     
     //cadenas
     
-    function rangoTexto($texto, $inicio, $cantidad){
-        
-        return $limite= substr($texto, $inicio, $cantidad); 
-        
+    function rangoTexto($texto, $inicio, $cantidad)
+    {        
+        return $limite= substr($texto, $inicio, $cantidad);         
     }
     
     //Redirecionar
     
     function Redireccion($url, $permanent = false){
-    header('Location: ' . $url, true, $permanent ? 301 : 302);
-
-    exit();
+        header('Location: ' . $url, true, $permanent ? 301 : 302);
+        exit();
     }
     
     function redireccionUrl($url){
         $url=Ap_BASE_URL.$url;
-    header('Location: ' . $url);
-    exit();
+        header('Location: ' . $url);
+        exit();
     }
     
     function redireccionUrlMsj($controlador){
         $this->_sesion->iniciarSesion('_s', false);
         $_SESSION[error_ingreso]='Error en el intento de ingreso';
         $controlador=Ap_BASE_URL.$controlador;
-    header('Location: ' . $controlador);
-    exit();
+        header('Location: ' . $controlador);
+        exit();
     }
     
     function redireccion_($url, $statusCode = 303){
-    header('Location: ' . $url, true, $statusCode);
-    die();
+        header('Location: ' . $url, true, $statusCode);
+        die();
     }
     
     function redirect($controller,$method = "index",$args = array())
-{
-    global $core; /* Guess Obviously */
-
-    $location = $core->Ap_BASE_URL . "/" . $controller . "/" . $method . "/" . implode("/",$args);
-
-    /*
-        * Use @header to redirect the page:
-    */
-    header("Location: " . $location);
-    exit;
-}
+    {
+        global $core; /* Guess Obviously */
+        $location = $core->Ap_BASE_URL . "/" . $controller . "/" . $method . "/" . implode("/",$args);
+        /*
+            * Use @header to redirect the page:
+        */
+        header("Location: " . $location);
+        exit;
+    }
     
     
     

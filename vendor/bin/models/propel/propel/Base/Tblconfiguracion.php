@@ -9,33 +9,28 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use propel\propel\Tbllinea as ChildTbllinea;
-use propel\propel\TbllineaQuery as ChildTbllineaQuery;
-use propel\propel\Tblproductos as ChildTblproductos;
-use propel\propel\TblproductosQuery as ChildTblproductosQuery;
-use propel\propel\Map\TbllineaTableMap;
-use propel\propel\Map\TblproductosTableMap;
+use propel\propel\TblconfiguracionQuery as ChildTblconfiguracionQuery;
+use propel\propel\Map\TblconfiguracionTableMap;
 
 /**
- * Base class that represents a row from the 'tbllinea' table.
+ * Base class that represents a row from the 'tblconfiguracion' table.
  *
  *
  *
  * @package    propel.generator.propel.propel.Base
  */
-abstract class Tbllinea implements ActiveRecordInterface
+abstract class Tblconfiguracion implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\propel\\propel\\Map\\TbllineaTableMap';
+    const TABLE_MAP = '\\propel\\propel\\Map\\TblconfiguracionTableMap';
 
 
     /**
@@ -65,31 +60,67 @@ abstract class Tbllinea implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the lineaid field.
-     *
-     * @var        int
-     */
-    protected $lineaid;
-
-    /**
-     * The value for the codigo field.
+     * The value for the configuracionid field.
      *
      * @var        string
      */
-    protected $codigo;
+    protected $configuracionid;
 
     /**
-     * The value for the nombre field.
+     * The value for the nombreempresa field.
      *
      * @var        string
      */
-    protected $nombre;
+    protected $nombreempresa;
 
     /**
-     * @var        ObjectCollection|ChildTblproductos[] Collection to store aggregation of ChildTblproductos objects.
+     * The value for the nit field.
+     *
+     * @var        string
      */
-    protected $collTblproductoss;
-    protected $collTblproductossPartial;
+    protected $nit;
+
+    /**
+     * The value for the direccion field.
+     *
+     * @var        string
+     */
+    protected $direccion;
+
+    /**
+     * The value for the ciudadid field.
+     *
+     * @var        string
+     */
+    protected $ciudadid;
+
+    /**
+     * The value for the telefono field.
+     *
+     * @var        string
+     */
+    protected $telefono;
+
+    /**
+     * The value for the actividadeconomica field.
+     *
+     * @var        string
+     */
+    protected $actividadeconomica;
+
+    /**
+     * The value for the regimen field.
+     *
+     * @var        string
+     */
+    protected $regimen;
+
+    /**
+     * The value for the resolucion field.
+     *
+     * @var        string
+     */
+    protected $resolucion;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -100,13 +131,7 @@ abstract class Tbllinea implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildTblproductos[]
-     */
-    protected $tblproductossScheduledForDeletion = null;
-
-    /**
-     * Initializes internal state of propel\propel\Base\Tbllinea object.
+     * Initializes internal state of propel\propel\Base\Tblconfiguracion object.
      */
     public function __construct()
     {
@@ -201,9 +226,9 @@ abstract class Tbllinea implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Tbllinea</code> instance.  If
-     * <code>obj</code> is an instance of <code>Tbllinea</code>, delegates to
-     * <code>equals(Tbllinea)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Tblconfiguracion</code> instance.  If
+     * <code>obj</code> is an instance of <code>Tblconfiguracion</code>, delegates to
+     * <code>equals(Tblconfiguracion)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -269,7 +294,7 @@ abstract class Tbllinea implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Tbllinea The current object, for fluid interface
+     * @return $this|Tblconfiguracion The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -331,94 +356,274 @@ abstract class Tbllinea implements ActiveRecordInterface
     }
 
     /**
-     * Get the [lineaid] column value.
-     *
-     * @return int
-     */
-    public function getLineaid()
-    {
-        return $this->lineaid;
-    }
-
-    /**
-     * Get the [codigo] column value.
+     * Get the [configuracionid] column value.
      *
      * @return string
      */
-    public function getCodigo()
+    public function getConfiguracionid()
     {
-        return $this->codigo;
+        return $this->configuracionid;
     }
 
     /**
-     * Get the [nombre] column value.
+     * Get the [nombreempresa] column value.
      *
      * @return string
      */
-    public function getNombre()
+    public function getNombreempresa()
     {
-        return $this->nombre;
+        return $this->nombreempresa;
     }
 
     /**
-     * Set the value of [lineaid] column.
+     * Get the [nit] column value.
      *
-     * @param int $v new value
-     * @return $this|\propel\propel\Tbllinea The current object (for fluent API support)
+     * @return string
      */
-    public function setLineaid($v)
+    public function getNit()
     {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->lineaid !== $v) {
-            $this->lineaid = $v;
-            $this->modifiedColumns[TbllineaTableMap::COL_LINEAID] = true;
-        }
-
-        return $this;
-    } // setLineaid()
+        return $this->nit;
+    }
 
     /**
-     * Set the value of [codigo] column.
+     * Get the [direccion] column value.
+     *
+     * @return string
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * Get the [ciudadid] column value.
+     *
+     * @return string
+     */
+    public function getCiudadid()
+    {
+        return $this->ciudadid;
+    }
+
+    /**
+     * Get the [telefono] column value.
+     *
+     * @return string
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Get the [actividadeconomica] column value.
+     *
+     * @return string
+     */
+    public function getActividadeconomica()
+    {
+        return $this->actividadeconomica;
+    }
+
+    /**
+     * Get the [regimen] column value.
+     *
+     * @return string
+     */
+    public function getRegimen()
+    {
+        return $this->regimen;
+    }
+
+    /**
+     * Get the [resolucion] column value.
+     *
+     * @return string
+     */
+    public function getResolucion()
+    {
+        return $this->resolucion;
+    }
+
+    /**
+     * Set the value of [configuracionid] column.
      *
      * @param string $v new value
-     * @return $this|\propel\propel\Tbllinea The current object (for fluent API support)
+     * @return $this|\propel\propel\Tblconfiguracion The current object (for fluent API support)
      */
-    public function setCodigo($v)
+    public function setConfiguracionid($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->codigo !== $v) {
-            $this->codigo = $v;
-            $this->modifiedColumns[TbllineaTableMap::COL_CODIGO] = true;
+        if ($this->configuracionid !== $v) {
+            $this->configuracionid = $v;
+            $this->modifiedColumns[TblconfiguracionTableMap::COL_CONFIGURACIONID] = true;
         }
 
         return $this;
-    } // setCodigo()
+    } // setConfiguracionid()
 
     /**
-     * Set the value of [nombre] column.
+     * Set the value of [nombreempresa] column.
      *
      * @param string $v new value
-     * @return $this|\propel\propel\Tbllinea The current object (for fluent API support)
+     * @return $this|\propel\propel\Tblconfiguracion The current object (for fluent API support)
      */
-    public function setNombre($v)
+    public function setNombreempresa($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->nombre !== $v) {
-            $this->nombre = $v;
-            $this->modifiedColumns[TbllineaTableMap::COL_NOMBRE] = true;
+        if ($this->nombreempresa !== $v) {
+            $this->nombreempresa = $v;
+            $this->modifiedColumns[TblconfiguracionTableMap::COL_NOMBREEMPRESA] = true;
         }
 
         return $this;
-    } // setNombre()
+    } // setNombreempresa()
+
+    /**
+     * Set the value of [nit] column.
+     *
+     * @param string $v new value
+     * @return $this|\propel\propel\Tblconfiguracion The current object (for fluent API support)
+     */
+    public function setNit($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->nit !== $v) {
+            $this->nit = $v;
+            $this->modifiedColumns[TblconfiguracionTableMap::COL_NIT] = true;
+        }
+
+        return $this;
+    } // setNit()
+
+    /**
+     * Set the value of [direccion] column.
+     *
+     * @param string $v new value
+     * @return $this|\propel\propel\Tblconfiguracion The current object (for fluent API support)
+     */
+    public function setDireccion($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->direccion !== $v) {
+            $this->direccion = $v;
+            $this->modifiedColumns[TblconfiguracionTableMap::COL_DIRECCION] = true;
+        }
+
+        return $this;
+    } // setDireccion()
+
+    /**
+     * Set the value of [ciudadid] column.
+     *
+     * @param string $v new value
+     * @return $this|\propel\propel\Tblconfiguracion The current object (for fluent API support)
+     */
+    public function setCiudadid($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->ciudadid !== $v) {
+            $this->ciudadid = $v;
+            $this->modifiedColumns[TblconfiguracionTableMap::COL_CIUDADID] = true;
+        }
+
+        return $this;
+    } // setCiudadid()
+
+    /**
+     * Set the value of [telefono] column.
+     *
+     * @param string $v new value
+     * @return $this|\propel\propel\Tblconfiguracion The current object (for fluent API support)
+     */
+    public function setTelefono($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->telefono !== $v) {
+            $this->telefono = $v;
+            $this->modifiedColumns[TblconfiguracionTableMap::COL_TELEFONO] = true;
+        }
+
+        return $this;
+    } // setTelefono()
+
+    /**
+     * Set the value of [actividadeconomica] column.
+     *
+     * @param string $v new value
+     * @return $this|\propel\propel\Tblconfiguracion The current object (for fluent API support)
+     */
+    public function setActividadeconomica($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->actividadeconomica !== $v) {
+            $this->actividadeconomica = $v;
+            $this->modifiedColumns[TblconfiguracionTableMap::COL_ACTIVIDADECONOMICA] = true;
+        }
+
+        return $this;
+    } // setActividadeconomica()
+
+    /**
+     * Set the value of [regimen] column.
+     *
+     * @param string $v new value
+     * @return $this|\propel\propel\Tblconfiguracion The current object (for fluent API support)
+     */
+    public function setRegimen($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->regimen !== $v) {
+            $this->regimen = $v;
+            $this->modifiedColumns[TblconfiguracionTableMap::COL_REGIMEN] = true;
+        }
+
+        return $this;
+    } // setRegimen()
+
+    /**
+     * Set the value of [resolucion] column.
+     *
+     * @param string $v new value
+     * @return $this|\propel\propel\Tblconfiguracion The current object (for fluent API support)
+     */
+    public function setResolucion($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->resolucion !== $v) {
+            $this->resolucion = $v;
+            $this->modifiedColumns[TblconfiguracionTableMap::COL_RESOLUCION] = true;
+        }
+
+        return $this;
+    } // setResolucion()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -456,14 +661,32 @@ abstract class Tbllinea implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : TbllineaTableMap::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->lineaid = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : TblconfiguracionTableMap::translateFieldName('Configuracionid', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->configuracionid = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : TbllineaTableMap::translateFieldName('Codigo', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->codigo = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : TblconfiguracionTableMap::translateFieldName('Nombreempresa', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->nombreempresa = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : TbllineaTableMap::translateFieldName('Nombre', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->nombre = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : TblconfiguracionTableMap::translateFieldName('Nit', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->nit = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : TblconfiguracionTableMap::translateFieldName('Direccion', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->direccion = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : TblconfiguracionTableMap::translateFieldName('Ciudadid', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->ciudadid = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : TblconfiguracionTableMap::translateFieldName('Telefono', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->telefono = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : TblconfiguracionTableMap::translateFieldName('Actividadeconomica', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->actividadeconomica = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : TblconfiguracionTableMap::translateFieldName('Regimen', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->regimen = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : TblconfiguracionTableMap::translateFieldName('Resolucion', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->resolucion = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -472,10 +695,10 @@ abstract class Tbllinea implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = TbllineaTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = TblconfiguracionTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Tbllinea'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Tblconfiguracion'), 0, $e);
         }
     }
 
@@ -517,13 +740,13 @@ abstract class Tbllinea implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(TbllineaTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(TblconfiguracionTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildTbllineaQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildTblconfiguracionQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -532,8 +755,6 @@ abstract class Tbllinea implements ActiveRecordInterface
         $this->hydrate($row, 0, true, $dataFetcher->getIndexType()); // rehydrate
 
         if ($deep) {  // also de-associate any related objects?
-
-            $this->collTblproductoss = null;
 
         } // if (deep)
     }
@@ -544,8 +765,8 @@ abstract class Tbllinea implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Tbllinea::setDeleted()
-     * @see Tbllinea::isDeleted()
+     * @see Tblconfiguracion::setDeleted()
+     * @see Tblconfiguracion::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -554,11 +775,11 @@ abstract class Tbllinea implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TbllineaTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblconfiguracionTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildTbllineaQuery::create()
+            $deleteQuery = ChildTblconfiguracionQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -593,7 +814,7 @@ abstract class Tbllinea implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TbllineaTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblconfiguracionTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -612,7 +833,7 @@ abstract class Tbllinea implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                TbllineaTableMap::addInstanceToPool($this);
+                TblconfiguracionTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -649,23 +870,6 @@ abstract class Tbllinea implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->tblproductossScheduledForDeletion !== null) {
-                if (!$this->tblproductossScheduledForDeletion->isEmpty()) {
-                    \propel\propel\TblproductosQuery::create()
-                        ->filterByPrimaryKeys($this->tblproductossScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->tblproductossScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collTblproductoss !== null) {
-                foreach ($this->collTblproductoss as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             $this->alreadyInSave = false;
 
         }
@@ -686,24 +890,42 @@ abstract class Tbllinea implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[TbllineaTableMap::COL_LINEAID] = true;
-        if (null !== $this->lineaid) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . TbllineaTableMap::COL_LINEAID . ')');
+        $this->modifiedColumns[TblconfiguracionTableMap::COL_CONFIGURACIONID] = true;
+        if (null !== $this->configuracionid) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . TblconfiguracionTableMap::COL_CONFIGURACIONID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(TbllineaTableMap::COL_LINEAID)) {
-            $modifiedColumns[':p' . $index++]  = 'LineaId';
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_CONFIGURACIONID)) {
+            $modifiedColumns[':p' . $index++]  = 'configuracionId';
         }
-        if ($this->isColumnModified(TbllineaTableMap::COL_CODIGO)) {
-            $modifiedColumns[':p' . $index++]  = 'codigo';
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_NOMBREEMPRESA)) {
+            $modifiedColumns[':p' . $index++]  = 'nombreEmpresa';
         }
-        if ($this->isColumnModified(TbllineaTableMap::COL_NOMBRE)) {
-            $modifiedColumns[':p' . $index++]  = 'nombre';
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_NIT)) {
+            $modifiedColumns[':p' . $index++]  = 'nit';
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_DIRECCION)) {
+            $modifiedColumns[':p' . $index++]  = 'direccion';
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_CIUDADID)) {
+            $modifiedColumns[':p' . $index++]  = 'ciudadId';
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_TELEFONO)) {
+            $modifiedColumns[':p' . $index++]  = 'telefono';
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_ACTIVIDADECONOMICA)) {
+            $modifiedColumns[':p' . $index++]  = 'actividadEconomica';
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_REGIMEN)) {
+            $modifiedColumns[':p' . $index++]  = 'regimen';
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_RESOLUCION)) {
+            $modifiedColumns[':p' . $index++]  = 'resolucion';
         }
 
         $sql = sprintf(
-            'INSERT INTO tbllinea (%s) VALUES (%s)',
+            'INSERT INTO tblconfiguracion (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -712,14 +934,32 @@ abstract class Tbllinea implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'LineaId':
-                        $stmt->bindValue($identifier, $this->lineaid, PDO::PARAM_INT);
+                    case 'configuracionId':
+                        $stmt->bindValue($identifier, $this->configuracionid, PDO::PARAM_INT);
                         break;
-                    case 'codigo':
-                        $stmt->bindValue($identifier, $this->codigo, PDO::PARAM_STR);
+                    case 'nombreEmpresa':
+                        $stmt->bindValue($identifier, $this->nombreempresa, PDO::PARAM_STR);
                         break;
-                    case 'nombre':
-                        $stmt->bindValue($identifier, $this->nombre, PDO::PARAM_STR);
+                    case 'nit':
+                        $stmt->bindValue($identifier, $this->nit, PDO::PARAM_STR);
+                        break;
+                    case 'direccion':
+                        $stmt->bindValue($identifier, $this->direccion, PDO::PARAM_STR);
+                        break;
+                    case 'ciudadId':
+                        $stmt->bindValue($identifier, $this->ciudadid, PDO::PARAM_INT);
+                        break;
+                    case 'telefono':
+                        $stmt->bindValue($identifier, $this->telefono, PDO::PARAM_STR);
+                        break;
+                    case 'actividadEconomica':
+                        $stmt->bindValue($identifier, $this->actividadeconomica, PDO::PARAM_STR);
+                        break;
+                    case 'regimen':
+                        $stmt->bindValue($identifier, $this->regimen, PDO::PARAM_STR);
+                        break;
+                    case 'resolucion':
+                        $stmt->bindValue($identifier, $this->resolucion, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -734,7 +974,7 @@ abstract class Tbllinea implements ActiveRecordInterface
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', 0, $e);
         }
-        $this->setLineaid($pk);
+        $this->setConfiguracionid($pk);
 
         $this->setNew(false);
     }
@@ -767,7 +1007,7 @@ abstract class Tbllinea implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = TbllineaTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = TblconfiguracionTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -784,13 +1024,31 @@ abstract class Tbllinea implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getLineaid();
+                return $this->getConfiguracionid();
                 break;
             case 1:
-                return $this->getCodigo();
+                return $this->getNombreempresa();
                 break;
             case 2:
-                return $this->getNombre();
+                return $this->getNit();
+                break;
+            case 3:
+                return $this->getDireccion();
+                break;
+            case 4:
+                return $this->getCiudadid();
+                break;
+            case 5:
+                return $this->getTelefono();
+                break;
+            case 6:
+                return $this->getActividadeconomica();
+                break;
+            case 7:
+                return $this->getRegimen();
+                break;
+            case 8:
+                return $this->getResolucion();
                 break;
             default:
                 return null;
@@ -809,45 +1067,33 @@ abstract class Tbllinea implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
-     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
     {
 
-        if (isset($alreadyDumpedObjects['Tbllinea'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Tblconfiguracion'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Tbllinea'][$this->hashCode()] = true;
-        $keys = TbllineaTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Tblconfiguracion'][$this->hashCode()] = true;
+        $keys = TblconfiguracionTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getLineaid(),
-            $keys[1] => $this->getCodigo(),
-            $keys[2] => $this->getNombre(),
+            $keys[0] => $this->getConfiguracionid(),
+            $keys[1] => $this->getNombreempresa(),
+            $keys[2] => $this->getNit(),
+            $keys[3] => $this->getDireccion(),
+            $keys[4] => $this->getCiudadid(),
+            $keys[5] => $this->getTelefono(),
+            $keys[6] => $this->getActividadeconomica(),
+            $keys[7] => $this->getRegimen(),
+            $keys[8] => $this->getResolucion(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
-        if ($includeForeignObjects) {
-            if (null !== $this->collTblproductoss) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'tblproductoss';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'tblproductoss';
-                        break;
-                    default:
-                        $key = 'Tblproductoss';
-                }
-
-                $result[$key] = $this->collTblproductoss->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-        }
 
         return $result;
     }
@@ -861,11 +1107,11 @@ abstract class Tbllinea implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\propel\propel\Tbllinea
+     * @return $this|\propel\propel\Tblconfiguracion
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = TbllineaTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = TblconfiguracionTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -876,19 +1122,37 @@ abstract class Tbllinea implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\propel\propel\Tbllinea
+     * @return $this|\propel\propel\Tblconfiguracion
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setLineaid($value);
+                $this->setConfiguracionid($value);
                 break;
             case 1:
-                $this->setCodigo($value);
+                $this->setNombreempresa($value);
                 break;
             case 2:
-                $this->setNombre($value);
+                $this->setNit($value);
+                break;
+            case 3:
+                $this->setDireccion($value);
+                break;
+            case 4:
+                $this->setCiudadid($value);
+                break;
+            case 5:
+                $this->setTelefono($value);
+                break;
+            case 6:
+                $this->setActividadeconomica($value);
+                break;
+            case 7:
+                $this->setRegimen($value);
+                break;
+            case 8:
+                $this->setResolucion($value);
                 break;
         } // switch()
 
@@ -914,16 +1178,34 @@ abstract class Tbllinea implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = TbllineaTableMap::getFieldNames($keyType);
+        $keys = TblconfiguracionTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setLineaid($arr[$keys[0]]);
+            $this->setConfiguracionid($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setCodigo($arr[$keys[1]]);
+            $this->setNombreempresa($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setNombre($arr[$keys[2]]);
+            $this->setNit($arr[$keys[2]]);
+        }
+        if (array_key_exists($keys[3], $arr)) {
+            $this->setDireccion($arr[$keys[3]]);
+        }
+        if (array_key_exists($keys[4], $arr)) {
+            $this->setCiudadid($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setTelefono($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setActividadeconomica($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setRegimen($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setResolucion($arr[$keys[8]]);
         }
     }
 
@@ -944,7 +1226,7 @@ abstract class Tbllinea implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\propel\propel\Tbllinea The current object, for fluid interface
+     * @return $this|\propel\propel\Tblconfiguracion The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -964,16 +1246,34 @@ abstract class Tbllinea implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(TbllineaTableMap::DATABASE_NAME);
+        $criteria = new Criteria(TblconfiguracionTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(TbllineaTableMap::COL_LINEAID)) {
-            $criteria->add(TbllineaTableMap::COL_LINEAID, $this->lineaid);
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_CONFIGURACIONID)) {
+            $criteria->add(TblconfiguracionTableMap::COL_CONFIGURACIONID, $this->configuracionid);
         }
-        if ($this->isColumnModified(TbllineaTableMap::COL_CODIGO)) {
-            $criteria->add(TbllineaTableMap::COL_CODIGO, $this->codigo);
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_NOMBREEMPRESA)) {
+            $criteria->add(TblconfiguracionTableMap::COL_NOMBREEMPRESA, $this->nombreempresa);
         }
-        if ($this->isColumnModified(TbllineaTableMap::COL_NOMBRE)) {
-            $criteria->add(TbllineaTableMap::COL_NOMBRE, $this->nombre);
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_NIT)) {
+            $criteria->add(TblconfiguracionTableMap::COL_NIT, $this->nit);
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_DIRECCION)) {
+            $criteria->add(TblconfiguracionTableMap::COL_DIRECCION, $this->direccion);
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_CIUDADID)) {
+            $criteria->add(TblconfiguracionTableMap::COL_CIUDADID, $this->ciudadid);
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_TELEFONO)) {
+            $criteria->add(TblconfiguracionTableMap::COL_TELEFONO, $this->telefono);
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_ACTIVIDADECONOMICA)) {
+            $criteria->add(TblconfiguracionTableMap::COL_ACTIVIDADECONOMICA, $this->actividadeconomica);
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_REGIMEN)) {
+            $criteria->add(TblconfiguracionTableMap::COL_REGIMEN, $this->regimen);
+        }
+        if ($this->isColumnModified(TblconfiguracionTableMap::COL_RESOLUCION)) {
+            $criteria->add(TblconfiguracionTableMap::COL_RESOLUCION, $this->resolucion);
         }
 
         return $criteria;
@@ -991,8 +1291,8 @@ abstract class Tbllinea implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildTbllineaQuery::create();
-        $criteria->add(TbllineaTableMap::COL_LINEAID, $this->lineaid);
+        $criteria = ChildTblconfiguracionQuery::create();
+        $criteria->add(TblconfiguracionTableMap::COL_CONFIGURACIONID, $this->configuracionid);
 
         return $criteria;
     }
@@ -1005,7 +1305,7 @@ abstract class Tbllinea implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getLineaid();
+        $validPk = null !== $this->getConfiguracionid();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1021,22 +1321,22 @@ abstract class Tbllinea implements ActiveRecordInterface
 
     /**
      * Returns the primary key for this object (row).
-     * @return int
+     * @return string
      */
     public function getPrimaryKey()
     {
-        return $this->getLineaid();
+        return $this->getConfiguracionid();
     }
 
     /**
-     * Generic method to set the primary key (lineaid column).
+     * Generic method to set the primary key (configuracionid column).
      *
-     * @param       int $key Primary key.
+     * @param       string $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setLineaid($key);
+        $this->setConfiguracionid($key);
     }
 
     /**
@@ -1045,7 +1345,7 @@ abstract class Tbllinea implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getLineaid();
+        return null === $this->getConfiguracionid();
     }
 
     /**
@@ -1054,32 +1354,24 @@ abstract class Tbllinea implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \propel\propel\Tbllinea (or compatible) type.
+     * @param      object $copyObj An object of \propel\propel\Tblconfiguracion (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setCodigo($this->getCodigo());
-        $copyObj->setNombre($this->getNombre());
-
-        if ($deepCopy) {
-            // important: temporarily setNew(false) because this affects the behavior of
-            // the getter/setter methods for fkey referrer objects.
-            $copyObj->setNew(false);
-
-            foreach ($this->getTblproductoss() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addTblproductos($relObj->copy($deepCopy));
-                }
-            }
-
-        } // if ($deepCopy)
-
+        $copyObj->setNombreempresa($this->getNombreempresa());
+        $copyObj->setNit($this->getNit());
+        $copyObj->setDireccion($this->getDireccion());
+        $copyObj->setCiudadid($this->getCiudadid());
+        $copyObj->setTelefono($this->getTelefono());
+        $copyObj->setActividadeconomica($this->getActividadeconomica());
+        $copyObj->setRegimen($this->getRegimen());
+        $copyObj->setResolucion($this->getResolucion());
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setLineaid(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setConfiguracionid(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1092,7 +1384,7 @@ abstract class Tbllinea implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \propel\propel\Tbllinea Clone of current object.
+     * @return \propel\propel\Tblconfiguracion Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1105,248 +1397,6 @@ abstract class Tbllinea implements ActiveRecordInterface
         return $copyObj;
     }
 
-
-    /**
-     * Initializes a collection based on the name of a relation.
-     * Avoids crafting an 'init[$relationName]s' method name
-     * that wouldn't work when StandardEnglishPluralizer is used.
-     *
-     * @param      string $relationName The name of the relation to initialize
-     * @return void
-     */
-    public function initRelation($relationName)
-    {
-        if ('Tblproductos' == $relationName) {
-            $this->initTblproductoss();
-            return;
-        }
-    }
-
-    /**
-     * Clears out the collTblproductoss collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addTblproductoss()
-     */
-    public function clearTblproductoss()
-    {
-        $this->collTblproductoss = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collTblproductoss collection loaded partially.
-     */
-    public function resetPartialTblproductoss($v = true)
-    {
-        $this->collTblproductossPartial = $v;
-    }
-
-    /**
-     * Initializes the collTblproductoss collection.
-     *
-     * By default this just sets the collTblproductoss collection to an empty array (like clearcollTblproductoss());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initTblproductoss($overrideExisting = true)
-    {
-        if (null !== $this->collTblproductoss && !$overrideExisting) {
-            return;
-        }
-
-        $collectionClassName = TblproductosTableMap::getTableMap()->getCollectionClassName();
-
-        $this->collTblproductoss = new $collectionClassName;
-        $this->collTblproductoss->setModel('\propel\propel\Tblproductos');
-    }
-
-    /**
-     * Gets an array of ChildTblproductos objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildTbllinea is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildTblproductos[] List of ChildTblproductos objects
-     * @throws PropelException
-     */
-    public function getTblproductoss(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collTblproductossPartial && !$this->isNew();
-        if (null === $this->collTblproductoss || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collTblproductoss) {
-                // return empty collection
-                $this->initTblproductoss();
-            } else {
-                $collTblproductoss = ChildTblproductosQuery::create(null, $criteria)
-                    ->filterByTbllinea($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collTblproductossPartial && count($collTblproductoss)) {
-                        $this->initTblproductoss(false);
-
-                        foreach ($collTblproductoss as $obj) {
-                            if (false == $this->collTblproductoss->contains($obj)) {
-                                $this->collTblproductoss->append($obj);
-                            }
-                        }
-
-                        $this->collTblproductossPartial = true;
-                    }
-
-                    return $collTblproductoss;
-                }
-
-                if ($partial && $this->collTblproductoss) {
-                    foreach ($this->collTblproductoss as $obj) {
-                        if ($obj->isNew()) {
-                            $collTblproductoss[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collTblproductoss = $collTblproductoss;
-                $this->collTblproductossPartial = false;
-            }
-        }
-
-        return $this->collTblproductoss;
-    }
-
-    /**
-     * Sets a collection of ChildTblproductos objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $tblproductoss A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildTbllinea The current object (for fluent API support)
-     */
-    public function setTblproductoss(Collection $tblproductoss, ConnectionInterface $con = null)
-    {
-        /** @var ChildTblproductos[] $tblproductossToDelete */
-        $tblproductossToDelete = $this->getTblproductoss(new Criteria(), $con)->diff($tblproductoss);
-
-
-        $this->tblproductossScheduledForDeletion = $tblproductossToDelete;
-
-        foreach ($tblproductossToDelete as $tblproductosRemoved) {
-            $tblproductosRemoved->setTbllinea(null);
-        }
-
-        $this->collTblproductoss = null;
-        foreach ($tblproductoss as $tblproductos) {
-            $this->addTblproductos($tblproductos);
-        }
-
-        $this->collTblproductoss = $tblproductoss;
-        $this->collTblproductossPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Tblproductos objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Tblproductos objects.
-     * @throws PropelException
-     */
-    public function countTblproductoss(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collTblproductossPartial && !$this->isNew();
-        if (null === $this->collTblproductoss || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collTblproductoss) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getTblproductoss());
-            }
-
-            $query = ChildTblproductosQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByTbllinea($this)
-                ->count($con);
-        }
-
-        return count($this->collTblproductoss);
-    }
-
-    /**
-     * Method called to associate a ChildTblproductos object to this object
-     * through the ChildTblproductos foreign key attribute.
-     *
-     * @param  ChildTblproductos $l ChildTblproductos
-     * @return $this|\propel\propel\Tbllinea The current object (for fluent API support)
-     */
-    public function addTblproductos(ChildTblproductos $l)
-    {
-        if ($this->collTblproductoss === null) {
-            $this->initTblproductoss();
-            $this->collTblproductossPartial = true;
-        }
-
-        if (!$this->collTblproductoss->contains($l)) {
-            $this->doAddTblproductos($l);
-
-            if ($this->tblproductossScheduledForDeletion and $this->tblproductossScheduledForDeletion->contains($l)) {
-                $this->tblproductossScheduledForDeletion->remove($this->tblproductossScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildTblproductos $tblproductos The ChildTblproductos object to add.
-     */
-    protected function doAddTblproductos(ChildTblproductos $tblproductos)
-    {
-        $this->collTblproductoss[]= $tblproductos;
-        $tblproductos->setTbllinea($this);
-    }
-
-    /**
-     * @param  ChildTblproductos $tblproductos The ChildTblproductos object to remove.
-     * @return $this|ChildTbllinea The current object (for fluent API support)
-     */
-    public function removeTblproductos(ChildTblproductos $tblproductos)
-    {
-        if ($this->getTblproductoss()->contains($tblproductos)) {
-            $pos = $this->collTblproductoss->search($tblproductos);
-            $this->collTblproductoss->remove($pos);
-            if (null === $this->tblproductossScheduledForDeletion) {
-                $this->tblproductossScheduledForDeletion = clone $this->collTblproductoss;
-                $this->tblproductossScheduledForDeletion->clear();
-            }
-            $this->tblproductossScheduledForDeletion[]= clone $tblproductos;
-            $tblproductos->setTbllinea(null);
-        }
-
-        return $this;
-    }
-
     /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
@@ -1354,9 +1404,15 @@ abstract class Tbllinea implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->lineaid = null;
-        $this->codigo = null;
-        $this->nombre = null;
+        $this->configuracionid = null;
+        $this->nombreempresa = null;
+        $this->nit = null;
+        $this->direccion = null;
+        $this->ciudadid = null;
+        $this->telefono = null;
+        $this->actividadeconomica = null;
+        $this->regimen = null;
+        $this->resolucion = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1375,14 +1431,8 @@ abstract class Tbllinea implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collTblproductoss) {
-                foreach ($this->collTblproductoss as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
-        $this->collTblproductoss = null;
     }
 
     /**
@@ -1392,7 +1442,7 @@ abstract class Tbllinea implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(TbllineaTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(TblconfiguracionTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

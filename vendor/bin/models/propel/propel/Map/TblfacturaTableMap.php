@@ -59,7 +59,7 @@ class TblfacturaTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 8;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class TblfacturaTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 8;
 
     /**
      * the column name for the facturaId field
@@ -92,9 +92,24 @@ class TblfacturaTableMap extends TableMap
     const COL_FECHA = 'tblfactura.fecha';
 
     /**
-     * the column name for the tblcliente_clienteId field
+     * the column name for the estado field
      */
-    const COL_TBLCLIENTE_CLIENTEID = 'tblfactura.tblcliente_clienteId';
+    const COL_ESTADO = 'tblfactura.estado';
+
+    /**
+     * the column name for the usuarioId field
+     */
+    const COL_USUARIOID = 'tblfactura.usuarioId';
+
+    /**
+     * the column name for the totatPagado field
+     */
+    const COL_TOTATPAGADO = 'tblfactura.totatPagado';
+
+    /**
+     * the column name for the metodoPagoId field
+     */
+    const COL_METODOPAGOID = 'tblfactura.metodoPagoId';
 
     /**
      * The default string format for model objects of the related table
@@ -108,11 +123,11 @@ class TblfacturaTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Facturaid', 'Numero', 'Clienteid', 'Fecha', 'TblclienteClienteid', ),
-        self::TYPE_CAMELNAME     => array('facturaid', 'numero', 'clienteid', 'fecha', 'tblclienteClienteid', ),
-        self::TYPE_COLNAME       => array(TblfacturaTableMap::COL_FACTURAID, TblfacturaTableMap::COL_NUMERO, TblfacturaTableMap::COL_CLIENTEID, TblfacturaTableMap::COL_FECHA, TblfacturaTableMap::COL_TBLCLIENTE_CLIENTEID, ),
-        self::TYPE_FIELDNAME     => array('facturaId', 'numero', 'clienteId', 'fecha', 'tblcliente_clienteId', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Facturaid', 'Numero', 'Clienteid', 'Fecha', 'Estado', 'Usuarioid', 'Totatpagado', 'Metodopagoid', ),
+        self::TYPE_CAMELNAME     => array('facturaid', 'numero', 'clienteid', 'fecha', 'estado', 'usuarioid', 'totatpagado', 'metodopagoid', ),
+        self::TYPE_COLNAME       => array(TblfacturaTableMap::COL_FACTURAID, TblfacturaTableMap::COL_NUMERO, TblfacturaTableMap::COL_CLIENTEID, TblfacturaTableMap::COL_FECHA, TblfacturaTableMap::COL_ESTADO, TblfacturaTableMap::COL_USUARIOID, TblfacturaTableMap::COL_TOTATPAGADO, TblfacturaTableMap::COL_METODOPAGOID, ),
+        self::TYPE_FIELDNAME     => array('facturaId', 'numero', 'clienteId', 'fecha', 'estado', 'usuarioId', 'totatPagado', 'metodoPagoId', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -122,11 +137,11 @@ class TblfacturaTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Facturaid' => 0, 'Numero' => 1, 'Clienteid' => 2, 'Fecha' => 3, 'TblclienteClienteid' => 4, ),
-        self::TYPE_CAMELNAME     => array('facturaid' => 0, 'numero' => 1, 'clienteid' => 2, 'fecha' => 3, 'tblclienteClienteid' => 4, ),
-        self::TYPE_COLNAME       => array(TblfacturaTableMap::COL_FACTURAID => 0, TblfacturaTableMap::COL_NUMERO => 1, TblfacturaTableMap::COL_CLIENTEID => 2, TblfacturaTableMap::COL_FECHA => 3, TblfacturaTableMap::COL_TBLCLIENTE_CLIENTEID => 4, ),
-        self::TYPE_FIELDNAME     => array('facturaId' => 0, 'numero' => 1, 'clienteId' => 2, 'fecha' => 3, 'tblcliente_clienteId' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Facturaid' => 0, 'Numero' => 1, 'Clienteid' => 2, 'Fecha' => 3, 'Estado' => 4, 'Usuarioid' => 5, 'Totatpagado' => 6, 'Metodopagoid' => 7, ),
+        self::TYPE_CAMELNAME     => array('facturaid' => 0, 'numero' => 1, 'clienteid' => 2, 'fecha' => 3, 'estado' => 4, 'usuarioid' => 5, 'totatpagado' => 6, 'metodopagoid' => 7, ),
+        self::TYPE_COLNAME       => array(TblfacturaTableMap::COL_FACTURAID => 0, TblfacturaTableMap::COL_NUMERO => 1, TblfacturaTableMap::COL_CLIENTEID => 2, TblfacturaTableMap::COL_FECHA => 3, TblfacturaTableMap::COL_ESTADO => 4, TblfacturaTableMap::COL_USUARIOID => 5, TblfacturaTableMap::COL_TOTATPAGADO => 6, TblfacturaTableMap::COL_METODOPAGOID => 7, ),
+        self::TYPE_FIELDNAME     => array('facturaId' => 0, 'numero' => 1, 'clienteId' => 2, 'fecha' => 3, 'estado' => 4, 'usuarioId' => 5, 'totatPagado' => 6, 'metodoPagoId' => 7, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -148,9 +163,12 @@ class TblfacturaTableMap extends TableMap
         // columns
         $this->addPrimaryKey('facturaId', 'Facturaid', 'BIGINT', true, null, null);
         $this->addColumn('numero', 'Numero', 'BIGINT', true, null, null);
-        $this->addColumn('clienteId', 'Clienteid', 'BIGINT', true, null, null);
+        $this->addForeignKey('clienteId', 'Clienteid', 'BIGINT', 'tblcliente', 'clienteId', true, null, null);
         $this->addColumn('fecha', 'Fecha', 'TIMESTAMP', true, null, null);
-        $this->addColumn('tblcliente_clienteId', 'TblclienteClienteid', 'BIGINT', true, null, null);
+        $this->addColumn('estado', 'Estado', 'CHAR', false, null, '1');
+        $this->addForeignKey('usuarioId', 'Usuarioid', 'BIGINT', 'usuarios', 'id_usuario', false, null, null);
+        $this->addColumn('totatPagado', 'Totatpagado', 'INTEGER', false, null, null);
+        $this->addForeignKey('metodoPagoId', 'Metodopagoid', 'INTEGER', 'tblmetodopago', 'metodopagoId', false, null, null);
     } // initialize()
 
     /**
@@ -158,10 +176,31 @@ class TblfacturaTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Tblcliente', '\\propel\\propel\\Tblcliente', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':clienteId',
+    1 => ':clienteId',
+  ),
+), null, null, null, false);
+        $this->addRelation('Tblmetodopago', '\\propel\\propel\\Tblmetodopago', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':metodoPagoId',
+    1 => ':metodopagoId',
+  ),
+), null, null, null, false);
+        $this->addRelation('Usuarios', '\\propel\\propel\\Usuarios', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':usuarioId',
+    1 => ':id_usuario',
+  ),
+), null, null, null, false);
         $this->addRelation('Tblfacturadetalle', '\\propel\\propel\\Tblfacturadetalle', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':tblfactura_facturaId',
+    0 => ':facturaId',
     1 => ':facturaId',
   ),
 ), null, null, 'Tblfacturadetalles', false);
@@ -312,13 +351,19 @@ class TblfacturaTableMap extends TableMap
             $criteria->addSelectColumn(TblfacturaTableMap::COL_NUMERO);
             $criteria->addSelectColumn(TblfacturaTableMap::COL_CLIENTEID);
             $criteria->addSelectColumn(TblfacturaTableMap::COL_FECHA);
-            $criteria->addSelectColumn(TblfacturaTableMap::COL_TBLCLIENTE_CLIENTEID);
+            $criteria->addSelectColumn(TblfacturaTableMap::COL_ESTADO);
+            $criteria->addSelectColumn(TblfacturaTableMap::COL_USUARIOID);
+            $criteria->addSelectColumn(TblfacturaTableMap::COL_TOTATPAGADO);
+            $criteria->addSelectColumn(TblfacturaTableMap::COL_METODOPAGOID);
         } else {
             $criteria->addSelectColumn($alias . '.facturaId');
             $criteria->addSelectColumn($alias . '.numero');
             $criteria->addSelectColumn($alias . '.clienteId');
             $criteria->addSelectColumn($alias . '.fecha');
-            $criteria->addSelectColumn($alias . '.tblcliente_clienteId');
+            $criteria->addSelectColumn($alias . '.estado');
+            $criteria->addSelectColumn($alias . '.usuarioId');
+            $criteria->addSelectColumn($alias . '.totatPagado');
+            $criteria->addSelectColumn($alias . '.metodoPagoId');
         }
     }
 

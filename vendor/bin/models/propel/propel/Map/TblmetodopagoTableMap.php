@@ -11,12 +11,12 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Map\TableMapTrait;
-use propel\propel\SesionUsuario;
-use propel\propel\SesionUsuarioQuery;
+use propel\propel\Tblmetodopago;
+use propel\propel\TblmetodopagoQuery;
 
 
 /**
- * This class defines the structure of the 'sesion_usuario' table.
+ * This class defines the structure of the 'tblmetodopago' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use propel\propel\SesionUsuarioQuery;
  * (i.e. if it's a text column type).
  *
  */
-class SesionUsuarioTableMap extends TableMap
+class TblmetodopagoTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class SesionUsuarioTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'propel.propel.Map.SesionUsuarioTableMap';
+    const CLASS_NAME = 'propel.propel.Map.TblmetodopagoTableMap';
 
     /**
      * The default database name for this class
@@ -44,17 +44,17 @@ class SesionUsuarioTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'sesion_usuario';
+    const TABLE_NAME = 'tblmetodopago';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\propel\\propel\\SesionUsuario';
+    const OM_CLASS = '\\propel\\propel\\Tblmetodopago';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'propel.propel.SesionUsuario';
+    const CLASS_DEFAULT = 'propel.propel.Tblmetodopago';
 
     /**
      * The total number of columns
@@ -72,19 +72,19 @@ class SesionUsuarioTableMap extends TableMap
     const NUM_HYDRATE_COLUMNS = 3;
 
     /**
-     * the column name for the id_sesion field
+     * the column name for the metodopagoId field
      */
-    const COL_ID_SESION = 'sesion_usuario.id_sesion';
+    const COL_METODOPAGOID = 'tblmetodopago.metodopagoId';
 
     /**
-     * the column name for the id_usuario field
+     * the column name for the nombre field
      */
-    const COL_ID_USUARIO = 'sesion_usuario.id_usuario';
+    const COL_NOMBRE = 'tblmetodopago.nombre';
 
     /**
-     * the column name for the fecha_sesion field
+     * the column name for the detalle field
      */
-    const COL_FECHA_SESION = 'sesion_usuario.fecha_sesion';
+    const COL_DETALLE = 'tblmetodopago.detalle';
 
     /**
      * The default string format for model objects of the related table
@@ -98,10 +98,10 @@ class SesionUsuarioTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('IdSesion', 'IdUsuario', 'FechaSesion', ),
-        self::TYPE_CAMELNAME     => array('idSesion', 'idUsuario', 'fechaSesion', ),
-        self::TYPE_COLNAME       => array(SesionUsuarioTableMap::COL_ID_SESION, SesionUsuarioTableMap::COL_ID_USUARIO, SesionUsuarioTableMap::COL_FECHA_SESION, ),
-        self::TYPE_FIELDNAME     => array('id_sesion', 'id_usuario', 'fecha_sesion', ),
+        self::TYPE_PHPNAME       => array('Metodopagoid', 'Nombre', 'Detalle', ),
+        self::TYPE_CAMELNAME     => array('metodopagoid', 'nombre', 'detalle', ),
+        self::TYPE_COLNAME       => array(TblmetodopagoTableMap::COL_METODOPAGOID, TblmetodopagoTableMap::COL_NOMBRE, TblmetodopagoTableMap::COL_DETALLE, ),
+        self::TYPE_FIELDNAME     => array('metodopagoId', 'nombre', 'detalle', ),
         self::TYPE_NUM           => array(0, 1, 2, )
     );
 
@@ -112,10 +112,10 @@ class SesionUsuarioTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('IdSesion' => 0, 'IdUsuario' => 1, 'FechaSesion' => 2, ),
-        self::TYPE_CAMELNAME     => array('idSesion' => 0, 'idUsuario' => 1, 'fechaSesion' => 2, ),
-        self::TYPE_COLNAME       => array(SesionUsuarioTableMap::COL_ID_SESION => 0, SesionUsuarioTableMap::COL_ID_USUARIO => 1, SesionUsuarioTableMap::COL_FECHA_SESION => 2, ),
-        self::TYPE_FIELDNAME     => array('id_sesion' => 0, 'id_usuario' => 1, 'fecha_sesion' => 2, ),
+        self::TYPE_PHPNAME       => array('Metodopagoid' => 0, 'Nombre' => 1, 'Detalle' => 2, ),
+        self::TYPE_CAMELNAME     => array('metodopagoid' => 0, 'nombre' => 1, 'detalle' => 2, ),
+        self::TYPE_COLNAME       => array(TblmetodopagoTableMap::COL_METODOPAGOID => 0, TblmetodopagoTableMap::COL_NOMBRE => 1, TblmetodopagoTableMap::COL_DETALLE => 2, ),
+        self::TYPE_FIELDNAME     => array('metodopagoId' => 0, 'nombre' => 1, 'detalle' => 2, ),
         self::TYPE_NUM           => array(0, 1, 2, )
     );
 
@@ -129,16 +129,16 @@ class SesionUsuarioTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('sesion_usuario');
-        $this->setPhpName('SesionUsuario');
+        $this->setName('tblmetodopago');
+        $this->setPhpName('Tblmetodopago');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\propel\\propel\\SesionUsuario');
+        $this->setClassName('\\propel\\propel\\Tblmetodopago');
         $this->setPackage('propel.propel');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('id_sesion', 'IdSesion', 'BIGINT', true, null, null);
-        $this->addColumn('id_usuario', 'IdUsuario', 'INTEGER', true, 10, null);
-        $this->addColumn('fecha_sesion', 'FechaSesion', 'VARCHAR', true, 20, null);
+        $this->addPrimaryKey('metodopagoId', 'Metodopagoid', 'INTEGER', true, null, null);
+        $this->addColumn('nombre', 'Nombre', 'VARCHAR', false, 100, null);
+        $this->addColumn('detalle', 'Detalle', 'LONGVARCHAR', false, null, null);
     } // initialize()
 
     /**
@@ -146,6 +146,13 @@ class SesionUsuarioTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Tblfactura', '\\propel\\propel\\Tblfactura', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':metodoPagoId',
+    1 => ':metodopagoId',
+  ),
+), null, null, 'Tblfacturas', false);
     } // buildRelations()
 
     /**
@@ -164,11 +171,11 @@ class SesionUsuarioTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('IdSesion', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Metodopagoid', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('IdSesion', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('IdSesion', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('IdSesion', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('IdSesion', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('IdSesion', TableMap::TYPE_PHPNAME, $indexType)];
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Metodopagoid', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Metodopagoid', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Metodopagoid', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Metodopagoid', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Metodopagoid', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -185,10 +192,10 @@ class SesionUsuarioTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return (string) $row[
+        return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('IdSesion', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Metodopagoid', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -205,7 +212,7 @@ class SesionUsuarioTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? SesionUsuarioTableMap::CLASS_DEFAULT : SesionUsuarioTableMap::OM_CLASS;
+        return $withPrefix ? TblmetodopagoTableMap::CLASS_DEFAULT : TblmetodopagoTableMap::OM_CLASS;
     }
 
     /**
@@ -219,22 +226,22 @@ class SesionUsuarioTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (SesionUsuario object, last column rank)
+     * @return array           (Tblmetodopago object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = SesionUsuarioTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = SesionUsuarioTableMap::getInstanceFromPool($key))) {
+        $key = TblmetodopagoTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = TblmetodopagoTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + SesionUsuarioTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + TblmetodopagoTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = SesionUsuarioTableMap::OM_CLASS;
-            /** @var SesionUsuario $obj */
+            $cls = TblmetodopagoTableMap::OM_CLASS;
+            /** @var Tblmetodopago $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            SesionUsuarioTableMap::addInstanceToPool($obj, $key);
+            TblmetodopagoTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -257,18 +264,18 @@ class SesionUsuarioTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = SesionUsuarioTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = SesionUsuarioTableMap::getInstanceFromPool($key))) {
+            $key = TblmetodopagoTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = TblmetodopagoTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var SesionUsuario $obj */
+                /** @var Tblmetodopago $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                SesionUsuarioTableMap::addInstanceToPool($obj, $key);
+                TblmetodopagoTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -289,13 +296,13 @@ class SesionUsuarioTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(SesionUsuarioTableMap::COL_ID_SESION);
-            $criteria->addSelectColumn(SesionUsuarioTableMap::COL_ID_USUARIO);
-            $criteria->addSelectColumn(SesionUsuarioTableMap::COL_FECHA_SESION);
+            $criteria->addSelectColumn(TblmetodopagoTableMap::COL_METODOPAGOID);
+            $criteria->addSelectColumn(TblmetodopagoTableMap::COL_NOMBRE);
+            $criteria->addSelectColumn(TblmetodopagoTableMap::COL_DETALLE);
         } else {
-            $criteria->addSelectColumn($alias . '.id_sesion');
-            $criteria->addSelectColumn($alias . '.id_usuario');
-            $criteria->addSelectColumn($alias . '.fecha_sesion');
+            $criteria->addSelectColumn($alias . '.metodopagoId');
+            $criteria->addSelectColumn($alias . '.nombre');
+            $criteria->addSelectColumn($alias . '.detalle');
         }
     }
 
@@ -308,7 +315,7 @@ class SesionUsuarioTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(SesionUsuarioTableMap::DATABASE_NAME)->getTable(SesionUsuarioTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(TblmetodopagoTableMap::DATABASE_NAME)->getTable(TblmetodopagoTableMap::TABLE_NAME);
     }
 
     /**
@@ -316,16 +323,16 @@ class SesionUsuarioTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(SesionUsuarioTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(SesionUsuarioTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new SesionUsuarioTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(TblmetodopagoTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(TblmetodopagoTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new TblmetodopagoTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a SesionUsuario or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Tblmetodopago or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or SesionUsuario object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Tblmetodopago object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -336,27 +343,27 @@ class SesionUsuarioTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SesionUsuarioTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblmetodopagoTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \propel\propel\SesionUsuario) { // it's a model object
+        } elseif ($values instanceof \propel\propel\Tblmetodopago) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(SesionUsuarioTableMap::DATABASE_NAME);
-            $criteria->add(SesionUsuarioTableMap::COL_ID_SESION, (array) $values, Criteria::IN);
+            $criteria = new Criteria(TblmetodopagoTableMap::DATABASE_NAME);
+            $criteria->add(TblmetodopagoTableMap::COL_METODOPAGOID, (array) $values, Criteria::IN);
         }
 
-        $query = SesionUsuarioQuery::create()->mergeWith($criteria);
+        $query = TblmetodopagoQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            SesionUsuarioTableMap::clearInstancePool();
+            TblmetodopagoTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                SesionUsuarioTableMap::removeInstanceFromPool($singleval);
+                TblmetodopagoTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -364,20 +371,20 @@ class SesionUsuarioTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the sesion_usuario table.
+     * Deletes all rows from the tblmetodopago table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return SesionUsuarioQuery::create()->doDeleteAll($con);
+        return TblmetodopagoQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a SesionUsuario or Criteria object.
+     * Performs an INSERT on the database, given a Tblmetodopago or Criteria object.
      *
-     * @param mixed               $criteria Criteria or SesionUsuario object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Tblmetodopago object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -386,22 +393,22 @@ class SesionUsuarioTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SesionUsuarioTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblmetodopagoTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from SesionUsuario object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Tblmetodopago object
         }
 
-        if ($criteria->containsKey(SesionUsuarioTableMap::COL_ID_SESION) && $criteria->keyContainsValue(SesionUsuarioTableMap::COL_ID_SESION) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.SesionUsuarioTableMap::COL_ID_SESION.')');
+        if ($criteria->containsKey(TblmetodopagoTableMap::COL_METODOPAGOID) && $criteria->keyContainsValue(TblmetodopagoTableMap::COL_METODOPAGOID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.TblmetodopagoTableMap::COL_METODOPAGOID.')');
         }
 
 
         // Set the correct dbName
-        $query = SesionUsuarioQuery::create()->mergeWith($criteria);
+        $query = TblmetodopagoQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -410,7 +417,7 @@ class SesionUsuarioTableMap extends TableMap
         });
     }
 
-} // SesionUsuarioTableMap
+} // TblmetodopagoTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-SesionUsuarioTableMap::buildTableMap();
+TblmetodopagoTableMap::buildTableMap();

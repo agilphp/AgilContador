@@ -99,28 +99,14 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
     protected $precio;
 
     /**
-     * The value for the tblfactura_facturaid field.
-     *
-     * @var        string
+     * @var        ChildTblfactura
      */
-    protected $tblfactura_facturaid;
-
-    /**
-     * The value for the tblproductos_productoid field.
-     *
-     * @var        string
-     */
-    protected $tblproductos_productoid;
+    protected $aTblfactura;
 
     /**
      * @var        ChildTblproductos
      */
     protected $aTblproductos;
-
-    /**
-     * @var        ChildTblfactura
-     */
-    protected $aTblfactura;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -406,26 +392,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
     }
 
     /**
-     * Get the [tblfactura_facturaid] column value.
-     *
-     * @return string
-     */
-    public function getTblfacturaFacturaid()
-    {
-        return $this->tblfactura_facturaid;
-    }
-
-    /**
-     * Get the [tblproductos_productoid] column value.
-     *
-     * @return string
-     */
-    public function getTblproductosProductoid()
-    {
-        return $this->tblproductos_productoid;
-    }
-
-    /**
      * Set the value of [facturadetalleid] column.
      *
      * @param string $v new value
@@ -462,6 +428,10 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
             $this->modifiedColumns[TblfacturadetalleTableMap::COL_FACTURAID] = true;
         }
 
+        if ($this->aTblfactura !== null && $this->aTblfactura->getFacturaid() !== $v) {
+            $this->aTblfactura = null;
+        }
+
         return $this;
     } // setFacturaid()
 
@@ -480,6 +450,10 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
         if ($this->productoid !== $v) {
             $this->productoid = $v;
             $this->modifiedColumns[TblfacturadetalleTableMap::COL_PRODUCTOID] = true;
+        }
+
+        if ($this->aTblproductos !== null && $this->aTblproductos->getProductoid() !== $v) {
+            $this->aTblproductos = null;
         }
 
         return $this;
@@ -524,54 +498,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
 
         return $this;
     } // setPrecio()
-
-    /**
-     * Set the value of [tblfactura_facturaid] column.
-     *
-     * @param string $v new value
-     * @return $this|\propel\propel\Tblfacturadetalle The current object (for fluent API support)
-     */
-    public function setTblfacturaFacturaid($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->tblfactura_facturaid !== $v) {
-            $this->tblfactura_facturaid = $v;
-            $this->modifiedColumns[TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID] = true;
-        }
-
-        if ($this->aTblfactura !== null && $this->aTblfactura->getFacturaid() !== $v) {
-            $this->aTblfactura = null;
-        }
-
-        return $this;
-    } // setTblfacturaFacturaid()
-
-    /**
-     * Set the value of [tblproductos_productoid] column.
-     *
-     * @param string $v new value
-     * @return $this|\propel\propel\Tblfacturadetalle The current object (for fluent API support)
-     */
-    public function setTblproductosProductoid($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->tblproductos_productoid !== $v) {
-            $this->tblproductos_productoid = $v;
-            $this->modifiedColumns[TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID] = true;
-        }
-
-        if ($this->aTblproductos !== null && $this->aTblproductos->getProductoid() !== $v) {
-            $this->aTblproductos = null;
-        }
-
-        return $this;
-    } // setTblproductosProductoid()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -623,12 +549,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : TblfacturadetalleTableMap::translateFieldName('Precio', TableMap::TYPE_PHPNAME, $indexType)];
             $this->precio = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : TblfacturadetalleTableMap::translateFieldName('TblfacturaFacturaid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tblfactura_facturaid = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : TblfacturadetalleTableMap::translateFieldName('TblproductosProductoid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tblproductos_productoid = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -637,7 +557,7 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = TblfacturadetalleTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = TblfacturadetalleTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Tblfacturadetalle'), 0, $e);
@@ -659,10 +579,10 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aTblfactura !== null && $this->tblfactura_facturaid !== $this->aTblfactura->getFacturaid()) {
+        if ($this->aTblfactura !== null && $this->facturaid !== $this->aTblfactura->getFacturaid()) {
             $this->aTblfactura = null;
         }
-        if ($this->aTblproductos !== null && $this->tblproductos_productoid !== $this->aTblproductos->getProductoid()) {
+        if ($this->aTblproductos !== null && $this->productoid !== $this->aTblproductos->getProductoid()) {
             $this->aTblproductos = null;
         }
     } // ensureConsistency
@@ -704,8 +624,8 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aTblproductos = null;
             $this->aTblfactura = null;
+            $this->aTblproductos = null;
         } // if (deep)
     }
 
@@ -814,18 +734,18 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aTblproductos !== null) {
-                if ($this->aTblproductos->isModified() || $this->aTblproductos->isNew()) {
-                    $affectedRows += $this->aTblproductos->save($con);
-                }
-                $this->setTblproductos($this->aTblproductos);
-            }
-
             if ($this->aTblfactura !== null) {
                 if ($this->aTblfactura->isModified() || $this->aTblfactura->isNew()) {
                     $affectedRows += $this->aTblfactura->save($con);
                 }
                 $this->setTblfactura($this->aTblfactura);
+            }
+
+            if ($this->aTblproductos !== null) {
+                if ($this->aTblproductos->isModified() || $this->aTblproductos->isNew()) {
+                    $affectedRows += $this->aTblproductos->save($con);
+                }
+                $this->setTblproductos($this->aTblproductos);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -880,12 +800,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
         if ($this->isColumnModified(TblfacturadetalleTableMap::COL_PRECIO)) {
             $modifiedColumns[':p' . $index++]  = 'precio';
         }
-        if ($this->isColumnModified(TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID)) {
-            $modifiedColumns[':p' . $index++]  = 'tblfactura_facturaId';
-        }
-        if ($this->isColumnModified(TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID)) {
-            $modifiedColumns[':p' . $index++]  = 'TblProductos_productoId';
-        }
 
         $sql = sprintf(
             'INSERT INTO tblfacturadetalle (%s) VALUES (%s)',
@@ -911,12 +825,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
                         break;
                     case 'precio':
                         $stmt->bindValue($identifier, $this->precio, PDO::PARAM_STR);
-                        break;
-                    case 'tblfactura_facturaId':
-                        $stmt->bindValue($identifier, $this->tblfactura_facturaid, PDO::PARAM_INT);
-                        break;
-                    case 'TblProductos_productoId':
-                        $stmt->bindValue($identifier, $this->tblproductos_productoid, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -995,12 +903,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
             case 4:
                 return $this->getPrecio();
                 break;
-            case 5:
-                return $this->getTblfacturaFacturaid();
-                break;
-            case 6:
-                return $this->getTblproductosProductoid();
-                break;
             default:
                 return null;
                 break;
@@ -1036,8 +938,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
             $keys[2] => $this->getProductoid(),
             $keys[3] => $this->getCantidad(),
             $keys[4] => $this->getPrecio(),
-            $keys[5] => $this->getTblfacturaFacturaid(),
-            $keys[6] => $this->getTblproductosProductoid(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1045,21 +945,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aTblproductos) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'tblproductos';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'tblproductos';
-                        break;
-                    default:
-                        $key = 'Tblproductos';
-                }
-
-                $result[$key] = $this->aTblproductos->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->aTblfactura) {
 
                 switch ($keyType) {
@@ -1074,6 +959,21 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aTblfactura->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aTblproductos) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'tblproductos';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'tblproductos';
+                        break;
+                    default:
+                        $key = 'Tblproductos';
+                }
+
+                $result[$key] = $this->aTblproductos->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1124,12 +1024,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
             case 4:
                 $this->setPrecio($value);
                 break;
-            case 5:
-                $this->setTblfacturaFacturaid($value);
-                break;
-            case 6:
-                $this->setTblproductosProductoid($value);
-                break;
         } // switch()
 
         return $this;
@@ -1170,12 +1064,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
         }
         if (array_key_exists($keys[4], $arr)) {
             $this->setPrecio($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setTblfacturaFacturaid($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setTblproductosProductoid($arr[$keys[6]]);
         }
     }
 
@@ -1232,12 +1120,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
         }
         if ($this->isColumnModified(TblfacturadetalleTableMap::COL_PRECIO)) {
             $criteria->add(TblfacturadetalleTableMap::COL_PRECIO, $this->precio);
-        }
-        if ($this->isColumnModified(TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID)) {
-            $criteria->add(TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID, $this->tblfactura_facturaid);
-        }
-        if ($this->isColumnModified(TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID)) {
-            $criteria->add(TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $this->tblproductos_productoid);
         }
 
         return $criteria;
@@ -1329,8 +1211,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
         $copyObj->setProductoid($this->getProductoid());
         $copyObj->setCantidad($this->getCantidad());
         $copyObj->setPrecio($this->getPrecio());
-        $copyObj->setTblfacturaFacturaid($this->getTblfacturaFacturaid());
-        $copyObj->setTblproductosProductoid($this->getTblproductosProductoid());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setFacturadetalleid(NULL); // this is a auto-increment column, so set to default value
@@ -1360,57 +1240,6 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildTblproductos object.
-     *
-     * @param  ChildTblproductos $v
-     * @return $this|\propel\propel\Tblfacturadetalle The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setTblproductos(ChildTblproductos $v = null)
-    {
-        if ($v === null) {
-            $this->setTblproductosProductoid(NULL);
-        } else {
-            $this->setTblproductosProductoid($v->getProductoid());
-        }
-
-        $this->aTblproductos = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildTblproductos object, it will not be re-added.
-        if ($v !== null) {
-            $v->addTblfacturadetalle($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildTblproductos object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildTblproductos The associated ChildTblproductos object.
-     * @throws PropelException
-     */
-    public function getTblproductos(ConnectionInterface $con = null)
-    {
-        if ($this->aTblproductos === null && (($this->tblproductos_productoid !== "" && $this->tblproductos_productoid !== null))) {
-            $this->aTblproductos = ChildTblproductosQuery::create()->findPk($this->tblproductos_productoid, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aTblproductos->addTblfacturadetalles($this);
-             */
-        }
-
-        return $this->aTblproductos;
-    }
-
-    /**
      * Declares an association between this object and a ChildTblfactura object.
      *
      * @param  ChildTblfactura $v
@@ -1420,9 +1249,9 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
     public function setTblfactura(ChildTblfactura $v = null)
     {
         if ($v === null) {
-            $this->setTblfacturaFacturaid(NULL);
+            $this->setFacturaid(NULL);
         } else {
-            $this->setTblfacturaFacturaid($v->getFacturaid());
+            $this->setFacturaid($v->getFacturaid());
         }
 
         $this->aTblfactura = $v;
@@ -1447,8 +1276,8 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
      */
     public function getTblfactura(ConnectionInterface $con = null)
     {
-        if ($this->aTblfactura === null && (($this->tblfactura_facturaid !== "" && $this->tblfactura_facturaid !== null))) {
-            $this->aTblfactura = ChildTblfacturaQuery::create()->findPk($this->tblfactura_facturaid, $con);
+        if ($this->aTblfactura === null && (($this->facturaid !== "" && $this->facturaid !== null))) {
+            $this->aTblfactura = ChildTblfacturaQuery::create()->findPk($this->facturaid, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
@@ -1462,25 +1291,74 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildTblproductos object.
+     *
+     * @param  ChildTblproductos $v
+     * @return $this|\propel\propel\Tblfacturadetalle The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setTblproductos(ChildTblproductos $v = null)
+    {
+        if ($v === null) {
+            $this->setProductoid(NULL);
+        } else {
+            $this->setProductoid($v->getProductoid());
+        }
+
+        $this->aTblproductos = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildTblproductos object, it will not be re-added.
+        if ($v !== null) {
+            $v->addTblfacturadetalle($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildTblproductos object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildTblproductos The associated ChildTblproductos object.
+     * @throws PropelException
+     */
+    public function getTblproductos(ConnectionInterface $con = null)
+    {
+        if ($this->aTblproductos === null && (($this->productoid !== "" && $this->productoid !== null))) {
+            $this->aTblproductos = ChildTblproductosQuery::create()->findPk($this->productoid, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aTblproductos->addTblfacturadetalles($this);
+             */
+        }
+
+        return $this->aTblproductos;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
-        if (null !== $this->aTblproductos) {
-            $this->aTblproductos->removeTblfacturadetalle($this);
-        }
         if (null !== $this->aTblfactura) {
             $this->aTblfactura->removeTblfacturadetalle($this);
+        }
+        if (null !== $this->aTblproductos) {
+            $this->aTblproductos->removeTblfacturadetalle($this);
         }
         $this->facturadetalleid = null;
         $this->facturaid = null;
         $this->productoid = null;
         $this->cantidad = null;
         $this->precio = null;
-        $this->tblfactura_facturaid = null;
-        $this->tblproductos_productoid = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1501,8 +1379,8 @@ abstract class Tblfacturadetalle implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->aTblproductos = null;
         $this->aTblfactura = null;
+        $this->aTblproductos = null;
     }
 
     /**

@@ -155,7 +155,7 @@ class TblingresoTableMap extends TableMap
         $this->addRelation('Tblingresodetalle', '\\propel\\propel\\Tblingresodetalle', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':TblIngreso_ingresoId',
+    0 => ':ingresoId',
     1 => ':ingresoId',
   ),
 ), null, null, 'Tblingresodetalles', false);

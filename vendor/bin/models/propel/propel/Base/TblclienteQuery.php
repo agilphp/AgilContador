@@ -7,6 +7,7 @@ use \PDO;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -40,6 +41,18 @@ use propel\propel\Map\TblclienteTableMap;
  * @method     ChildTblclienteQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
  * @method     ChildTblclienteQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildTblclienteQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
+ *
+ * @method     ChildTblclienteQuery leftJoinTblfactura($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblfactura relation
+ * @method     ChildTblclienteQuery rightJoinTblfactura($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblfactura relation
+ * @method     ChildTblclienteQuery innerJoinTblfactura($relationAlias = null) Adds a INNER JOIN clause to the query using the Tblfactura relation
+ *
+ * @method     ChildTblclienteQuery joinWithTblfactura($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tblfactura relation
+ *
+ * @method     ChildTblclienteQuery leftJoinWithTblfactura() Adds a LEFT JOIN clause and with to the query using the Tblfactura relation
+ * @method     ChildTblclienteQuery rightJoinWithTblfactura() Adds a RIGHT JOIN clause and with to the query using the Tblfactura relation
+ * @method     ChildTblclienteQuery innerJoinWithTblfactura() Adds a INNER JOIN clause and with to the query using the Tblfactura relation
+ *
+ * @method     \propel\propel\TblfacturaQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildTblcliente findOne(ConnectionInterface $con = null) Return the first ChildTblcliente matching the query
  * @method     ChildTblcliente findOneOrCreate(ConnectionInterface $con = null) Return the first ChildTblcliente matching the query, or a new ChildTblcliente object populated from the query conditions when no match is found
@@ -436,6 +449,79 @@ abstract class TblclienteQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(TblclienteTableMap::COL_CIUDADID, $ciudadid, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \propel\propel\Tblfactura object
+     *
+     * @param \propel\propel\Tblfactura|ObjectCollection $tblfactura the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildTblclienteQuery The current query, for fluid interface
+     */
+    public function filterByTblfactura($tblfactura, $comparison = null)
+    {
+        if ($tblfactura instanceof \propel\propel\Tblfactura) {
+            return $this
+                ->addUsingAlias(TblclienteTableMap::COL_CLIENTEID, $tblfactura->getClienteid(), $comparison);
+        } elseif ($tblfactura instanceof ObjectCollection) {
+            return $this
+                ->useTblfacturaQuery()
+                ->filterByPrimaryKeys($tblfactura->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByTblfactura() only accepts arguments of type \propel\propel\Tblfactura or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Tblfactura relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildTblclienteQuery The current query, for fluid interface
+     */
+    public function joinTblfactura($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Tblfactura');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Tblfactura');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Tblfactura relation Tblfactura object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \propel\propel\TblfacturaQuery A secondary query class using the current class as primary query
+     */
+    public function useTblfacturaQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinTblfactura($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Tblfactura', '\propel\propel\TblfacturaQuery');
     }
 
     /**

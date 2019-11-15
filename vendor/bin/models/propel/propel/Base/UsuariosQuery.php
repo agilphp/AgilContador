@@ -7,6 +7,7 @@ use \PDO;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -24,12 +25,16 @@ use propel\propel\Map\UsuariosTableMap;
  * @method     ChildUsuariosQuery orderByEmail($order = Criteria::ASC) Order by the email column
  * @method     ChildUsuariosQuery orderByNivel($order = Criteria::ASC) Order by the nivel column
  * @method     ChildUsuariosQuery orderByClave($order = Criteria::ASC) Order by the clave column
+ * @method     ChildUsuariosQuery orderByRolid($order = Criteria::ASC) Order by the rolId column
+ * @method     ChildUsuariosQuery orderByMenuid($order = Criteria::ASC) Order by the menuId column
  *
  * @method     ChildUsuariosQuery groupByIdUsuario() Group by the id_usuario column
  * @method     ChildUsuariosQuery groupByNombre() Group by the nombre column
  * @method     ChildUsuariosQuery groupByEmail() Group by the email column
  * @method     ChildUsuariosQuery groupByNivel() Group by the nivel column
  * @method     ChildUsuariosQuery groupByClave() Group by the clave column
+ * @method     ChildUsuariosQuery groupByRolid() Group by the rolId column
+ * @method     ChildUsuariosQuery groupByMenuid() Group by the menuId column
  *
  * @method     ChildUsuariosQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildUsuariosQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -39,30 +44,68 @@ use propel\propel\Map\UsuariosTableMap;
  * @method     ChildUsuariosQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildUsuariosQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
+ * @method     ChildUsuariosQuery leftJoinTblmenu($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblmenu relation
+ * @method     ChildUsuariosQuery rightJoinTblmenu($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblmenu relation
+ * @method     ChildUsuariosQuery innerJoinTblmenu($relationAlias = null) Adds a INNER JOIN clause to the query using the Tblmenu relation
+ *
+ * @method     ChildUsuariosQuery joinWithTblmenu($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tblmenu relation
+ *
+ * @method     ChildUsuariosQuery leftJoinWithTblmenu() Adds a LEFT JOIN clause and with to the query using the Tblmenu relation
+ * @method     ChildUsuariosQuery rightJoinWithTblmenu() Adds a RIGHT JOIN clause and with to the query using the Tblmenu relation
+ * @method     ChildUsuariosQuery innerJoinWithTblmenu() Adds a INNER JOIN clause and with to the query using the Tblmenu relation
+ *
+ * @method     ChildUsuariosQuery leftJoinTblrol($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblrol relation
+ * @method     ChildUsuariosQuery rightJoinTblrol($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblrol relation
+ * @method     ChildUsuariosQuery innerJoinTblrol($relationAlias = null) Adds a INNER JOIN clause to the query using the Tblrol relation
+ *
+ * @method     ChildUsuariosQuery joinWithTblrol($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tblrol relation
+ *
+ * @method     ChildUsuariosQuery leftJoinWithTblrol() Adds a LEFT JOIN clause and with to the query using the Tblrol relation
+ * @method     ChildUsuariosQuery rightJoinWithTblrol() Adds a RIGHT JOIN clause and with to the query using the Tblrol relation
+ * @method     ChildUsuariosQuery innerJoinWithTblrol() Adds a INNER JOIN clause and with to the query using the Tblrol relation
+ *
+ * @method     ChildUsuariosQuery leftJoinTblfactura($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblfactura relation
+ * @method     ChildUsuariosQuery rightJoinTblfactura($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblfactura relation
+ * @method     ChildUsuariosQuery innerJoinTblfactura($relationAlias = null) Adds a INNER JOIN clause to the query using the Tblfactura relation
+ *
+ * @method     ChildUsuariosQuery joinWithTblfactura($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tblfactura relation
+ *
+ * @method     ChildUsuariosQuery leftJoinWithTblfactura() Adds a LEFT JOIN clause and with to the query using the Tblfactura relation
+ * @method     ChildUsuariosQuery rightJoinWithTblfactura() Adds a RIGHT JOIN clause and with to the query using the Tblfactura relation
+ * @method     ChildUsuariosQuery innerJoinWithTblfactura() Adds a INNER JOIN clause and with to the query using the Tblfactura relation
+ *
+ * @method     \propel\propel\TblmenuQuery|\propel\propel\TblrolQuery|\propel\propel\TblfacturaQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ *
  * @method     ChildUsuarios findOne(ConnectionInterface $con = null) Return the first ChildUsuarios matching the query
  * @method     ChildUsuarios findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUsuarios matching the query, or a new ChildUsuarios object populated from the query conditions when no match is found
  *
- * @method     ChildUsuarios findOneByIdUsuario(int $id_usuario) Return the first ChildUsuarios filtered by the id_usuario column
+ * @method     ChildUsuarios findOneByIdUsuario(string $id_usuario) Return the first ChildUsuarios filtered by the id_usuario column
  * @method     ChildUsuarios findOneByNombre(string $nombre) Return the first ChildUsuarios filtered by the nombre column
  * @method     ChildUsuarios findOneByEmail(string $email) Return the first ChildUsuarios filtered by the email column
  * @method     ChildUsuarios findOneByNivel(string $nivel) Return the first ChildUsuarios filtered by the nivel column
- * @method     ChildUsuarios findOneByClave(string $clave) Return the first ChildUsuarios filtered by the clave column *
+ * @method     ChildUsuarios findOneByClave(string $clave) Return the first ChildUsuarios filtered by the clave column
+ * @method     ChildUsuarios findOneByRolid(int $rolId) Return the first ChildUsuarios filtered by the rolId column
+ * @method     ChildUsuarios findOneByMenuid(int $menuId) Return the first ChildUsuarios filtered by the menuId column *
 
  * @method     ChildUsuarios requirePk($key, ConnectionInterface $con = null) Return the ChildUsuarios by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsuarios requireOne(ConnectionInterface $con = null) Return the first ChildUsuarios matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildUsuarios requireOneByIdUsuario(int $id_usuario) Return the first ChildUsuarios filtered by the id_usuario column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUsuarios requireOneByIdUsuario(string $id_usuario) Return the first ChildUsuarios filtered by the id_usuario column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsuarios requireOneByNombre(string $nombre) Return the first ChildUsuarios filtered by the nombre column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsuarios requireOneByEmail(string $email) Return the first ChildUsuarios filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsuarios requireOneByNivel(string $nivel) Return the first ChildUsuarios filtered by the nivel column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsuarios requireOneByClave(string $clave) Return the first ChildUsuarios filtered by the clave column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUsuarios requireOneByRolid(int $rolId) Return the first ChildUsuarios filtered by the rolId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUsuarios requireOneByMenuid(int $menuId) Return the first ChildUsuarios filtered by the menuId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUsuarios[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUsuarios objects based on current ModelCriteria
- * @method     ChildUsuarios[]|ObjectCollection findByIdUsuario(int $id_usuario) Return ChildUsuarios objects filtered by the id_usuario column
+ * @method     ChildUsuarios[]|ObjectCollection findByIdUsuario(string $id_usuario) Return ChildUsuarios objects filtered by the id_usuario column
  * @method     ChildUsuarios[]|ObjectCollection findByNombre(string $nombre) Return ChildUsuarios objects filtered by the nombre column
  * @method     ChildUsuarios[]|ObjectCollection findByEmail(string $email) Return ChildUsuarios objects filtered by the email column
  * @method     ChildUsuarios[]|ObjectCollection findByNivel(string $nivel) Return ChildUsuarios objects filtered by the nivel column
  * @method     ChildUsuarios[]|ObjectCollection findByClave(string $clave) Return ChildUsuarios objects filtered by the clave column
+ * @method     ChildUsuarios[]|ObjectCollection findByRolid(int $rolId) Return ChildUsuarios objects filtered by the rolId column
+ * @method     ChildUsuarios[]|ObjectCollection findByMenuid(int $menuId) Return ChildUsuarios objects filtered by the menuId column
  * @method     ChildUsuarios[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -161,7 +204,7 @@ abstract class UsuariosQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id_usuario, nombre, email, nivel, clave FROM usuarios WHERE id_usuario = :p0';
+        $sql = 'SELECT id_usuario, nombre, email, nivel, clave, rolId, menuId FROM usuarios WHERE id_usuario = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -390,6 +433,319 @@ abstract class UsuariosQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UsuariosTableMap::COL_CLAVE, $clave, $comparison);
+    }
+
+    /**
+     * Filter the query on the rolId column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByRolid(1234); // WHERE rolId = 1234
+     * $query->filterByRolid(array(12, 34)); // WHERE rolId IN (12, 34)
+     * $query->filterByRolid(array('min' => 12)); // WHERE rolId > 12
+     * </code>
+     *
+     * @see       filterByTblrol()
+     *
+     * @param     mixed $rolid The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUsuariosQuery The current query, for fluid interface
+     */
+    public function filterByRolid($rolid = null, $comparison = null)
+    {
+        if (is_array($rolid)) {
+            $useMinMax = false;
+            if (isset($rolid['min'])) {
+                $this->addUsingAlias(UsuariosTableMap::COL_ROLID, $rolid['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($rolid['max'])) {
+                $this->addUsingAlias(UsuariosTableMap::COL_ROLID, $rolid['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UsuariosTableMap::COL_ROLID, $rolid, $comparison);
+    }
+
+    /**
+     * Filter the query on the menuId column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByMenuid(1234); // WHERE menuId = 1234
+     * $query->filterByMenuid(array(12, 34)); // WHERE menuId IN (12, 34)
+     * $query->filterByMenuid(array('min' => 12)); // WHERE menuId > 12
+     * </code>
+     *
+     * @see       filterByTblmenu()
+     *
+     * @param     mixed $menuid The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUsuariosQuery The current query, for fluid interface
+     */
+    public function filterByMenuid($menuid = null, $comparison = null)
+    {
+        if (is_array($menuid)) {
+            $useMinMax = false;
+            if (isset($menuid['min'])) {
+                $this->addUsingAlias(UsuariosTableMap::COL_MENUID, $menuid['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($menuid['max'])) {
+                $this->addUsingAlias(UsuariosTableMap::COL_MENUID, $menuid['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UsuariosTableMap::COL_MENUID, $menuid, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \propel\propel\Tblmenu object
+     *
+     * @param \propel\propel\Tblmenu|ObjectCollection $tblmenu The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildUsuariosQuery The current query, for fluid interface
+     */
+    public function filterByTblmenu($tblmenu, $comparison = null)
+    {
+        if ($tblmenu instanceof \propel\propel\Tblmenu) {
+            return $this
+                ->addUsingAlias(UsuariosTableMap::COL_MENUID, $tblmenu->getMenuid(), $comparison);
+        } elseif ($tblmenu instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(UsuariosTableMap::COL_MENUID, $tblmenu->toKeyValue('PrimaryKey', 'Menuid'), $comparison);
+        } else {
+            throw new PropelException('filterByTblmenu() only accepts arguments of type \propel\propel\Tblmenu or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Tblmenu relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildUsuariosQuery The current query, for fluid interface
+     */
+    public function joinTblmenu($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Tblmenu');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Tblmenu');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Tblmenu relation Tblmenu object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \propel\propel\TblmenuQuery A secondary query class using the current class as primary query
+     */
+    public function useTblmenuQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinTblmenu($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Tblmenu', '\propel\propel\TblmenuQuery');
+    }
+
+    /**
+     * Filter the query by a related \propel\propel\Tblrol object
+     *
+     * @param \propel\propel\Tblrol|ObjectCollection $tblrol The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildUsuariosQuery The current query, for fluid interface
+     */
+    public function filterByTblrol($tblrol, $comparison = null)
+    {
+        if ($tblrol instanceof \propel\propel\Tblrol) {
+            return $this
+                ->addUsingAlias(UsuariosTableMap::COL_ROLID, $tblrol->getRolid(), $comparison);
+        } elseif ($tblrol instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(UsuariosTableMap::COL_ROLID, $tblrol->toKeyValue('PrimaryKey', 'Rolid'), $comparison);
+        } else {
+            throw new PropelException('filterByTblrol() only accepts arguments of type \propel\propel\Tblrol or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Tblrol relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildUsuariosQuery The current query, for fluid interface
+     */
+    public function joinTblrol($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Tblrol');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Tblrol');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Tblrol relation Tblrol object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \propel\propel\TblrolQuery A secondary query class using the current class as primary query
+     */
+    public function useTblrolQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinTblrol($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Tblrol', '\propel\propel\TblrolQuery');
+    }
+
+    /**
+     * Filter the query by a related \propel\propel\Tblfactura object
+     *
+     * @param \propel\propel\Tblfactura|ObjectCollection $tblfactura the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildUsuariosQuery The current query, for fluid interface
+     */
+    public function filterByTblfactura($tblfactura, $comparison = null)
+    {
+        if ($tblfactura instanceof \propel\propel\Tblfactura) {
+            return $this
+                ->addUsingAlias(UsuariosTableMap::COL_ID_USUARIO, $tblfactura->getUsuarioid(), $comparison);
+        } elseif ($tblfactura instanceof ObjectCollection) {
+            return $this
+                ->useTblfacturaQuery()
+                ->filterByPrimaryKeys($tblfactura->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByTblfactura() only accepts arguments of type \propel\propel\Tblfactura or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Tblfactura relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildUsuariosQuery The current query, for fluid interface
+     */
+    public function joinTblfactura($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Tblfactura');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Tblfactura');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Tblfactura relation Tblfactura object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \propel\propel\TblfacturaQuery A secondary query class using the current class as primary query
+     */
+    public function useTblfacturaQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinTblfactura($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Tblfactura', '\propel\propel\TblfacturaQuery');
     }
 
     /**

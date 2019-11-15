@@ -9,14 +9,19 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
+use propel\propel\Tblcliente as ChildTblcliente;
 use propel\propel\TblclienteQuery as ChildTblclienteQuery;
+use propel\propel\Tblfactura as ChildTblfactura;
+use propel\propel\TblfacturaQuery as ChildTblfacturaQuery;
 use propel\propel\Map\TblclienteTableMap;
+use propel\propel\Map\TblfacturaTableMap;
 
 /**
  * Base class that represents a row from the 'tblcliente' table.
@@ -102,12 +107,24 @@ abstract class Tblcliente implements ActiveRecordInterface
     protected $ciudadid;
 
     /**
+     * @var        ObjectCollection|ChildTblfactura[] Collection to store aggregation of ChildTblfactura objects.
+     */
+    protected $collTblfacturas;
+    protected $collTblfacturasPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
      * @var boolean
      */
     protected $alreadyInSave = false;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildTblfactura[]
+     */
+    protected $tblfacturasScheduledForDeletion = null;
 
     /**
      * Initializes internal state of propel\propel\Base\Tblcliente object.
@@ -636,6 +653,8 @@ abstract class Tblcliente implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->collTblfacturas = null;
+
         } // if (deep)
     }
 
@@ -748,6 +767,23 @@ abstract class Tblcliente implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
+            }
+
+            if ($this->tblfacturasScheduledForDeletion !== null) {
+                if (!$this->tblfacturasScheduledForDeletion->isEmpty()) {
+                    \propel\propel\TblfacturaQuery::create()
+                        ->filterByPrimaryKeys($this->tblfacturasScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->tblfacturasScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collTblfacturas !== null) {
+                foreach ($this->collTblfacturas as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
             }
 
             $this->alreadyInSave = false;
@@ -920,10 +956,11 @@ abstract class Tblcliente implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
         if (isset($alreadyDumpedObjects['Tblcliente'][$this->hashCode()])) {
@@ -944,6 +981,23 @@ abstract class Tblcliente implements ActiveRecordInterface
             $result[$key] = $virtualColumn;
         }
 
+        if ($includeForeignObjects) {
+            if (null !== $this->collTblfacturas) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'tblfacturas';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'tblfacturas';
+                        break;
+                    default:
+                        $key = 'Tblfacturas';
+                }
+
+                $result[$key] = $this->collTblfacturas->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+        }
 
         return $result;
     }
@@ -1189,6 +1243,20 @@ abstract class Tblcliente implements ActiveRecordInterface
         $copyObj->setDireccion($this->getDireccion());
         $copyObj->setTelefono($this->getTelefono());
         $copyObj->setCiudadid($this->getCiudadid());
+
+        if ($deepCopy) {
+            // important: temporarily setNew(false) because this affects the behavior of
+            // the getter/setter methods for fkey referrer objects.
+            $copyObj->setNew(false);
+
+            foreach ($this->getTblfacturas() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addTblfactura($relObj->copy($deepCopy));
+                }
+            }
+
+        } // if ($deepCopy)
+
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setClienteid(NULL); // this is a auto-increment column, so set to default value
@@ -1215,6 +1283,298 @@ abstract class Tblcliente implements ActiveRecordInterface
         $this->copyInto($copyObj, $deepCopy);
 
         return $copyObj;
+    }
+
+
+    /**
+     * Initializes a collection based on the name of a relation.
+     * Avoids crafting an 'init[$relationName]s' method name
+     * that wouldn't work when StandardEnglishPluralizer is used.
+     *
+     * @param      string $relationName The name of the relation to initialize
+     * @return void
+     */
+    public function initRelation($relationName)
+    {
+        if ('Tblfactura' == $relationName) {
+            $this->initTblfacturas();
+            return;
+        }
+    }
+
+    /**
+     * Clears out the collTblfacturas collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addTblfacturas()
+     */
+    public function clearTblfacturas()
+    {
+        $this->collTblfacturas = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collTblfacturas collection loaded partially.
+     */
+    public function resetPartialTblfacturas($v = true)
+    {
+        $this->collTblfacturasPartial = $v;
+    }
+
+    /**
+     * Initializes the collTblfacturas collection.
+     *
+     * By default this just sets the collTblfacturas collection to an empty array (like clearcollTblfacturas());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initTblfacturas($overrideExisting = true)
+    {
+        if (null !== $this->collTblfacturas && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = TblfacturaTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collTblfacturas = new $collectionClassName;
+        $this->collTblfacturas->setModel('\propel\propel\Tblfactura');
+    }
+
+    /**
+     * Gets an array of ChildTblfactura objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildTblcliente is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildTblfactura[] List of ChildTblfactura objects
+     * @throws PropelException
+     */
+    public function getTblfacturas(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTblfacturasPartial && !$this->isNew();
+        if (null === $this->collTblfacturas || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collTblfacturas) {
+                // return empty collection
+                $this->initTblfacturas();
+            } else {
+                $collTblfacturas = ChildTblfacturaQuery::create(null, $criteria)
+                    ->filterByTblcliente($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collTblfacturasPartial && count($collTblfacturas)) {
+                        $this->initTblfacturas(false);
+
+                        foreach ($collTblfacturas as $obj) {
+                            if (false == $this->collTblfacturas->contains($obj)) {
+                                $this->collTblfacturas->append($obj);
+                            }
+                        }
+
+                        $this->collTblfacturasPartial = true;
+                    }
+
+                    return $collTblfacturas;
+                }
+
+                if ($partial && $this->collTblfacturas) {
+                    foreach ($this->collTblfacturas as $obj) {
+                        if ($obj->isNew()) {
+                            $collTblfacturas[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collTblfacturas = $collTblfacturas;
+                $this->collTblfacturasPartial = false;
+            }
+        }
+
+        return $this->collTblfacturas;
+    }
+
+    /**
+     * Sets a collection of ChildTblfactura objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $tblfacturas A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildTblcliente The current object (for fluent API support)
+     */
+    public function setTblfacturas(Collection $tblfacturas, ConnectionInterface $con = null)
+    {
+        /** @var ChildTblfactura[] $tblfacturasToDelete */
+        $tblfacturasToDelete = $this->getTblfacturas(new Criteria(), $con)->diff($tblfacturas);
+
+
+        $this->tblfacturasScheduledForDeletion = $tblfacturasToDelete;
+
+        foreach ($tblfacturasToDelete as $tblfacturaRemoved) {
+            $tblfacturaRemoved->setTblcliente(null);
+        }
+
+        $this->collTblfacturas = null;
+        foreach ($tblfacturas as $tblfactura) {
+            $this->addTblfactura($tblfactura);
+        }
+
+        $this->collTblfacturas = $tblfacturas;
+        $this->collTblfacturasPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Tblfactura objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Tblfactura objects.
+     * @throws PropelException
+     */
+    public function countTblfacturas(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTblfacturasPartial && !$this->isNew();
+        if (null === $this->collTblfacturas || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collTblfacturas) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getTblfacturas());
+            }
+
+            $query = ChildTblfacturaQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByTblcliente($this)
+                ->count($con);
+        }
+
+        return count($this->collTblfacturas);
+    }
+
+    /**
+     * Method called to associate a ChildTblfactura object to this object
+     * through the ChildTblfactura foreign key attribute.
+     *
+     * @param  ChildTblfactura $l ChildTblfactura
+     * @return $this|\propel\propel\Tblcliente The current object (for fluent API support)
+     */
+    public function addTblfactura(ChildTblfactura $l)
+    {
+        if ($this->collTblfacturas === null) {
+            $this->initTblfacturas();
+            $this->collTblfacturasPartial = true;
+        }
+
+        if (!$this->collTblfacturas->contains($l)) {
+            $this->doAddTblfactura($l);
+
+            if ($this->tblfacturasScheduledForDeletion and $this->tblfacturasScheduledForDeletion->contains($l)) {
+                $this->tblfacturasScheduledForDeletion->remove($this->tblfacturasScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildTblfactura $tblfactura The ChildTblfactura object to add.
+     */
+    protected function doAddTblfactura(ChildTblfactura $tblfactura)
+    {
+        $this->collTblfacturas[]= $tblfactura;
+        $tblfactura->setTblcliente($this);
+    }
+
+    /**
+     * @param  ChildTblfactura $tblfactura The ChildTblfactura object to remove.
+     * @return $this|ChildTblcliente The current object (for fluent API support)
+     */
+    public function removeTblfactura(ChildTblfactura $tblfactura)
+    {
+        if ($this->getTblfacturas()->contains($tblfactura)) {
+            $pos = $this->collTblfacturas->search($tblfactura);
+            $this->collTblfacturas->remove($pos);
+            if (null === $this->tblfacturasScheduledForDeletion) {
+                $this->tblfacturasScheduledForDeletion = clone $this->collTblfacturas;
+                $this->tblfacturasScheduledForDeletion->clear();
+            }
+            $this->tblfacturasScheduledForDeletion[]= clone $tblfactura;
+            $tblfactura->setTblcliente(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Tblcliente is new, it will return
+     * an empty collection; or if this Tblcliente has previously
+     * been saved, it will retrieve related Tblfacturas from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Tblcliente.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildTblfactura[] List of ChildTblfactura objects
+     */
+    public function getTblfacturasJoinTblmetodopago(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildTblfacturaQuery::create(null, $criteria);
+        $query->joinWith('Tblmetodopago', $joinBehavior);
+
+        return $this->getTblfacturas($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Tblcliente is new, it will return
+     * an empty collection; or if this Tblcliente has previously
+     * been saved, it will retrieve related Tblfacturas from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Tblcliente.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildTblfactura[] List of ChildTblfactura objects
+     */
+    public function getTblfacturasJoinUsuarios(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildTblfacturaQuery::create(null, $criteria);
+        $query->joinWith('Usuarios', $joinBehavior);
+
+        return $this->getTblfacturas($query, $con);
     }
 
     /**
@@ -1248,8 +1608,14 @@ abstract class Tblcliente implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collTblfacturas) {
+                foreach ($this->collTblfacturas as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
+        $this->collTblfacturas = null;
     }
 
     /**

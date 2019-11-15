@@ -59,7 +59,7 @@ class UsuariosTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 7;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class UsuariosTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /**
      * the column name for the id_usuario field
@@ -97,6 +97,16 @@ class UsuariosTableMap extends TableMap
     const COL_CLAVE = 'usuarios.clave';
 
     /**
+     * the column name for the rolId field
+     */
+    const COL_ROLID = 'usuarios.rolId';
+
+    /**
+     * the column name for the menuId field
+     */
+    const COL_MENUID = 'usuarios.menuId';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -108,11 +118,11 @@ class UsuariosTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('IdUsuario', 'Nombre', 'Email', 'Nivel', 'Clave', ),
-        self::TYPE_CAMELNAME     => array('idUsuario', 'nombre', 'email', 'nivel', 'clave', ),
-        self::TYPE_COLNAME       => array(UsuariosTableMap::COL_ID_USUARIO, UsuariosTableMap::COL_NOMBRE, UsuariosTableMap::COL_EMAIL, UsuariosTableMap::COL_NIVEL, UsuariosTableMap::COL_CLAVE, ),
-        self::TYPE_FIELDNAME     => array('id_usuario', 'nombre', 'email', 'nivel', 'clave', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('IdUsuario', 'Nombre', 'Email', 'Nivel', 'Clave', 'Rolid', 'Menuid', ),
+        self::TYPE_CAMELNAME     => array('idUsuario', 'nombre', 'email', 'nivel', 'clave', 'rolid', 'menuid', ),
+        self::TYPE_COLNAME       => array(UsuariosTableMap::COL_ID_USUARIO, UsuariosTableMap::COL_NOMBRE, UsuariosTableMap::COL_EMAIL, UsuariosTableMap::COL_NIVEL, UsuariosTableMap::COL_CLAVE, UsuariosTableMap::COL_ROLID, UsuariosTableMap::COL_MENUID, ),
+        self::TYPE_FIELDNAME     => array('id_usuario', 'nombre', 'email', 'nivel', 'clave', 'rolId', 'menuId', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -122,11 +132,11 @@ class UsuariosTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('IdUsuario' => 0, 'Nombre' => 1, 'Email' => 2, 'Nivel' => 3, 'Clave' => 4, ),
-        self::TYPE_CAMELNAME     => array('idUsuario' => 0, 'nombre' => 1, 'email' => 2, 'nivel' => 3, 'clave' => 4, ),
-        self::TYPE_COLNAME       => array(UsuariosTableMap::COL_ID_USUARIO => 0, UsuariosTableMap::COL_NOMBRE => 1, UsuariosTableMap::COL_EMAIL => 2, UsuariosTableMap::COL_NIVEL => 3, UsuariosTableMap::COL_CLAVE => 4, ),
-        self::TYPE_FIELDNAME     => array('id_usuario' => 0, 'nombre' => 1, 'email' => 2, 'nivel' => 3, 'clave' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('IdUsuario' => 0, 'Nombre' => 1, 'Email' => 2, 'Nivel' => 3, 'Clave' => 4, 'Rolid' => 5, 'Menuid' => 6, ),
+        self::TYPE_CAMELNAME     => array('idUsuario' => 0, 'nombre' => 1, 'email' => 2, 'nivel' => 3, 'clave' => 4, 'rolid' => 5, 'menuid' => 6, ),
+        self::TYPE_COLNAME       => array(UsuariosTableMap::COL_ID_USUARIO => 0, UsuariosTableMap::COL_NOMBRE => 1, UsuariosTableMap::COL_EMAIL => 2, UsuariosTableMap::COL_NIVEL => 3, UsuariosTableMap::COL_CLAVE => 4, UsuariosTableMap::COL_ROLID => 5, UsuariosTableMap::COL_MENUID => 6, ),
+        self::TYPE_FIELDNAME     => array('id_usuario' => 0, 'nombre' => 1, 'email' => 2, 'nivel' => 3, 'clave' => 4, 'rolId' => 5, 'menuId' => 6, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -146,11 +156,13 @@ class UsuariosTableMap extends TableMap
         $this->setPackage('propel.propel');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('id_usuario', 'IdUsuario', 'INTEGER', true, 10, null);
+        $this->addPrimaryKey('id_usuario', 'IdUsuario', 'BIGINT', true, null, null);
         $this->addColumn('nombre', 'Nombre', 'VARCHAR', true, 100, null);
         $this->addColumn('email', 'Email', 'VARCHAR', true, 100, null);
         $this->addColumn('nivel', 'Nivel', 'CHAR', true, null, null);
         $this->addColumn('clave', 'Clave', 'VARCHAR', true, 60, null);
+        $this->addForeignKey('rolId', 'Rolid', 'INTEGER', 'tblrol', 'rolId', true, null, null);
+        $this->addForeignKey('menuId', 'Menuid', 'INTEGER', 'tblmenu', 'menuId', true, 5, null);
     } // initialize()
 
     /**
@@ -158,6 +170,27 @@ class UsuariosTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Tblmenu', '\\propel\\propel\\Tblmenu', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':menuId',
+    1 => ':menuId',
+  ),
+), null, null, null, false);
+        $this->addRelation('Tblrol', '\\propel\\propel\\Tblrol', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':rolId',
+    1 => ':rolId',
+  ),
+), null, null, null, false);
+        $this->addRelation('Tblfactura', '\\propel\\propel\\Tblfactura', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':usuarioId',
+    1 => ':id_usuario',
+  ),
+), null, null, 'Tblfacturas', false);
     } // buildRelations()
 
     /**
@@ -197,7 +230,7 @@ class UsuariosTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return (int) $row[
+        return (string) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
                 : self::translateFieldName('IdUsuario', TableMap::TYPE_PHPNAME, $indexType)
@@ -306,12 +339,16 @@ class UsuariosTableMap extends TableMap
             $criteria->addSelectColumn(UsuariosTableMap::COL_EMAIL);
             $criteria->addSelectColumn(UsuariosTableMap::COL_NIVEL);
             $criteria->addSelectColumn(UsuariosTableMap::COL_CLAVE);
+            $criteria->addSelectColumn(UsuariosTableMap::COL_ROLID);
+            $criteria->addSelectColumn(UsuariosTableMap::COL_MENUID);
         } else {
             $criteria->addSelectColumn($alias . '.id_usuario');
             $criteria->addSelectColumn($alias . '.nombre');
             $criteria->addSelectColumn($alias . '.email');
             $criteria->addSelectColumn($alias . '.nivel');
             $criteria->addSelectColumn($alias . '.clave');
+            $criteria->addSelectColumn($alias . '.rolId');
+            $criteria->addSelectColumn($alias . '.menuId');
         }
     }
 

@@ -706,9 +706,10 @@ abstract class Tblingreso implements ActiveRecordInterface
 
             if ($this->tblingresodetallesScheduledForDeletion !== null) {
                 if (!$this->tblingresodetallesScheduledForDeletion->isEmpty()) {
-                    \propel\propel\TblingresodetalleQuery::create()
-                        ->filterByPrimaryKeys($this->tblingresodetallesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
+                    foreach ($this->tblingresodetallesScheduledForDeletion as $tblingresodetalle) {
+                        // need to save related object because we set the relation to null
+                        $tblingresodetalle->save($con);
+                    }
                     $this->tblingresodetallesScheduledForDeletion = null;
                 }
             }
@@ -1408,7 +1409,7 @@ abstract class Tblingreso implements ActiveRecordInterface
                 $this->tblingresodetallesScheduledForDeletion = clone $this->collTblingresodetalles;
                 $this->tblingresodetallesScheduledForDeletion->clear();
             }
-            $this->tblingresodetallesScheduledForDeletion[]= clone $tblingresodetalle;
+            $this->tblingresodetallesScheduledForDeletion[]= $tblingresodetalle;
             $tblingresodetalle->setTblingreso(null);
         }
 

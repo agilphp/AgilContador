@@ -92,20 +92,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
     protected $cantidad;
 
     /**
-     * The value for the tblegreso_egresoid field.
-     *
-     * @var        string
-     */
-    protected $tblegreso_egresoid;
-
-    /**
-     * The value for the tblproductos_productoid field.
-     *
-     * @var        string
-     */
-    protected $tblproductos_productoid;
-
-    /**
      * @var        ChildTblegreso
      */
     protected $aTblegreso;
@@ -389,26 +375,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
     }
 
     /**
-     * Get the [tblegreso_egresoid] column value.
-     *
-     * @return string
-     */
-    public function getTblegresoEgresoid()
-    {
-        return $this->tblegreso_egresoid;
-    }
-
-    /**
-     * Get the [tblproductos_productoid] column value.
-     *
-     * @return string
-     */
-    public function getTblproductosProductoid()
-    {
-        return $this->tblproductos_productoid;
-    }
-
-    /**
      * Set the value of [egresodetalleid] column.
      *
      * @param string $v new value
@@ -445,6 +411,10 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
             $this->modifiedColumns[TblegresodetalleTableMap::COL_EGRESOID] = true;
         }
 
+        if ($this->aTblegreso !== null && $this->aTblegreso->getEgresoid() !== $v) {
+            $this->aTblegreso = null;
+        }
+
         return $this;
     } // setEgresoid()
 
@@ -463,6 +433,10 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
         if ($this->productoid !== $v) {
             $this->productoid = $v;
             $this->modifiedColumns[TblegresodetalleTableMap::COL_PRODUCTOID] = true;
+        }
+
+        if ($this->aTblproductos !== null && $this->aTblproductos->getProductoid() !== $v) {
+            $this->aTblproductos = null;
         }
 
         return $this;
@@ -487,54 +461,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
 
         return $this;
     } // setCantidad()
-
-    /**
-     * Set the value of [tblegreso_egresoid] column.
-     *
-     * @param string $v new value
-     * @return $this|\propel\propel\Tblegresodetalle The current object (for fluent API support)
-     */
-    public function setTblegresoEgresoid($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->tblegreso_egresoid !== $v) {
-            $this->tblegreso_egresoid = $v;
-            $this->modifiedColumns[TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID] = true;
-        }
-
-        if ($this->aTblegreso !== null && $this->aTblegreso->getEgresoid() !== $v) {
-            $this->aTblegreso = null;
-        }
-
-        return $this;
-    } // setTblegresoEgresoid()
-
-    /**
-     * Set the value of [tblproductos_productoid] column.
-     *
-     * @param string $v new value
-     * @return $this|\propel\propel\Tblegresodetalle The current object (for fluent API support)
-     */
-    public function setTblproductosProductoid($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->tblproductos_productoid !== $v) {
-            $this->tblproductos_productoid = $v;
-            $this->modifiedColumns[TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID] = true;
-        }
-
-        if ($this->aTblproductos !== null && $this->aTblproductos->getProductoid() !== $v) {
-            $this->aTblproductos = null;
-        }
-
-        return $this;
-    } // setTblproductosProductoid()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -583,12 +509,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : TblegresodetalleTableMap::translateFieldName('Cantidad', TableMap::TYPE_PHPNAME, $indexType)];
             $this->cantidad = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : TblegresodetalleTableMap::translateFieldName('TblegresoEgresoid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tblegreso_egresoid = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : TblegresodetalleTableMap::translateFieldName('TblproductosProductoid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tblproductos_productoid = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -597,7 +517,7 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = TblegresodetalleTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = TblegresodetalleTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Tblegresodetalle'), 0, $e);
@@ -619,10 +539,10 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aTblegreso !== null && $this->tblegreso_egresoid !== $this->aTblegreso->getEgresoid()) {
+        if ($this->aTblegreso !== null && $this->egresoid !== $this->aTblegreso->getEgresoid()) {
             $this->aTblegreso = null;
         }
-        if ($this->aTblproductos !== null && $this->tblproductos_productoid !== $this->aTblproductos->getProductoid()) {
+        if ($this->aTblproductos !== null && $this->productoid !== $this->aTblproductos->getProductoid()) {
             $this->aTblproductos = null;
         }
     } // ensureConsistency
@@ -837,12 +757,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
         if ($this->isColumnModified(TblegresodetalleTableMap::COL_CANTIDAD)) {
             $modifiedColumns[':p' . $index++]  = 'cantidad';
         }
-        if ($this->isColumnModified(TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID)) {
-            $modifiedColumns[':p' . $index++]  = 'TblEgreso_egresoId';
-        }
-        if ($this->isColumnModified(TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID)) {
-            $modifiedColumns[':p' . $index++]  = 'TblProductos_productoId';
-        }
 
         $sql = sprintf(
             'INSERT INTO tblegresodetalle (%s) VALUES (%s)',
@@ -865,12 +779,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
                         break;
                     case 'cantidad':
                         $stmt->bindValue($identifier, $this->cantidad, PDO::PARAM_STR);
-                        break;
-                    case 'TblEgreso_egresoId':
-                        $stmt->bindValue($identifier, $this->tblegreso_egresoid, PDO::PARAM_INT);
-                        break;
-                    case 'TblProductos_productoId':
-                        $stmt->bindValue($identifier, $this->tblproductos_productoid, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -946,12 +854,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
             case 3:
                 return $this->getCantidad();
                 break;
-            case 4:
-                return $this->getTblegresoEgresoid();
-                break;
-            case 5:
-                return $this->getTblproductosProductoid();
-                break;
             default:
                 return null;
                 break;
@@ -986,8 +888,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
             $keys[1] => $this->getEgresoid(),
             $keys[2] => $this->getProductoid(),
             $keys[3] => $this->getCantidad(),
-            $keys[4] => $this->getTblegresoEgresoid(),
-            $keys[5] => $this->getTblproductosProductoid(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1071,12 +971,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
             case 3:
                 $this->setCantidad($value);
                 break;
-            case 4:
-                $this->setTblegresoEgresoid($value);
-                break;
-            case 5:
-                $this->setTblproductosProductoid($value);
-                break;
         } // switch()
 
         return $this;
@@ -1114,12 +1008,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
         }
         if (array_key_exists($keys[3], $arr)) {
             $this->setCantidad($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setTblegresoEgresoid($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setTblproductosProductoid($arr[$keys[5]]);
         }
     }
 
@@ -1173,12 +1061,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
         }
         if ($this->isColumnModified(TblegresodetalleTableMap::COL_CANTIDAD)) {
             $criteria->add(TblegresodetalleTableMap::COL_CANTIDAD, $this->cantidad);
-        }
-        if ($this->isColumnModified(TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID)) {
-            $criteria->add(TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID, $this->tblegreso_egresoid);
-        }
-        if ($this->isColumnModified(TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID)) {
-            $criteria->add(TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $this->tblproductos_productoid);
         }
 
         return $criteria;
@@ -1269,8 +1151,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
         $copyObj->setEgresoid($this->getEgresoid());
         $copyObj->setProductoid($this->getProductoid());
         $copyObj->setCantidad($this->getCantidad());
-        $copyObj->setTblegresoEgresoid($this->getTblegresoEgresoid());
-        $copyObj->setTblproductosProductoid($this->getTblproductosProductoid());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setEgresodetalleid(NULL); // this is a auto-increment column, so set to default value
@@ -1309,9 +1189,9 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
     public function setTblegreso(ChildTblegreso $v = null)
     {
         if ($v === null) {
-            $this->setTblegresoEgresoid(NULL);
+            $this->setEgresoid(NULL);
         } else {
-            $this->setTblegresoEgresoid($v->getEgresoid());
+            $this->setEgresoid($v->getEgresoid());
         }
 
         $this->aTblegreso = $v;
@@ -1336,8 +1216,8 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
      */
     public function getTblegreso(ConnectionInterface $con = null)
     {
-        if ($this->aTblegreso === null && (($this->tblegreso_egresoid !== "" && $this->tblegreso_egresoid !== null))) {
-            $this->aTblegreso = ChildTblegresoQuery::create()->findPk($this->tblegreso_egresoid, $con);
+        if ($this->aTblegreso === null && (($this->egresoid !== "" && $this->egresoid !== null))) {
+            $this->aTblegreso = ChildTblegresoQuery::create()->findPk($this->egresoid, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
@@ -1360,9 +1240,9 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
     public function setTblproductos(ChildTblproductos $v = null)
     {
         if ($v === null) {
-            $this->setTblproductosProductoid(NULL);
+            $this->setProductoid(NULL);
         } else {
-            $this->setTblproductosProductoid($v->getProductoid());
+            $this->setProductoid($v->getProductoid());
         }
 
         $this->aTblproductos = $v;
@@ -1387,8 +1267,8 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
      */
     public function getTblproductos(ConnectionInterface $con = null)
     {
-        if ($this->aTblproductos === null && (($this->tblproductos_productoid !== "" && $this->tblproductos_productoid !== null))) {
-            $this->aTblproductos = ChildTblproductosQuery::create()->findPk($this->tblproductos_productoid, $con);
+        if ($this->aTblproductos === null && (($this->productoid !== "" && $this->productoid !== null))) {
+            $this->aTblproductos = ChildTblproductosQuery::create()->findPk($this->productoid, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
@@ -1418,8 +1298,6 @@ abstract class Tblegresodetalle implements ActiveRecordInterface
         $this->egresoid = null;
         $this->productoid = null;
         $this->cantidad = null;
-        $this->tblegreso_egresoid = null;
-        $this->tblproductos_productoid = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

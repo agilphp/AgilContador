@@ -2,10 +2,10 @@
 
 namespace propel\propel;
 
-use propel\propel\Base\Tbllinea as BaseTbllinea;
+use propel\propel\Base\TblmenuQuery as BaseTblmenuQuery;
 
 /**
- * Skeleton subclass for representing a row from the 'tbllinea' table.
+ * Skeleton subclass for performing query and update operations on the 'tblmenu' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use propel\propel\Base\Tbllinea as BaseTbllinea;
  * long as it does not already exist in the output directory.
  *
  */
-class Tbllinea extends BaseTbllinea
+class TblmenuQuery extends BaseTblmenuQuery
 {
 
 }

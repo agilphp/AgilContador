@@ -9,28 +9,33 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use propel\propel\SesionUsuarioQuery as ChildSesionUsuarioQuery;
-use propel\propel\Map\SesionUsuarioTableMap;
+use propel\propel\Tblcategoria as ChildTblcategoria;
+use propel\propel\TblcategoriaQuery as ChildTblcategoriaQuery;
+use propel\propel\Tblproductos as ChildTblproductos;
+use propel\propel\TblproductosQuery as ChildTblproductosQuery;
+use propel\propel\Map\TblcategoriaTableMap;
+use propel\propel\Map\TblproductosTableMap;
 
 /**
- * Base class that represents a row from the 'sesion_usuario' table.
+ * Base class that represents a row from the 'tblcategoria' table.
  *
  *
  *
  * @package    propel.generator.propel.propel.Base
  */
-abstract class SesionUsuario implements ActiveRecordInterface
+abstract class Tblcategoria implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\propel\\propel\\Map\\SesionUsuarioTableMap';
+    const TABLE_MAP = '\\propel\\propel\\Map\\TblcategoriaTableMap';
 
 
     /**
@@ -60,25 +65,38 @@ abstract class SesionUsuario implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the id_sesion field.
-     *
-     * @var        string
-     */
-    protected $id_sesion;
-
-    /**
-     * The value for the id_usuario field.
+     * The value for the lineaid field.
      *
      * @var        int
      */
-    protected $id_usuario;
+    protected $lineaid;
 
     /**
-     * The value for the fecha_sesion field.
+     * The value for the codigo field.
      *
      * @var        string
      */
-    protected $fecha_sesion;
+    protected $codigo;
+
+    /**
+     * The value for the nombre field.
+     *
+     * @var        string
+     */
+    protected $nombre;
+
+    /**
+     * The value for the descripcion field.
+     *
+     * @var        string
+     */
+    protected $descripcion;
+
+    /**
+     * @var        ObjectCollection|ChildTblproductos[] Collection to store aggregation of ChildTblproductos objects.
+     */
+    protected $collTblproductoss;
+    protected $collTblproductossPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -89,7 +107,13 @@ abstract class SesionUsuario implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of propel\propel\Base\SesionUsuario object.
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildTblproductos[]
+     */
+    protected $tblproductossScheduledForDeletion = null;
+
+    /**
+     * Initializes internal state of propel\propel\Base\Tblcategoria object.
      */
     public function __construct()
     {
@@ -184,9 +208,9 @@ abstract class SesionUsuario implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>SesionUsuario</code> instance.  If
-     * <code>obj</code> is an instance of <code>SesionUsuario</code>, delegates to
-     * <code>equals(SesionUsuario)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Tblcategoria</code> instance.  If
+     * <code>obj</code> is an instance of <code>Tblcategoria</code>, delegates to
+     * <code>equals(Tblcategoria)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -252,7 +276,7 @@ abstract class SesionUsuario implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|SesionUsuario The current object, for fluid interface
+     * @return $this|Tblcategoria The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -314,94 +338,124 @@ abstract class SesionUsuario implements ActiveRecordInterface
     }
 
     /**
-     * Get the [id_sesion] column value.
-     *
-     * @return string
-     */
-    public function getIdSesion()
-    {
-        return $this->id_sesion;
-    }
-
-    /**
-     * Get the [id_usuario] column value.
+     * Get the [lineaid] column value.
      *
      * @return int
      */
-    public function getIdUsuario()
+    public function getLineaid()
     {
-        return $this->id_usuario;
+        return $this->lineaid;
     }
 
     /**
-     * Get the [fecha_sesion] column value.
+     * Get the [codigo] column value.
      *
      * @return string
      */
-    public function getFechaSesion()
+    public function getCodigo()
     {
-        return $this->fecha_sesion;
+        return $this->codigo;
     }
 
     /**
-     * Set the value of [id_sesion] column.
+     * Get the [nombre] column value.
      *
-     * @param string $v new value
-     * @return $this|\propel\propel\SesionUsuario The current object (for fluent API support)
+     * @return string
      */
-    public function setIdSesion($v)
+    public function getNombre()
     {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->id_sesion !== $v) {
-            $this->id_sesion = $v;
-            $this->modifiedColumns[SesionUsuarioTableMap::COL_ID_SESION] = true;
-        }
-
-        return $this;
-    } // setIdSesion()
+        return $this->nombre;
+    }
 
     /**
-     * Set the value of [id_usuario] column.
+     * Get the [descripcion] column value.
+     *
+     * @return string
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set the value of [lineaid] column.
      *
      * @param int $v new value
-     * @return $this|\propel\propel\SesionUsuario The current object (for fluent API support)
+     * @return $this|\propel\propel\Tblcategoria The current object (for fluent API support)
      */
-    public function setIdUsuario($v)
+    public function setLineaid($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->id_usuario !== $v) {
-            $this->id_usuario = $v;
-            $this->modifiedColumns[SesionUsuarioTableMap::COL_ID_USUARIO] = true;
+        if ($this->lineaid !== $v) {
+            $this->lineaid = $v;
+            $this->modifiedColumns[TblcategoriaTableMap::COL_LINEAID] = true;
         }
 
         return $this;
-    } // setIdUsuario()
+    } // setLineaid()
 
     /**
-     * Set the value of [fecha_sesion] column.
+     * Set the value of [codigo] column.
      *
      * @param string $v new value
-     * @return $this|\propel\propel\SesionUsuario The current object (for fluent API support)
+     * @return $this|\propel\propel\Tblcategoria The current object (for fluent API support)
      */
-    public function setFechaSesion($v)
+    public function setCodigo($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->fecha_sesion !== $v) {
-            $this->fecha_sesion = $v;
-            $this->modifiedColumns[SesionUsuarioTableMap::COL_FECHA_SESION] = true;
+        if ($this->codigo !== $v) {
+            $this->codigo = $v;
+            $this->modifiedColumns[TblcategoriaTableMap::COL_CODIGO] = true;
         }
 
         return $this;
-    } // setFechaSesion()
+    } // setCodigo()
+
+    /**
+     * Set the value of [nombre] column.
+     *
+     * @param string $v new value
+     * @return $this|\propel\propel\Tblcategoria The current object (for fluent API support)
+     */
+    public function setNombre($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->nombre !== $v) {
+            $this->nombre = $v;
+            $this->modifiedColumns[TblcategoriaTableMap::COL_NOMBRE] = true;
+        }
+
+        return $this;
+    } // setNombre()
+
+    /**
+     * Set the value of [descripcion] column.
+     *
+     * @param string $v new value
+     * @return $this|\propel\propel\Tblcategoria The current object (for fluent API support)
+     */
+    public function setDescripcion($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->descripcion !== $v) {
+            $this->descripcion = $v;
+            $this->modifiedColumns[TblcategoriaTableMap::COL_DESCRIPCION] = true;
+        }
+
+        return $this;
+    } // setDescripcion()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -439,14 +493,17 @@ abstract class SesionUsuario implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : SesionUsuarioTableMap::translateFieldName('IdSesion', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->id_sesion = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : TblcategoriaTableMap::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->lineaid = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SesionUsuarioTableMap::translateFieldName('IdUsuario', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->id_usuario = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : TblcategoriaTableMap::translateFieldName('Codigo', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->codigo = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SesionUsuarioTableMap::translateFieldName('FechaSesion', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->fecha_sesion = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : TblcategoriaTableMap::translateFieldName('Nombre', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->nombre = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : TblcategoriaTableMap::translateFieldName('Descripcion', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->descripcion = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -455,10 +512,10 @@ abstract class SesionUsuario implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = SesionUsuarioTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = TblcategoriaTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\SesionUsuario'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Tblcategoria'), 0, $e);
         }
     }
 
@@ -500,13 +557,13 @@ abstract class SesionUsuario implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(SesionUsuarioTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(TblcategoriaTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildSesionUsuarioQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildTblcategoriaQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -515,6 +572,8 @@ abstract class SesionUsuario implements ActiveRecordInterface
         $this->hydrate($row, 0, true, $dataFetcher->getIndexType()); // rehydrate
 
         if ($deep) {  // also de-associate any related objects?
+
+            $this->collTblproductoss = null;
 
         } // if (deep)
     }
@@ -525,8 +584,8 @@ abstract class SesionUsuario implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see SesionUsuario::setDeleted()
-     * @see SesionUsuario::isDeleted()
+     * @see Tblcategoria::setDeleted()
+     * @see Tblcategoria::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -535,11 +594,11 @@ abstract class SesionUsuario implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SesionUsuarioTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblcategoriaTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildSesionUsuarioQuery::create()
+            $deleteQuery = ChildTblcategoriaQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -574,7 +633,7 @@ abstract class SesionUsuario implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SesionUsuarioTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblcategoriaTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -593,7 +652,7 @@ abstract class SesionUsuario implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                SesionUsuarioTableMap::addInstanceToPool($this);
+                TblcategoriaTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -630,6 +689,24 @@ abstract class SesionUsuario implements ActiveRecordInterface
                 $this->resetModified();
             }
 
+            if ($this->tblproductossScheduledForDeletion !== null) {
+                if (!$this->tblproductossScheduledForDeletion->isEmpty()) {
+                    foreach ($this->tblproductossScheduledForDeletion as $tblproductos) {
+                        // need to save related object because we set the relation to null
+                        $tblproductos->save($con);
+                    }
+                    $this->tblproductossScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collTblproductoss !== null) {
+                foreach ($this->collTblproductoss as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             $this->alreadyInSave = false;
 
         }
@@ -650,24 +727,27 @@ abstract class SesionUsuario implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[SesionUsuarioTableMap::COL_ID_SESION] = true;
-        if (null !== $this->id_sesion) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . SesionUsuarioTableMap::COL_ID_SESION . ')');
+        $this->modifiedColumns[TblcategoriaTableMap::COL_LINEAID] = true;
+        if (null !== $this->lineaid) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . TblcategoriaTableMap::COL_LINEAID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(SesionUsuarioTableMap::COL_ID_SESION)) {
-            $modifiedColumns[':p' . $index++]  = 'id_sesion';
+        if ($this->isColumnModified(TblcategoriaTableMap::COL_LINEAID)) {
+            $modifiedColumns[':p' . $index++]  = 'LineaId';
         }
-        if ($this->isColumnModified(SesionUsuarioTableMap::COL_ID_USUARIO)) {
-            $modifiedColumns[':p' . $index++]  = 'id_usuario';
+        if ($this->isColumnModified(TblcategoriaTableMap::COL_CODIGO)) {
+            $modifiedColumns[':p' . $index++]  = 'codigo';
         }
-        if ($this->isColumnModified(SesionUsuarioTableMap::COL_FECHA_SESION)) {
-            $modifiedColumns[':p' . $index++]  = 'fecha_sesion';
+        if ($this->isColumnModified(TblcategoriaTableMap::COL_NOMBRE)) {
+            $modifiedColumns[':p' . $index++]  = 'nombre';
+        }
+        if ($this->isColumnModified(TblcategoriaTableMap::COL_DESCRIPCION)) {
+            $modifiedColumns[':p' . $index++]  = 'descripcion';
         }
 
         $sql = sprintf(
-            'INSERT INTO sesion_usuario (%s) VALUES (%s)',
+            'INSERT INTO tblcategoria (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -676,14 +756,17 @@ abstract class SesionUsuario implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id_sesion':
-                        $stmt->bindValue($identifier, $this->id_sesion, PDO::PARAM_INT);
+                    case 'LineaId':
+                        $stmt->bindValue($identifier, $this->lineaid, PDO::PARAM_INT);
                         break;
-                    case 'id_usuario':
-                        $stmt->bindValue($identifier, $this->id_usuario, PDO::PARAM_INT);
+                    case 'codigo':
+                        $stmt->bindValue($identifier, $this->codigo, PDO::PARAM_STR);
                         break;
-                    case 'fecha_sesion':
-                        $stmt->bindValue($identifier, $this->fecha_sesion, PDO::PARAM_STR);
+                    case 'nombre':
+                        $stmt->bindValue($identifier, $this->nombre, PDO::PARAM_STR);
+                        break;
+                    case 'descripcion':
+                        $stmt->bindValue($identifier, $this->descripcion, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -698,7 +781,7 @@ abstract class SesionUsuario implements ActiveRecordInterface
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', 0, $e);
         }
-        $this->setIdSesion($pk);
+        $this->setLineaid($pk);
 
         $this->setNew(false);
     }
@@ -731,7 +814,7 @@ abstract class SesionUsuario implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = SesionUsuarioTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = TblcategoriaTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -748,13 +831,16 @@ abstract class SesionUsuario implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getIdSesion();
+                return $this->getLineaid();
                 break;
             case 1:
-                return $this->getIdUsuario();
+                return $this->getCodigo();
                 break;
             case 2:
-                return $this->getFechaSesion();
+                return $this->getNombre();
+                break;
+            case 3:
+                return $this->getDescripcion();
                 break;
             default:
                 return null;
@@ -773,27 +859,46 @@ abstract class SesionUsuario implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['SesionUsuario'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Tblcategoria'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['SesionUsuario'][$this->hashCode()] = true;
-        $keys = SesionUsuarioTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Tblcategoria'][$this->hashCode()] = true;
+        $keys = TblcategoriaTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getIdSesion(),
-            $keys[1] => $this->getIdUsuario(),
-            $keys[2] => $this->getFechaSesion(),
+            $keys[0] => $this->getLineaid(),
+            $keys[1] => $this->getCodigo(),
+            $keys[2] => $this->getNombre(),
+            $keys[3] => $this->getDescripcion(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
+        if ($includeForeignObjects) {
+            if (null !== $this->collTblproductoss) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'tblproductoss';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'tblproductoss';
+                        break;
+                    default:
+                        $key = 'Tblproductoss';
+                }
+
+                $result[$key] = $this->collTblproductoss->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+        }
 
         return $result;
     }
@@ -807,11 +912,11 @@ abstract class SesionUsuario implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\propel\propel\SesionUsuario
+     * @return $this|\propel\propel\Tblcategoria
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = SesionUsuarioTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = TblcategoriaTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -822,19 +927,22 @@ abstract class SesionUsuario implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\propel\propel\SesionUsuario
+     * @return $this|\propel\propel\Tblcategoria
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setIdSesion($value);
+                $this->setLineaid($value);
                 break;
             case 1:
-                $this->setIdUsuario($value);
+                $this->setCodigo($value);
                 break;
             case 2:
-                $this->setFechaSesion($value);
+                $this->setNombre($value);
+                break;
+            case 3:
+                $this->setDescripcion($value);
                 break;
         } // switch()
 
@@ -860,16 +968,19 @@ abstract class SesionUsuario implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = SesionUsuarioTableMap::getFieldNames($keyType);
+        $keys = TblcategoriaTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setIdSesion($arr[$keys[0]]);
+            $this->setLineaid($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setIdUsuario($arr[$keys[1]]);
+            $this->setCodigo($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setFechaSesion($arr[$keys[2]]);
+            $this->setNombre($arr[$keys[2]]);
+        }
+        if (array_key_exists($keys[3], $arr)) {
+            $this->setDescripcion($arr[$keys[3]]);
         }
     }
 
@@ -890,7 +1001,7 @@ abstract class SesionUsuario implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\propel\propel\SesionUsuario The current object, for fluid interface
+     * @return $this|\propel\propel\Tblcategoria The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -910,16 +1021,19 @@ abstract class SesionUsuario implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(SesionUsuarioTableMap::DATABASE_NAME);
+        $criteria = new Criteria(TblcategoriaTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(SesionUsuarioTableMap::COL_ID_SESION)) {
-            $criteria->add(SesionUsuarioTableMap::COL_ID_SESION, $this->id_sesion);
+        if ($this->isColumnModified(TblcategoriaTableMap::COL_LINEAID)) {
+            $criteria->add(TblcategoriaTableMap::COL_LINEAID, $this->lineaid);
         }
-        if ($this->isColumnModified(SesionUsuarioTableMap::COL_ID_USUARIO)) {
-            $criteria->add(SesionUsuarioTableMap::COL_ID_USUARIO, $this->id_usuario);
+        if ($this->isColumnModified(TblcategoriaTableMap::COL_CODIGO)) {
+            $criteria->add(TblcategoriaTableMap::COL_CODIGO, $this->codigo);
         }
-        if ($this->isColumnModified(SesionUsuarioTableMap::COL_FECHA_SESION)) {
-            $criteria->add(SesionUsuarioTableMap::COL_FECHA_SESION, $this->fecha_sesion);
+        if ($this->isColumnModified(TblcategoriaTableMap::COL_NOMBRE)) {
+            $criteria->add(TblcategoriaTableMap::COL_NOMBRE, $this->nombre);
+        }
+        if ($this->isColumnModified(TblcategoriaTableMap::COL_DESCRIPCION)) {
+            $criteria->add(TblcategoriaTableMap::COL_DESCRIPCION, $this->descripcion);
         }
 
         return $criteria;
@@ -937,8 +1051,8 @@ abstract class SesionUsuario implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildSesionUsuarioQuery::create();
-        $criteria->add(SesionUsuarioTableMap::COL_ID_SESION, $this->id_sesion);
+        $criteria = ChildTblcategoriaQuery::create();
+        $criteria->add(TblcategoriaTableMap::COL_LINEAID, $this->lineaid);
 
         return $criteria;
     }
@@ -951,7 +1065,7 @@ abstract class SesionUsuario implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getIdSesion();
+        $validPk = null !== $this->getLineaid();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -967,22 +1081,22 @@ abstract class SesionUsuario implements ActiveRecordInterface
 
     /**
      * Returns the primary key for this object (row).
-     * @return string
+     * @return int
      */
     public function getPrimaryKey()
     {
-        return $this->getIdSesion();
+        return $this->getLineaid();
     }
 
     /**
-     * Generic method to set the primary key (id_sesion column).
+     * Generic method to set the primary key (lineaid column).
      *
-     * @param       string $key Primary key.
+     * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setIdSesion($key);
+        $this->setLineaid($key);
     }
 
     /**
@@ -991,7 +1105,7 @@ abstract class SesionUsuario implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getIdSesion();
+        return null === $this->getLineaid();
     }
 
     /**
@@ -1000,18 +1114,33 @@ abstract class SesionUsuario implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \propel\propel\SesionUsuario (or compatible) type.
+     * @param      object $copyObj An object of \propel\propel\Tblcategoria (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setIdUsuario($this->getIdUsuario());
-        $copyObj->setFechaSesion($this->getFechaSesion());
+        $copyObj->setCodigo($this->getCodigo());
+        $copyObj->setNombre($this->getNombre());
+        $copyObj->setDescripcion($this->getDescripcion());
+
+        if ($deepCopy) {
+            // important: temporarily setNew(false) because this affects the behavior of
+            // the getter/setter methods for fkey referrer objects.
+            $copyObj->setNew(false);
+
+            foreach ($this->getTblproductoss() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addTblproductos($relObj->copy($deepCopy));
+                }
+            }
+
+        } // if ($deepCopy)
+
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setIdSesion(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setLineaid(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1024,7 +1153,7 @@ abstract class SesionUsuario implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \propel\propel\SesionUsuario Clone of current object.
+     * @return \propel\propel\Tblcategoria Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1037,6 +1166,248 @@ abstract class SesionUsuario implements ActiveRecordInterface
         return $copyObj;
     }
 
+
+    /**
+     * Initializes a collection based on the name of a relation.
+     * Avoids crafting an 'init[$relationName]s' method name
+     * that wouldn't work when StandardEnglishPluralizer is used.
+     *
+     * @param      string $relationName The name of the relation to initialize
+     * @return void
+     */
+    public function initRelation($relationName)
+    {
+        if ('Tblproductos' == $relationName) {
+            $this->initTblproductoss();
+            return;
+        }
+    }
+
+    /**
+     * Clears out the collTblproductoss collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addTblproductoss()
+     */
+    public function clearTblproductoss()
+    {
+        $this->collTblproductoss = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collTblproductoss collection loaded partially.
+     */
+    public function resetPartialTblproductoss($v = true)
+    {
+        $this->collTblproductossPartial = $v;
+    }
+
+    /**
+     * Initializes the collTblproductoss collection.
+     *
+     * By default this just sets the collTblproductoss collection to an empty array (like clearcollTblproductoss());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initTblproductoss($overrideExisting = true)
+    {
+        if (null !== $this->collTblproductoss && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = TblproductosTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collTblproductoss = new $collectionClassName;
+        $this->collTblproductoss->setModel('\propel\propel\Tblproductos');
+    }
+
+    /**
+     * Gets an array of ChildTblproductos objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildTblcategoria is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildTblproductos[] List of ChildTblproductos objects
+     * @throws PropelException
+     */
+    public function getTblproductoss(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTblproductossPartial && !$this->isNew();
+        if (null === $this->collTblproductoss || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collTblproductoss) {
+                // return empty collection
+                $this->initTblproductoss();
+            } else {
+                $collTblproductoss = ChildTblproductosQuery::create(null, $criteria)
+                    ->filterByTblcategoria($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collTblproductossPartial && count($collTblproductoss)) {
+                        $this->initTblproductoss(false);
+
+                        foreach ($collTblproductoss as $obj) {
+                            if (false == $this->collTblproductoss->contains($obj)) {
+                                $this->collTblproductoss->append($obj);
+                            }
+                        }
+
+                        $this->collTblproductossPartial = true;
+                    }
+
+                    return $collTblproductoss;
+                }
+
+                if ($partial && $this->collTblproductoss) {
+                    foreach ($this->collTblproductoss as $obj) {
+                        if ($obj->isNew()) {
+                            $collTblproductoss[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collTblproductoss = $collTblproductoss;
+                $this->collTblproductossPartial = false;
+            }
+        }
+
+        return $this->collTblproductoss;
+    }
+
+    /**
+     * Sets a collection of ChildTblproductos objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $tblproductoss A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildTblcategoria The current object (for fluent API support)
+     */
+    public function setTblproductoss(Collection $tblproductoss, ConnectionInterface $con = null)
+    {
+        /** @var ChildTblproductos[] $tblproductossToDelete */
+        $tblproductossToDelete = $this->getTblproductoss(new Criteria(), $con)->diff($tblproductoss);
+
+
+        $this->tblproductossScheduledForDeletion = $tblproductossToDelete;
+
+        foreach ($tblproductossToDelete as $tblproductosRemoved) {
+            $tblproductosRemoved->setTblcategoria(null);
+        }
+
+        $this->collTblproductoss = null;
+        foreach ($tblproductoss as $tblproductos) {
+            $this->addTblproductos($tblproductos);
+        }
+
+        $this->collTblproductoss = $tblproductoss;
+        $this->collTblproductossPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Tblproductos objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Tblproductos objects.
+     * @throws PropelException
+     */
+    public function countTblproductoss(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTblproductossPartial && !$this->isNew();
+        if (null === $this->collTblproductoss || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collTblproductoss) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getTblproductoss());
+            }
+
+            $query = ChildTblproductosQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByTblcategoria($this)
+                ->count($con);
+        }
+
+        return count($this->collTblproductoss);
+    }
+
+    /**
+     * Method called to associate a ChildTblproductos object to this object
+     * through the ChildTblproductos foreign key attribute.
+     *
+     * @param  ChildTblproductos $l ChildTblproductos
+     * @return $this|\propel\propel\Tblcategoria The current object (for fluent API support)
+     */
+    public function addTblproductos(ChildTblproductos $l)
+    {
+        if ($this->collTblproductoss === null) {
+            $this->initTblproductoss();
+            $this->collTblproductossPartial = true;
+        }
+
+        if (!$this->collTblproductoss->contains($l)) {
+            $this->doAddTblproductos($l);
+
+            if ($this->tblproductossScheduledForDeletion and $this->tblproductossScheduledForDeletion->contains($l)) {
+                $this->tblproductossScheduledForDeletion->remove($this->tblproductossScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildTblproductos $tblproductos The ChildTblproductos object to add.
+     */
+    protected function doAddTblproductos(ChildTblproductos $tblproductos)
+    {
+        $this->collTblproductoss[]= $tblproductos;
+        $tblproductos->setTblcategoria($this);
+    }
+
+    /**
+     * @param  ChildTblproductos $tblproductos The ChildTblproductos object to remove.
+     * @return $this|ChildTblcategoria The current object (for fluent API support)
+     */
+    public function removeTblproductos(ChildTblproductos $tblproductos)
+    {
+        if ($this->getTblproductoss()->contains($tblproductos)) {
+            $pos = $this->collTblproductoss->search($tblproductos);
+            $this->collTblproductoss->remove($pos);
+            if (null === $this->tblproductossScheduledForDeletion) {
+                $this->tblproductossScheduledForDeletion = clone $this->collTblproductoss;
+                $this->tblproductossScheduledForDeletion->clear();
+            }
+            $this->tblproductossScheduledForDeletion[]= $tblproductos;
+            $tblproductos->setTblcategoria(null);
+        }
+
+        return $this;
+    }
+
     /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
@@ -1044,9 +1415,10 @@ abstract class SesionUsuario implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->id_sesion = null;
-        $this->id_usuario = null;
-        $this->fecha_sesion = null;
+        $this->lineaid = null;
+        $this->codigo = null;
+        $this->nombre = null;
+        $this->descripcion = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1065,8 +1437,14 @@ abstract class SesionUsuario implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collTblproductoss) {
+                foreach ($this->collTblproductoss as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
+        $this->collTblproductoss = null;
     }
 
     /**
@@ -1076,7 +1454,7 @@ abstract class SesionUsuario implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(SesionUsuarioTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(TblcategoriaTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

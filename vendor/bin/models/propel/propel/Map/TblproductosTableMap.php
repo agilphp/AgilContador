@@ -59,7 +59,7 @@ class TblproductosTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class TblproductosTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the productoId field
@@ -92,11 +92,6 @@ class TblproductosTableMap extends TableMap
     const COL_LINEAID = 'tblproductos.lineaId';
 
     /**
-     * the column name for the TblLinea_LineaId field
-     */
-    const COL_TBLLINEA_LINEAID = 'tblproductos.TblLinea_LineaId';
-
-    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -108,11 +103,11 @@ class TblproductosTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Productoid', 'Codigo', 'Nombre', 'Lineaid', 'TbllineaLineaid', ),
-        self::TYPE_CAMELNAME     => array('productoid', 'codigo', 'nombre', 'lineaid', 'tbllineaLineaid', ),
-        self::TYPE_COLNAME       => array(TblproductosTableMap::COL_PRODUCTOID, TblproductosTableMap::COL_CODIGO, TblproductosTableMap::COL_NOMBRE, TblproductosTableMap::COL_LINEAID, TblproductosTableMap::COL_TBLLINEA_LINEAID, ),
-        self::TYPE_FIELDNAME     => array('productoId', 'codigo', 'nombre', 'lineaId', 'TblLinea_LineaId', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Productoid', 'Codigo', 'Nombre', 'Lineaid', ),
+        self::TYPE_CAMELNAME     => array('productoid', 'codigo', 'nombre', 'lineaid', ),
+        self::TYPE_COLNAME       => array(TblproductosTableMap::COL_PRODUCTOID, TblproductosTableMap::COL_CODIGO, TblproductosTableMap::COL_NOMBRE, TblproductosTableMap::COL_LINEAID, ),
+        self::TYPE_FIELDNAME     => array('productoId', 'codigo', 'nombre', 'lineaId', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -122,11 +117,11 @@ class TblproductosTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Productoid' => 0, 'Codigo' => 1, 'Nombre' => 2, 'Lineaid' => 3, 'TbllineaLineaid' => 4, ),
-        self::TYPE_CAMELNAME     => array('productoid' => 0, 'codigo' => 1, 'nombre' => 2, 'lineaid' => 3, 'tbllineaLineaid' => 4, ),
-        self::TYPE_COLNAME       => array(TblproductosTableMap::COL_PRODUCTOID => 0, TblproductosTableMap::COL_CODIGO => 1, TblproductosTableMap::COL_NOMBRE => 2, TblproductosTableMap::COL_LINEAID => 3, TblproductosTableMap::COL_TBLLINEA_LINEAID => 4, ),
-        self::TYPE_FIELDNAME     => array('productoId' => 0, 'codigo' => 1, 'nombre' => 2, 'lineaId' => 3, 'TblLinea_LineaId' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Productoid' => 0, 'Codigo' => 1, 'Nombre' => 2, 'Lineaid' => 3, ),
+        self::TYPE_CAMELNAME     => array('productoid' => 0, 'codigo' => 1, 'nombre' => 2, 'lineaid' => 3, ),
+        self::TYPE_COLNAME       => array(TblproductosTableMap::COL_PRODUCTOID => 0, TblproductosTableMap::COL_CODIGO => 1, TblproductosTableMap::COL_NOMBRE => 2, TblproductosTableMap::COL_LINEAID => 3, ),
+        self::TYPE_FIELDNAME     => array('productoId' => 0, 'codigo' => 1, 'nombre' => 2, 'lineaId' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -149,8 +144,7 @@ class TblproductosTableMap extends TableMap
         $this->addPrimaryKey('productoId', 'Productoid', 'BIGINT', true, null, null);
         $this->addColumn('codigo', 'Codigo', 'VARCHAR', false, 45, null);
         $this->addColumn('nombre', 'Nombre', 'VARCHAR', false, 250, null);
-        $this->addColumn('lineaId', 'Lineaid', 'INTEGER', false, 5, null);
-        $this->addForeignKey('TblLinea_LineaId', 'TbllineaLineaid', 'INTEGER', 'tbllinea', 'LineaId', true, 5, null);
+        $this->addForeignKey('lineaId', 'Lineaid', 'INTEGER', 'tblcategoria', 'LineaId', false, 5, null);
     } // initialize()
 
     /**
@@ -158,45 +152,45 @@ class TblproductosTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Tbllinea', '\\propel\\propel\\Tbllinea', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Tblcategoria', '\\propel\\propel\\Tblcategoria', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
-    0 => ':TblLinea_LineaId',
+    0 => ':lineaId',
     1 => ':LineaId',
   ),
 ), null, null, null, false);
         $this->addRelation('Tblegresodetalle', '\\propel\\propel\\Tblegresodetalle', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':TblProductos_productoId',
+    0 => ':productoId',
     1 => ':productoId',
   ),
 ), null, null, 'Tblegresodetalles', false);
         $this->addRelation('Tblfacturadetalle', '\\propel\\propel\\Tblfacturadetalle', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':TblProductos_productoId',
+    0 => ':productoId',
     1 => ':productoId',
   ),
 ), null, null, 'Tblfacturadetalles', false);
         $this->addRelation('Tblingresodetalle', '\\propel\\propel\\Tblingresodetalle', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':TblProductos_productoId',
+    0 => ':productoId',
     1 => ':productoId',
   ),
 ), null, null, 'Tblingresodetalles', false);
         $this->addRelation('Tblproductocosto', '\\propel\\propel\\Tblproductocosto', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':TblProductos_productoId',
+    0 => ':productoId',
     1 => ':productoId',
   ),
 ), null, null, 'Tblproductocostos', false);
         $this->addRelation('Tblproductoprecio', '\\propel\\propel\\Tblproductoprecio', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':TblProductos_productoId',
+    0 => ':productoId',
     1 => ':productoId',
   ),
 ), null, null, 'Tblproductoprecios', false);
@@ -347,13 +341,11 @@ class TblproductosTableMap extends TableMap
             $criteria->addSelectColumn(TblproductosTableMap::COL_CODIGO);
             $criteria->addSelectColumn(TblproductosTableMap::COL_NOMBRE);
             $criteria->addSelectColumn(TblproductosTableMap::COL_LINEAID);
-            $criteria->addSelectColumn(TblproductosTableMap::COL_TBLLINEA_LINEAID);
         } else {
             $criteria->addSelectColumn($alias . '.productoId');
             $criteria->addSelectColumn($alias . '.codigo');
             $criteria->addSelectColumn($alias . '.nombre');
             $criteria->addSelectColumn($alias . '.lineaId');
-            $criteria->addSelectColumn($alias . '.TblLinea_LineaId');
         }
     }
 

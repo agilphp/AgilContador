@@ -92,20 +92,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
     protected $cantidad;
 
     /**
-     * The value for the tblproductos_productoid field.
-     *
-     * @var        string
-     */
-    protected $tblproductos_productoid;
-
-    /**
-     * The value for the tblingreso_ingresoid field.
-     *
-     * @var        string
-     */
-    protected $tblingreso_ingresoid;
-
-    /**
      * @var        ChildTblingreso
      */
     protected $aTblingreso;
@@ -389,26 +375,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
     }
 
     /**
-     * Get the [tblproductos_productoid] column value.
-     *
-     * @return string
-     */
-    public function getTblproductosProductoid()
-    {
-        return $this->tblproductos_productoid;
-    }
-
-    /**
-     * Get the [tblingreso_ingresoid] column value.
-     *
-     * @return string
-     */
-    public function getTblingresoIngresoid()
-    {
-        return $this->tblingreso_ingresoid;
-    }
-
-    /**
      * Set the value of [ingresodetalleid] column.
      *
      * @param string $v new value
@@ -445,6 +411,10 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
             $this->modifiedColumns[TblingresodetalleTableMap::COL_INGRESOID] = true;
         }
 
+        if ($this->aTblingreso !== null && $this->aTblingreso->getIngresoid() !== $v) {
+            $this->aTblingreso = null;
+        }
+
         return $this;
     } // setIngresoid()
 
@@ -463,6 +433,10 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
         if ($this->productoid !== $v) {
             $this->productoid = $v;
             $this->modifiedColumns[TblingresodetalleTableMap::COL_PRODUCTOID] = true;
+        }
+
+        if ($this->aTblproductos !== null && $this->aTblproductos->getProductoid() !== $v) {
+            $this->aTblproductos = null;
         }
 
         return $this;
@@ -487,54 +461,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
 
         return $this;
     } // setCantidad()
-
-    /**
-     * Set the value of [tblproductos_productoid] column.
-     *
-     * @param string $v new value
-     * @return $this|\propel\propel\Tblingresodetalle The current object (for fluent API support)
-     */
-    public function setTblproductosProductoid($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->tblproductos_productoid !== $v) {
-            $this->tblproductos_productoid = $v;
-            $this->modifiedColumns[TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID] = true;
-        }
-
-        if ($this->aTblproductos !== null && $this->aTblproductos->getProductoid() !== $v) {
-            $this->aTblproductos = null;
-        }
-
-        return $this;
-    } // setTblproductosProductoid()
-
-    /**
-     * Set the value of [tblingreso_ingresoid] column.
-     *
-     * @param string $v new value
-     * @return $this|\propel\propel\Tblingresodetalle The current object (for fluent API support)
-     */
-    public function setTblingresoIngresoid($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->tblingreso_ingresoid !== $v) {
-            $this->tblingreso_ingresoid = $v;
-            $this->modifiedColumns[TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID] = true;
-        }
-
-        if ($this->aTblingreso !== null && $this->aTblingreso->getIngresoid() !== $v) {
-            $this->aTblingreso = null;
-        }
-
-        return $this;
-    } // setTblingresoIngresoid()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -583,12 +509,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : TblingresodetalleTableMap::translateFieldName('Cantidad', TableMap::TYPE_PHPNAME, $indexType)];
             $this->cantidad = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : TblingresodetalleTableMap::translateFieldName('TblproductosProductoid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tblproductos_productoid = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : TblingresodetalleTableMap::translateFieldName('TblingresoIngresoid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tblingreso_ingresoid = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -597,7 +517,7 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = TblingresodetalleTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = TblingresodetalleTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Tblingresodetalle'), 0, $e);
@@ -619,11 +539,11 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aTblproductos !== null && $this->tblproductos_productoid !== $this->aTblproductos->getProductoid()) {
-            $this->aTblproductos = null;
-        }
-        if ($this->aTblingreso !== null && $this->tblingreso_ingresoid !== $this->aTblingreso->getIngresoid()) {
+        if ($this->aTblingreso !== null && $this->ingresoid !== $this->aTblingreso->getIngresoid()) {
             $this->aTblingreso = null;
+        }
+        if ($this->aTblproductos !== null && $this->productoid !== $this->aTblproductos->getProductoid()) {
+            $this->aTblproductos = null;
         }
     } // ensureConsistency
 
@@ -833,12 +753,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
         if ($this->isColumnModified(TblingresodetalleTableMap::COL_CANTIDAD)) {
             $modifiedColumns[':p' . $index++]  = 'cantidad';
         }
-        if ($this->isColumnModified(TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID)) {
-            $modifiedColumns[':p' . $index++]  = 'TblProductos_productoId';
-        }
-        if ($this->isColumnModified(TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID)) {
-            $modifiedColumns[':p' . $index++]  = 'TblIngreso_ingresoId';
-        }
 
         $sql = sprintf(
             'INSERT INTO tblingresodetalle (%s) VALUES (%s)',
@@ -861,12 +775,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
                         break;
                     case 'cantidad':
                         $stmt->bindValue($identifier, $this->cantidad, PDO::PARAM_STR);
-                        break;
-                    case 'TblProductos_productoId':
-                        $stmt->bindValue($identifier, $this->tblproductos_productoid, PDO::PARAM_INT);
-                        break;
-                    case 'TblIngreso_ingresoId':
-                        $stmt->bindValue($identifier, $this->tblingreso_ingresoid, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -935,12 +843,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
             case 3:
                 return $this->getCantidad();
                 break;
-            case 4:
-                return $this->getTblproductosProductoid();
-                break;
-            case 5:
-                return $this->getTblingresoIngresoid();
-                break;
             default:
                 return null;
                 break;
@@ -975,8 +877,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
             $keys[1] => $this->getIngresoid(),
             $keys[2] => $this->getProductoid(),
             $keys[3] => $this->getCantidad(),
-            $keys[4] => $this->getTblproductosProductoid(),
-            $keys[5] => $this->getTblingresoIngresoid(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1060,12 +960,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
             case 3:
                 $this->setCantidad($value);
                 break;
-            case 4:
-                $this->setTblproductosProductoid($value);
-                break;
-            case 5:
-                $this->setTblingresoIngresoid($value);
-                break;
         } // switch()
 
         return $this;
@@ -1103,12 +997,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
         }
         if (array_key_exists($keys[3], $arr)) {
             $this->setCantidad($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setTblproductosProductoid($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setTblingresoIngresoid($arr[$keys[5]]);
         }
     }
 
@@ -1162,12 +1050,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
         }
         if ($this->isColumnModified(TblingresodetalleTableMap::COL_CANTIDAD)) {
             $criteria->add(TblingresodetalleTableMap::COL_CANTIDAD, $this->cantidad);
-        }
-        if ($this->isColumnModified(TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID)) {
-            $criteria->add(TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $this->tblproductos_productoid);
-        }
-        if ($this->isColumnModified(TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID)) {
-            $criteria->add(TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID, $this->tblingreso_ingresoid);
         }
 
         return $criteria;
@@ -1259,8 +1141,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
         $copyObj->setIngresoid($this->getIngresoid());
         $copyObj->setProductoid($this->getProductoid());
         $copyObj->setCantidad($this->getCantidad());
-        $copyObj->setTblproductosProductoid($this->getTblproductosProductoid());
-        $copyObj->setTblingresoIngresoid($this->getTblingresoIngresoid());
         if ($makeNew) {
             $copyObj->setNew(true);
         }
@@ -1298,9 +1178,9 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
     public function setTblingreso(ChildTblingreso $v = null)
     {
         if ($v === null) {
-            $this->setTblingresoIngresoid(NULL);
+            $this->setIngresoid(NULL);
         } else {
-            $this->setTblingresoIngresoid($v->getIngresoid());
+            $this->setIngresoid($v->getIngresoid());
         }
 
         $this->aTblingreso = $v;
@@ -1325,8 +1205,8 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
      */
     public function getTblingreso(ConnectionInterface $con = null)
     {
-        if ($this->aTblingreso === null && (($this->tblingreso_ingresoid !== "" && $this->tblingreso_ingresoid !== null))) {
-            $this->aTblingreso = ChildTblingresoQuery::create()->findPk($this->tblingreso_ingresoid, $con);
+        if ($this->aTblingreso === null && (($this->ingresoid !== "" && $this->ingresoid !== null))) {
+            $this->aTblingreso = ChildTblingresoQuery::create()->findPk($this->ingresoid, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
@@ -1349,9 +1229,9 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
     public function setTblproductos(ChildTblproductos $v = null)
     {
         if ($v === null) {
-            $this->setTblproductosProductoid(NULL);
+            $this->setProductoid(NULL);
         } else {
-            $this->setTblproductosProductoid($v->getProductoid());
+            $this->setProductoid($v->getProductoid());
         }
 
         $this->aTblproductos = $v;
@@ -1376,8 +1256,8 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
      */
     public function getTblproductos(ConnectionInterface $con = null)
     {
-        if ($this->aTblproductos === null && (($this->tblproductos_productoid !== "" && $this->tblproductos_productoid !== null))) {
-            $this->aTblproductos = ChildTblproductosQuery::create()->findPk($this->tblproductos_productoid, $con);
+        if ($this->aTblproductos === null && (($this->productoid !== "" && $this->productoid !== null))) {
+            $this->aTblproductos = ChildTblproductosQuery::create()->findPk($this->productoid, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
@@ -1407,8 +1287,6 @@ abstract class Tblingresodetalle implements ActiveRecordInterface
         $this->ingresoid = null;
         $this->productoid = null;
         $this->cantidad = null;
-        $this->tblproductos_productoid = null;
-        $this->tblingreso_ingresoid = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

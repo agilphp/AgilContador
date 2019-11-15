@@ -4,33 +4,6 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ---------------------------------------------------------------------
--- menu
--- ---------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `menu`;
-
-CREATE TABLE `menu`
-(
-    `id` INTEGER(5) NOT NULL,
-    `menu` VARCHAR(50) NOT NULL,
-    `url` VARCHAR(120) NOT NULL
-) ENGINE=InnoDB;
-
--- ---------------------------------------------------------------------
--- sesion_usuario
--- ---------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `sesion_usuario`;
-
-CREATE TABLE `sesion_usuario`
-(
-    `id_sesion` BIGINT NOT NULL AUTO_INCREMENT,
-    `id_usuario` INTEGER(10) NOT NULL,
-    `fecha_sesion` VARCHAR(20) NOT NULL,
-    PRIMARY KEY (`id_sesion`)
-) ENGINE=InnoDB;
-
--- ---------------------------------------------------------------------
 -- sesiones
 -- ---------------------------------------------------------------------
 
@@ -43,6 +16,21 @@ CREATE TABLE `sesiones`
     `data` TEXT NOT NULL,
     `session_key` CHAR(128) NOT NULL,
     PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- tblcategoria
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tblcategoria`;
+
+CREATE TABLE `tblcategoria`
+(
+    `LineaId` INTEGER(5) NOT NULL AUTO_INCREMENT,
+    `codigo` VARCHAR(45),
+    `nombre` VARCHAR(45),
+    `descripcion` TEXT,
+    PRIMARY KEY (`LineaId`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
@@ -60,6 +48,26 @@ CREATE TABLE `tblcliente`
     `telefono` VARCHAR(150) NOT NULL,
     `ciudadId` INTEGER(10) NOT NULL,
     PRIMARY KEY (`clienteId`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- tblconfiguracion
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tblconfiguracion`;
+
+CREATE TABLE `tblconfiguracion`
+(
+    `configuracionId` BIGINT NOT NULL AUTO_INCREMENT,
+    `nombreEmpresa` VARCHAR(250),
+    `nit` VARCHAR(45),
+    `direccion` VARCHAR(250),
+    `ciudadId` BIGINT,
+    `telefono` VARCHAR(15),
+    `actividadEconomica` VARCHAR(5),
+    `regimen` VARCHAR(250),
+    `resolucion` VARCHAR(45),
+    PRIMARY KEY (`configuracionId`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
@@ -89,16 +97,14 @@ CREATE TABLE `tblegresodetalle`
     `egresoId` BIGINT,
     `productoId` BIGINT,
     `cantidad` DECIMAL(10,2),
-    `TblEgreso_egresoId` BIGINT NOT NULL,
-    `TblProductos_productoId` BIGINT NOT NULL,
     PRIMARY KEY (`egresoDetalleId`),
-    INDEX `fk_TblEgresoDetalle_TblEgreso1_idx` (`TblEgreso_egresoId`),
-    INDEX `fk_TblEgresoDetalle_TblProductos1_idx` (`TblProductos_productoId`),
-    CONSTRAINT `fk_TblEgresoDetalle_TblEgreso1`
-        FOREIGN KEY (`TblEgreso_egresoId`)
+    INDEX `fk_tblegresodetalle_tblproductos1_idx` (`productoId`),
+    INDEX `fk_tblegresodetalle_tblegreso1_idx` (`egresoId`),
+    CONSTRAINT `fk_tblegresodetalle_tblegreso1`
+        FOREIGN KEY (`egresoId`)
         REFERENCES `tblegreso` (`egresoId`),
-    CONSTRAINT `fk_TblEgresoDetalle_TblProductos1`
-        FOREIGN KEY (`TblProductos_productoId`)
+    CONSTRAINT `fk_tblegresodetalle_tblproductos1`
+        FOREIGN KEY (`productoId`)
         REFERENCES `tblproductos` (`productoId`)
 ) ENGINE=InnoDB;
 
@@ -114,9 +120,23 @@ CREATE TABLE `tblfactura`
     `numero` BIGINT NOT NULL,
     `clienteId` BIGINT NOT NULL,
     `fecha` DATETIME NOT NULL,
-    `tblcliente_clienteId` BIGINT NOT NULL,
+    `estado` CHAR DEFAULT '1',
+    `usuarioId` BIGINT,
+    `totatPagado` INTEGER,
+    `metodoPagoId` INTEGER,
     PRIMARY KEY (`facturaId`),
-    INDEX `fk_tblfactura_tblcliente_idx` (`tblcliente_clienteId`)
+    INDEX `fk_tblfactura_tblcliente1_idx` (`clienteId`),
+    INDEX `fk_tblfactura_usuarios1_idx` (`usuarioId`),
+    INDEX `fk_tblfactura_tblmetodopago1_idx` (`metodoPagoId`),
+    CONSTRAINT `fk_tblfactura_tblcliente1`
+        FOREIGN KEY (`clienteId`)
+        REFERENCES `tblcliente` (`clienteId`),
+    CONSTRAINT `fk_tblfactura_tblmetodopago1`
+        FOREIGN KEY (`metodoPagoId`)
+        REFERENCES `tblmetodopago` (`metodopagoId`),
+    CONSTRAINT `fk_tblfactura_usuarios1`
+        FOREIGN KEY (`usuarioId`)
+        REFERENCES `usuarios` (`id_usuario`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
@@ -132,17 +152,15 @@ CREATE TABLE `tblfacturadetalle`
     `productoId` BIGINT,
     `cantidad` DECIMAL(10,2),
     `precio` DECIMAL(10,2),
-    `tblfactura_facturaId` BIGINT NOT NULL,
-    `TblProductos_productoId` BIGINT NOT NULL,
     PRIMARY KEY (`facturaDetalleId`),
-    INDEX `fk_TblFacturaDetalle_tblfactura1_idx` (`tblfactura_facturaId`),
-    INDEX `fk_TblFacturaDetalle_TblProductos1_idx` (`TblProductos_productoId`),
-    CONSTRAINT `fk_TblFacturaDetalle_TblProductos1`
-        FOREIGN KEY (`TblProductos_productoId`)
-        REFERENCES `tblproductos` (`productoId`),
-    CONSTRAINT `fk_TblFacturaDetalle_tblfactura1`
-        FOREIGN KEY (`tblfactura_facturaId`)
-        REFERENCES `tblfactura` (`facturaId`)
+    INDEX `fk_tblfacturadetalle_tblfactura1_idx` (`facturaId`),
+    INDEX `fk_tblfacturadetalle_tblproductos1_idx` (`productoId`),
+    CONSTRAINT `fk_tblfacturadetalle_tblfactura1`
+        FOREIGN KEY (`facturaId`)
+        REFERENCES `tblfactura` (`facturaId`),
+    CONSTRAINT `fk_tblfacturadetalle_tblproductos1`
+        FOREIGN KEY (`productoId`)
+        REFERENCES `tblproductos` (`productoId`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
@@ -172,31 +190,65 @@ CREATE TABLE `tblingresodetalle`
     `ingresoId` BIGINT,
     `productoId` BIGINT,
     `cantidad` DECIMAL(10,2),
-    `TblProductos_productoId` BIGINT NOT NULL,
-    `TblIngreso_ingresoId` BIGINT NOT NULL,
     PRIMARY KEY (`ingresoDetalleId`),
-    INDEX `fk_TblIngresoDetalle_TblProductos1_idx` (`TblProductos_productoId`),
-    INDEX `fk_TblIngresoDetalle_TblIngreso1_idx` (`TblIngreso_ingresoId`),
-    CONSTRAINT `fk_TblIngresoDetalle_TblIngreso1`
-        FOREIGN KEY (`TblIngreso_ingresoId`)
+    INDEX `fk_tblingresodetalle_tblingreso1_idx` (`ingresoId`),
+    INDEX `fk_tblingresodetalle_tblproductos1_idx` (`productoId`),
+    CONSTRAINT `fk_tblingresodetalle_tblingreso1`
+        FOREIGN KEY (`ingresoId`)
         REFERENCES `tblingreso` (`ingresoId`),
-    CONSTRAINT `fk_TblIngresoDetalle_TblProductos1`
-        FOREIGN KEY (`TblProductos_productoId`)
+    CONSTRAINT `fk_tblingresodetalle_tblproductos1`
+        FOREIGN KEY (`productoId`)
         REFERENCES `tblproductos` (`productoId`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
--- tbllinea
+-- tblmenu
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `tbllinea`;
+DROP TABLE IF EXISTS `tblmenu`;
 
-CREATE TABLE `tbllinea`
+CREATE TABLE `tblmenu`
 (
-    `LineaId` INTEGER(5) NOT NULL AUTO_INCREMENT,
-    `codigo` VARCHAR(45),
-    `nombre` VARCHAR(45),
-    PRIMARY KEY (`LineaId`)
+    `menuId` INTEGER(5) NOT NULL AUTO_INCREMENT,
+    `menu` VARCHAR(50) NOT NULL,
+    `url` VARCHAR(120) NOT NULL,
+    `estado` CHAR,
+    PRIMARY KEY (`menuId`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- tblmenuitens
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tblmenuitens`;
+
+CREATE TABLE `tblmenuitens`
+(
+    `menuItensId` BIGINT NOT NULL AUTO_INCREMENT,
+    `item` VARCHAR(45),
+    `estado` CHAR DEFAULT '1',
+    `activo` CHAR DEFAULT '0' NOT NULL,
+    `padre` CHAR DEFAULT '0' NOT NULL,
+    `menuId` INTEGER(5) NOT NULL,
+    PRIMARY KEY (`menuItensId`),
+    INDEX `fk_menuItens_tblmenu1_idx` (`menuId`),
+    CONSTRAINT `fk_menuItens_tblmenu1`
+        FOREIGN KEY (`menuId`)
+        REFERENCES `tblmenu` (`menuId`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- tblmetodopago
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tblmetodopago`;
+
+CREATE TABLE `tblmetodopago`
+(
+    `metodopagoId` INTEGER NOT NULL AUTO_INCREMENT,
+    `nombre` VARCHAR(100),
+    `detalle` TEXT,
+    PRIMARY KEY (`metodopagoId`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
@@ -211,11 +263,10 @@ CREATE TABLE `tblproductocosto`
     `productoId` BIGINT,
     `costo` DECIMAL(10,2),
     `fecha` DATETIME,
-    `TblProductos_productoId` BIGINT NOT NULL,
     PRIMARY KEY (`productoPrecioId`),
-    INDEX `fk_TblProductoPrecio_TblProductos1_idx` (`TblProductos_productoId`),
-    CONSTRAINT `fk_TblProductoPrecio_TblProductos10`
-        FOREIGN KEY (`TblProductos_productoId`)
+    INDEX `fk_tblproductocosto_tblproductos1_idx` (`productoId`),
+    CONSTRAINT `fk_tblproductocosto_tblproductos1`
+        FOREIGN KEY (`productoId`)
         REFERENCES `tblproductos` (`productoId`)
 ) ENGINE=InnoDB;
 
@@ -231,11 +282,10 @@ CREATE TABLE `tblproductoprecio`
     `productoId` BIGINT,
     `precio` DECIMAL(10,2),
     `fecha` DATETIME,
-    `TblProductos_productoId` BIGINT NOT NULL,
     PRIMARY KEY (`productoPrecioId`),
-    INDEX `fk_TblProductoPrecio_TblProductos1_idx` (`TblProductos_productoId`),
-    CONSTRAINT `fk_TblProductoPrecio_TblProductos1`
-        FOREIGN KEY (`TblProductos_productoId`)
+    INDEX `fk_tblproductoprecio_tblproductos1_idx` (`productoId`),
+    CONSTRAINT `fk_tblproductoprecio_tblproductos1`
+        FOREIGN KEY (`productoId`)
         REFERENCES `tblproductos` (`productoId`)
 ) ENGINE=InnoDB;
 
@@ -251,12 +301,26 @@ CREATE TABLE `tblproductos`
     `codigo` VARCHAR(45),
     `nombre` VARCHAR(250),
     `lineaId` INTEGER(5),
-    `TblLinea_LineaId` INTEGER(5) NOT NULL,
     PRIMARY KEY (`productoId`),
-    INDEX `fk_TblProductos_TblLinea1_idx` (`TblLinea_LineaId`),
-    CONSTRAINT `fk_TblProductos_TblLinea1`
-        FOREIGN KEY (`TblLinea_LineaId`)
-        REFERENCES `tbllinea` (`LineaId`)
+    INDEX `fk_tblproductos_tbllinea1_idx` (`lineaId`),
+    CONSTRAINT `fk_tblproductos_tbllinea1`
+        FOREIGN KEY (`lineaId`)
+        REFERENCES `tblcategoria` (`LineaId`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- tblrol
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tblrol`;
+
+CREATE TABLE `tblrol`
+(
+    `rolId` INTEGER NOT NULL AUTO_INCREMENT,
+    `nombre` VARCHAR(100),
+    `estado` CHAR,
+    `fecha` DATETIME,
+    PRIMARY KEY (`rolId`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
@@ -267,12 +331,22 @@ DROP TABLE IF EXISTS `usuarios`;
 
 CREATE TABLE `usuarios`
 (
-    `id_usuario` INTEGER(10) NOT NULL AUTO_INCREMENT,
+    `id_usuario` BIGINT NOT NULL AUTO_INCREMENT,
     `nombre` VARCHAR(100) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
     `nivel` CHAR NOT NULL,
     `clave` VARCHAR(60) NOT NULL,
-    PRIMARY KEY (`id_usuario`)
+    `rolId` INTEGER NOT NULL,
+    `menuId` INTEGER(5) NOT NULL,
+    PRIMARY KEY (`id_usuario`),
+    INDEX `fk_usuarios_tblrol1_idx` (`rolId`),
+    INDEX `fk_usuarios_tblmenu1_idx` (`menuId`),
+    CONSTRAINT `fk_usuarios_tblmenu1`
+        FOREIGN KEY (`menuId`)
+        REFERENCES `tblmenu` (`menuId`),
+    CONSTRAINT `fk_usuarios_tblrol1`
+        FOREIGN KEY (`rolId`)
+        REFERENCES `tblrol` (`rolId`)
 ) ENGINE=InnoDB;
 
 # This restores the fkey checks, after having unset them earlier

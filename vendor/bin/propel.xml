@@ -5,7 +5,7 @@
             <connections>
                 <connection id="default">
                     <adapter>mysql</adapter>
-                    <dsn>mysql:host=localhost;port=3306;dbname=contador</dsn>
+                    <dsn>mysql:host=localhost;port=3306;dbname=agilcontador</dsn>
                     <user>root</user>
                     <password></password>
                     <settings>

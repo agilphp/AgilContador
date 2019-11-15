@@ -155,7 +155,7 @@ class TblegresoTableMap extends TableMap
         $this->addRelation('Tblegresodetalle', '\\propel\\propel\\Tblegresodetalle', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':TblEgreso_egresoId',
+    0 => ':egresoId',
     1 => ':egresoId',
   ),
 ), null, null, 'Tblegresodetalles', false);

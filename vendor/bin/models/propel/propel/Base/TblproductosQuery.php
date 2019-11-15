@@ -24,13 +24,11 @@ use propel\propel\Map\TblproductosTableMap;
  * @method     ChildTblproductosQuery orderByCodigo($order = Criteria::ASC) Order by the codigo column
  * @method     ChildTblproductosQuery orderByNombre($order = Criteria::ASC) Order by the nombre column
  * @method     ChildTblproductosQuery orderByLineaid($order = Criteria::ASC) Order by the lineaId column
- * @method     ChildTblproductosQuery orderByTbllineaLineaid($order = Criteria::ASC) Order by the TblLinea_LineaId column
  *
  * @method     ChildTblproductosQuery groupByProductoid() Group by the productoId column
  * @method     ChildTblproductosQuery groupByCodigo() Group by the codigo column
  * @method     ChildTblproductosQuery groupByNombre() Group by the nombre column
  * @method     ChildTblproductosQuery groupByLineaid() Group by the lineaId column
- * @method     ChildTblproductosQuery groupByTbllineaLineaid() Group by the TblLinea_LineaId column
  *
  * @method     ChildTblproductosQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildTblproductosQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -40,15 +38,15 @@ use propel\propel\Map\TblproductosTableMap;
  * @method     ChildTblproductosQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildTblproductosQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildTblproductosQuery leftJoinTbllinea($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tbllinea relation
- * @method     ChildTblproductosQuery rightJoinTbllinea($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tbllinea relation
- * @method     ChildTblproductosQuery innerJoinTbllinea($relationAlias = null) Adds a INNER JOIN clause to the query using the Tbllinea relation
+ * @method     ChildTblproductosQuery leftJoinTblcategoria($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblcategoria relation
+ * @method     ChildTblproductosQuery rightJoinTblcategoria($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblcategoria relation
+ * @method     ChildTblproductosQuery innerJoinTblcategoria($relationAlias = null) Adds a INNER JOIN clause to the query using the Tblcategoria relation
  *
- * @method     ChildTblproductosQuery joinWithTbllinea($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tbllinea relation
+ * @method     ChildTblproductosQuery joinWithTblcategoria($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tblcategoria relation
  *
- * @method     ChildTblproductosQuery leftJoinWithTbllinea() Adds a LEFT JOIN clause and with to the query using the Tbllinea relation
- * @method     ChildTblproductosQuery rightJoinWithTbllinea() Adds a RIGHT JOIN clause and with to the query using the Tbllinea relation
- * @method     ChildTblproductosQuery innerJoinWithTbllinea() Adds a INNER JOIN clause and with to the query using the Tbllinea relation
+ * @method     ChildTblproductosQuery leftJoinWithTblcategoria() Adds a LEFT JOIN clause and with to the query using the Tblcategoria relation
+ * @method     ChildTblproductosQuery rightJoinWithTblcategoria() Adds a RIGHT JOIN clause and with to the query using the Tblcategoria relation
+ * @method     ChildTblproductosQuery innerJoinWithTblcategoria() Adds a INNER JOIN clause and with to the query using the Tblcategoria relation
  *
  * @method     ChildTblproductosQuery leftJoinTblegresodetalle($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblegresodetalle relation
  * @method     ChildTblproductosQuery rightJoinTblegresodetalle($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblegresodetalle relation
@@ -100,7 +98,7 @@ use propel\propel\Map\TblproductosTableMap;
  * @method     ChildTblproductosQuery rightJoinWithTblproductoprecio() Adds a RIGHT JOIN clause and with to the query using the Tblproductoprecio relation
  * @method     ChildTblproductosQuery innerJoinWithTblproductoprecio() Adds a INNER JOIN clause and with to the query using the Tblproductoprecio relation
  *
- * @method     \propel\propel\TbllineaQuery|\propel\propel\TblegresodetalleQuery|\propel\propel\TblfacturadetalleQuery|\propel\propel\TblingresodetalleQuery|\propel\propel\TblproductocostoQuery|\propel\propel\TblproductoprecioQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \propel\propel\TblcategoriaQuery|\propel\propel\TblegresodetalleQuery|\propel\propel\TblfacturadetalleQuery|\propel\propel\TblingresodetalleQuery|\propel\propel\TblproductocostoQuery|\propel\propel\TblproductoprecioQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildTblproductos findOne(ConnectionInterface $con = null) Return the first ChildTblproductos matching the query
  * @method     ChildTblproductos findOneOrCreate(ConnectionInterface $con = null) Return the first ChildTblproductos matching the query, or a new ChildTblproductos object populated from the query conditions when no match is found
@@ -108,8 +106,7 @@ use propel\propel\Map\TblproductosTableMap;
  * @method     ChildTblproductos findOneByProductoid(string $productoId) Return the first ChildTblproductos filtered by the productoId column
  * @method     ChildTblproductos findOneByCodigo(string $codigo) Return the first ChildTblproductos filtered by the codigo column
  * @method     ChildTblproductos findOneByNombre(string $nombre) Return the first ChildTblproductos filtered by the nombre column
- * @method     ChildTblproductos findOneByLineaid(int $lineaId) Return the first ChildTblproductos filtered by the lineaId column
- * @method     ChildTblproductos findOneByTbllineaLineaid(int $TblLinea_LineaId) Return the first ChildTblproductos filtered by the TblLinea_LineaId column *
+ * @method     ChildTblproductos findOneByLineaid(int $lineaId) Return the first ChildTblproductos filtered by the lineaId column *
 
  * @method     ChildTblproductos requirePk($key, ConnectionInterface $con = null) Return the ChildTblproductos by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblproductos requireOne(ConnectionInterface $con = null) Return the first ChildTblproductos matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -118,14 +115,12 @@ use propel\propel\Map\TblproductosTableMap;
  * @method     ChildTblproductos requireOneByCodigo(string $codigo) Return the first ChildTblproductos filtered by the codigo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblproductos requireOneByNombre(string $nombre) Return the first ChildTblproductos filtered by the nombre column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblproductos requireOneByLineaid(int $lineaId) Return the first ChildTblproductos filtered by the lineaId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTblproductos requireOneByTbllineaLineaid(int $TblLinea_LineaId) Return the first ChildTblproductos filtered by the TblLinea_LineaId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildTblproductos[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildTblproductos objects based on current ModelCriteria
  * @method     ChildTblproductos[]|ObjectCollection findByProductoid(string $productoId) Return ChildTblproductos objects filtered by the productoId column
  * @method     ChildTblproductos[]|ObjectCollection findByCodigo(string $codigo) Return ChildTblproductos objects filtered by the codigo column
  * @method     ChildTblproductos[]|ObjectCollection findByNombre(string $nombre) Return ChildTblproductos objects filtered by the nombre column
  * @method     ChildTblproductos[]|ObjectCollection findByLineaid(int $lineaId) Return ChildTblproductos objects filtered by the lineaId column
- * @method     ChildTblproductos[]|ObjectCollection findByTbllineaLineaid(int $TblLinea_LineaId) Return ChildTblproductos objects filtered by the TblLinea_LineaId column
  * @method     ChildTblproductos[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -224,7 +219,7 @@ abstract class TblproductosQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT productoId, codigo, nombre, lineaId, TblLinea_LineaId FROM tblproductos WHERE productoId = :p0';
+        $sql = 'SELECT productoId, codigo, nombre, lineaId FROM tblproductos WHERE productoId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -415,6 +410,8 @@ abstract class TblproductosQuery extends ModelCriteria
      * $query->filterByLineaid(array('min' => 12)); // WHERE lineaId > 12
      * </code>
      *
+     * @see       filterByTblcategoria()
+     *
      * @param     mixed $lineaid The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
@@ -447,87 +444,44 @@ abstract class TblproductosQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the TblLinea_LineaId column
+     * Filter the query by a related \propel\propel\Tblcategoria object
      *
-     * Example usage:
-     * <code>
-     * $query->filterByTbllineaLineaid(1234); // WHERE TblLinea_LineaId = 1234
-     * $query->filterByTbllineaLineaid(array(12, 34)); // WHERE TblLinea_LineaId IN (12, 34)
-     * $query->filterByTbllineaLineaid(array('min' => 12)); // WHERE TblLinea_LineaId > 12
-     * </code>
-     *
-     * @see       filterByTbllinea()
-     *
-     * @param     mixed $tbllineaLineaid The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildTblproductosQuery The current query, for fluid interface
-     */
-    public function filterByTbllineaLineaid($tbllineaLineaid = null, $comparison = null)
-    {
-        if (is_array($tbllineaLineaid)) {
-            $useMinMax = false;
-            if (isset($tbllineaLineaid['min'])) {
-                $this->addUsingAlias(TblproductosTableMap::COL_TBLLINEA_LINEAID, $tbllineaLineaid['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($tbllineaLineaid['max'])) {
-                $this->addUsingAlias(TblproductosTableMap::COL_TBLLINEA_LINEAID, $tbllineaLineaid['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(TblproductosTableMap::COL_TBLLINEA_LINEAID, $tbllineaLineaid, $comparison);
-    }
-
-    /**
-     * Filter the query by a related \propel\propel\Tbllinea object
-     *
-     * @param \propel\propel\Tbllinea|ObjectCollection $tbllinea The related object(s) to use as filter
+     * @param \propel\propel\Tblcategoria|ObjectCollection $tblcategoria The related object(s) to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return ChildTblproductosQuery The current query, for fluid interface
      */
-    public function filterByTbllinea($tbllinea, $comparison = null)
+    public function filterByTblcategoria($tblcategoria, $comparison = null)
     {
-        if ($tbllinea instanceof \propel\propel\Tbllinea) {
+        if ($tblcategoria instanceof \propel\propel\Tblcategoria) {
             return $this
-                ->addUsingAlias(TblproductosTableMap::COL_TBLLINEA_LINEAID, $tbllinea->getLineaid(), $comparison);
-        } elseif ($tbllinea instanceof ObjectCollection) {
+                ->addUsingAlias(TblproductosTableMap::COL_LINEAID, $tblcategoria->getLineaid(), $comparison);
+        } elseif ($tblcategoria instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(TblproductosTableMap::COL_TBLLINEA_LINEAID, $tbllinea->toKeyValue('PrimaryKey', 'Lineaid'), $comparison);
+                ->addUsingAlias(TblproductosTableMap::COL_LINEAID, $tblcategoria->toKeyValue('PrimaryKey', 'Lineaid'), $comparison);
         } else {
-            throw new PropelException('filterByTbllinea() only accepts arguments of type \propel\propel\Tbllinea or Collection');
+            throw new PropelException('filterByTblcategoria() only accepts arguments of type \propel\propel\Tblcategoria or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Tbllinea relation
+     * Adds a JOIN clause to the query using the Tblcategoria relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildTblproductosQuery The current query, for fluid interface
      */
-    public function joinTbllinea($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblcategoria($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Tbllinea');
+        $relationMap = $tableMap->getRelation('Tblcategoria');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -542,14 +496,14 @@ abstract class TblproductosQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Tbllinea');
+            $this->addJoinObject($join, 'Tblcategoria');
         }
 
         return $this;
     }
 
     /**
-     * Use the Tbllinea relation Tbllinea object
+     * Use the Tblcategoria relation Tblcategoria object
      *
      * @see useQuery()
      *
@@ -557,13 +511,13 @@ abstract class TblproductosQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \propel\propel\TbllineaQuery A secondary query class using the current class as primary query
+     * @return \propel\propel\TblcategoriaQuery A secondary query class using the current class as primary query
      */
-    public function useTbllineaQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblcategoriaQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
-            ->joinTbllinea($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Tbllinea', '\propel\propel\TbllineaQuery');
+            ->joinTblcategoria($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Tblcategoria', '\propel\propel\TblcategoriaQuery');
     }
 
     /**
@@ -578,7 +532,7 @@ abstract class TblproductosQuery extends ModelCriteria
     {
         if ($tblegresodetalle instanceof \propel\propel\Tblegresodetalle) {
             return $this
-                ->addUsingAlias(TblproductosTableMap::COL_PRODUCTOID, $tblegresodetalle->getTblproductosProductoid(), $comparison);
+                ->addUsingAlias(TblproductosTableMap::COL_PRODUCTOID, $tblegresodetalle->getProductoid(), $comparison);
         } elseif ($tblegresodetalle instanceof ObjectCollection) {
             return $this
                 ->useTblegresodetalleQuery()
@@ -597,7 +551,7 @@ abstract class TblproductosQuery extends ModelCriteria
      *
      * @return $this|ChildTblproductosQuery The current query, for fluid interface
      */
-    public function joinTblegresodetalle($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblegresodetalle($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblegresodetalle');
@@ -632,7 +586,7 @@ abstract class TblproductosQuery extends ModelCriteria
      *
      * @return \propel\propel\TblegresodetalleQuery A secondary query class using the current class as primary query
      */
-    public function useTblegresodetalleQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblegresodetalleQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblegresodetalle($relationAlias, $joinType)
@@ -651,7 +605,7 @@ abstract class TblproductosQuery extends ModelCriteria
     {
         if ($tblfacturadetalle instanceof \propel\propel\Tblfacturadetalle) {
             return $this
-                ->addUsingAlias(TblproductosTableMap::COL_PRODUCTOID, $tblfacturadetalle->getTblproductosProductoid(), $comparison);
+                ->addUsingAlias(TblproductosTableMap::COL_PRODUCTOID, $tblfacturadetalle->getProductoid(), $comparison);
         } elseif ($tblfacturadetalle instanceof ObjectCollection) {
             return $this
                 ->useTblfacturadetalleQuery()
@@ -670,7 +624,7 @@ abstract class TblproductosQuery extends ModelCriteria
      *
      * @return $this|ChildTblproductosQuery The current query, for fluid interface
      */
-    public function joinTblfacturadetalle($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblfacturadetalle($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblfacturadetalle');
@@ -705,7 +659,7 @@ abstract class TblproductosQuery extends ModelCriteria
      *
      * @return \propel\propel\TblfacturadetalleQuery A secondary query class using the current class as primary query
      */
-    public function useTblfacturadetalleQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblfacturadetalleQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblfacturadetalle($relationAlias, $joinType)
@@ -724,7 +678,7 @@ abstract class TblproductosQuery extends ModelCriteria
     {
         if ($tblingresodetalle instanceof \propel\propel\Tblingresodetalle) {
             return $this
-                ->addUsingAlias(TblproductosTableMap::COL_PRODUCTOID, $tblingresodetalle->getTblproductosProductoid(), $comparison);
+                ->addUsingAlias(TblproductosTableMap::COL_PRODUCTOID, $tblingresodetalle->getProductoid(), $comparison);
         } elseif ($tblingresodetalle instanceof ObjectCollection) {
             return $this
                 ->useTblingresodetalleQuery()
@@ -743,7 +697,7 @@ abstract class TblproductosQuery extends ModelCriteria
      *
      * @return $this|ChildTblproductosQuery The current query, for fluid interface
      */
-    public function joinTblingresodetalle($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblingresodetalle($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblingresodetalle');
@@ -778,7 +732,7 @@ abstract class TblproductosQuery extends ModelCriteria
      *
      * @return \propel\propel\TblingresodetalleQuery A secondary query class using the current class as primary query
      */
-    public function useTblingresodetalleQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblingresodetalleQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblingresodetalle($relationAlias, $joinType)
@@ -797,7 +751,7 @@ abstract class TblproductosQuery extends ModelCriteria
     {
         if ($tblproductocosto instanceof \propel\propel\Tblproductocosto) {
             return $this
-                ->addUsingAlias(TblproductosTableMap::COL_PRODUCTOID, $tblproductocosto->getTblproductosProductoid(), $comparison);
+                ->addUsingAlias(TblproductosTableMap::COL_PRODUCTOID, $tblproductocosto->getProductoid(), $comparison);
         } elseif ($tblproductocosto instanceof ObjectCollection) {
             return $this
                 ->useTblproductocostoQuery()
@@ -816,7 +770,7 @@ abstract class TblproductosQuery extends ModelCriteria
      *
      * @return $this|ChildTblproductosQuery The current query, for fluid interface
      */
-    public function joinTblproductocosto($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblproductocosto($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblproductocosto');
@@ -851,7 +805,7 @@ abstract class TblproductosQuery extends ModelCriteria
      *
      * @return \propel\propel\TblproductocostoQuery A secondary query class using the current class as primary query
      */
-    public function useTblproductocostoQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblproductocostoQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblproductocosto($relationAlias, $joinType)
@@ -870,7 +824,7 @@ abstract class TblproductosQuery extends ModelCriteria
     {
         if ($tblproductoprecio instanceof \propel\propel\Tblproductoprecio) {
             return $this
-                ->addUsingAlias(TblproductosTableMap::COL_PRODUCTOID, $tblproductoprecio->getTblproductosProductoid(), $comparison);
+                ->addUsingAlias(TblproductosTableMap::COL_PRODUCTOID, $tblproductoprecio->getProductoid(), $comparison);
         } elseif ($tblproductoprecio instanceof ObjectCollection) {
             return $this
                 ->useTblproductoprecioQuery()
@@ -889,7 +843,7 @@ abstract class TblproductosQuery extends ModelCriteria
      *
      * @return $this|ChildTblproductosQuery The current query, for fluid interface
      */
-    public function joinTblproductoprecio($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblproductoprecio($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblproductoprecio');
@@ -924,7 +878,7 @@ abstract class TblproductosQuery extends ModelCriteria
      *
      * @return \propel\propel\TblproductoprecioQuery A secondary query class using the current class as primary query
      */
-    public function useTblproductoprecioQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblproductoprecioQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblproductoprecio($relationAlias, $joinType)

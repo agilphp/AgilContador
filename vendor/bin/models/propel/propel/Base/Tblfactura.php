@@ -18,10 +18,16 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
+use propel\propel\Tblcliente as ChildTblcliente;
+use propel\propel\TblclienteQuery as ChildTblclienteQuery;
 use propel\propel\Tblfactura as ChildTblfactura;
 use propel\propel\TblfacturaQuery as ChildTblfacturaQuery;
 use propel\propel\Tblfacturadetalle as ChildTblfacturadetalle;
 use propel\propel\TblfacturadetalleQuery as ChildTblfacturadetalleQuery;
+use propel\propel\Tblmetodopago as ChildTblmetodopago;
+use propel\propel\TblmetodopagoQuery as ChildTblmetodopagoQuery;
+use propel\propel\Usuarios as ChildUsuarios;
+use propel\propel\UsuariosQuery as ChildUsuariosQuery;
 use propel\propel\Map\TblfacturaTableMap;
 use propel\propel\Map\TblfacturadetalleTableMap;
 
@@ -95,11 +101,48 @@ abstract class Tblfactura implements ActiveRecordInterface
     protected $fecha;
 
     /**
-     * The value for the tblcliente_clienteid field.
+     * The value for the estado field.
+     *
+     * Note: this column has a database default value of: '1'
+     * @var        string
+     */
+    protected $estado;
+
+    /**
+     * The value for the usuarioid field.
      *
      * @var        string
      */
-    protected $tblcliente_clienteid;
+    protected $usuarioid;
+
+    /**
+     * The value for the totatpagado field.
+     *
+     * @var        int
+     */
+    protected $totatpagado;
+
+    /**
+     * The value for the metodopagoid field.
+     *
+     * @var        int
+     */
+    protected $metodopagoid;
+
+    /**
+     * @var        ChildTblcliente
+     */
+    protected $aTblcliente;
+
+    /**
+     * @var        ChildTblmetodopago
+     */
+    protected $aTblmetodopago;
+
+    /**
+     * @var        ChildUsuarios
+     */
+    protected $aUsuarios;
 
     /**
      * @var        ObjectCollection|ChildTblfacturadetalle[] Collection to store aggregation of ChildTblfacturadetalle objects.
@@ -122,10 +165,23 @@ abstract class Tblfactura implements ActiveRecordInterface
     protected $tblfacturadetallesScheduledForDeletion = null;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->estado = '1';
+    }
+
+    /**
      * Initializes internal state of propel\propel\Base\Tblfactura object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -397,13 +453,43 @@ abstract class Tblfactura implements ActiveRecordInterface
     }
 
     /**
-     * Get the [tblcliente_clienteid] column value.
+     * Get the [estado] column value.
      *
      * @return string
      */
-    public function getTblclienteClienteid()
+    public function getEstado()
     {
-        return $this->tblcliente_clienteid;
+        return $this->estado;
+    }
+
+    /**
+     * Get the [usuarioid] column value.
+     *
+     * @return string
+     */
+    public function getUsuarioid()
+    {
+        return $this->usuarioid;
+    }
+
+    /**
+     * Get the [totatpagado] column value.
+     *
+     * @return int
+     */
+    public function getTotatpagado()
+    {
+        return $this->totatpagado;
+    }
+
+    /**
+     * Get the [metodopagoid] column value.
+     *
+     * @return int
+     */
+    public function getMetodopagoid()
+    {
+        return $this->metodopagoid;
     }
 
     /**
@@ -463,6 +549,10 @@ abstract class Tblfactura implements ActiveRecordInterface
             $this->modifiedColumns[TblfacturaTableMap::COL_CLIENTEID] = true;
         }
 
+        if ($this->aTblcliente !== null && $this->aTblcliente->getClienteid() !== $v) {
+            $this->aTblcliente = null;
+        }
+
         return $this;
     } // setClienteid()
 
@@ -487,24 +577,92 @@ abstract class Tblfactura implements ActiveRecordInterface
     } // setFecha()
 
     /**
-     * Set the value of [tblcliente_clienteid] column.
+     * Set the value of [estado] column.
      *
      * @param string $v new value
      * @return $this|\propel\propel\Tblfactura The current object (for fluent API support)
      */
-    public function setTblclienteClienteid($v)
+    public function setEstado($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->tblcliente_clienteid !== $v) {
-            $this->tblcliente_clienteid = $v;
-            $this->modifiedColumns[TblfacturaTableMap::COL_TBLCLIENTE_CLIENTEID] = true;
+        if ($this->estado !== $v) {
+            $this->estado = $v;
+            $this->modifiedColumns[TblfacturaTableMap::COL_ESTADO] = true;
         }
 
         return $this;
-    } // setTblclienteClienteid()
+    } // setEstado()
+
+    /**
+     * Set the value of [usuarioid] column.
+     *
+     * @param string $v new value
+     * @return $this|\propel\propel\Tblfactura The current object (for fluent API support)
+     */
+    public function setUsuarioid($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->usuarioid !== $v) {
+            $this->usuarioid = $v;
+            $this->modifiedColumns[TblfacturaTableMap::COL_USUARIOID] = true;
+        }
+
+        if ($this->aUsuarios !== null && $this->aUsuarios->getIdUsuario() !== $v) {
+            $this->aUsuarios = null;
+        }
+
+        return $this;
+    } // setUsuarioid()
+
+    /**
+     * Set the value of [totatpagado] column.
+     *
+     * @param int $v new value
+     * @return $this|\propel\propel\Tblfactura The current object (for fluent API support)
+     */
+    public function setTotatpagado($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->totatpagado !== $v) {
+            $this->totatpagado = $v;
+            $this->modifiedColumns[TblfacturaTableMap::COL_TOTATPAGADO] = true;
+        }
+
+        return $this;
+    } // setTotatpagado()
+
+    /**
+     * Set the value of [metodopagoid] column.
+     *
+     * @param int $v new value
+     * @return $this|\propel\propel\Tblfactura The current object (for fluent API support)
+     */
+    public function setMetodopagoid($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->metodopagoid !== $v) {
+            $this->metodopagoid = $v;
+            $this->modifiedColumns[TblfacturaTableMap::COL_METODOPAGOID] = true;
+        }
+
+        if ($this->aTblmetodopago !== null && $this->aTblmetodopago->getMetodopagoid() !== $v) {
+            $this->aTblmetodopago = null;
+        }
+
+        return $this;
+    } // setMetodopagoid()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -516,6 +674,10 @@ abstract class Tblfactura implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->estado !== '1') {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -557,8 +719,17 @@ abstract class Tblfactura implements ActiveRecordInterface
             }
             $this->fecha = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : TblfacturaTableMap::translateFieldName('TblclienteClienteid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tblcliente_clienteid = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : TblfacturaTableMap::translateFieldName('Estado', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->estado = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : TblfacturaTableMap::translateFieldName('Usuarioid', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->usuarioid = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : TblfacturaTableMap::translateFieldName('Totatpagado', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->totatpagado = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : TblfacturaTableMap::translateFieldName('Metodopagoid', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->metodopagoid = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -567,7 +738,7 @@ abstract class Tblfactura implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = TblfacturaTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 8; // 8 = TblfacturaTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Tblfactura'), 0, $e);
@@ -589,6 +760,15 @@ abstract class Tblfactura implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aTblcliente !== null && $this->clienteid !== $this->aTblcliente->getClienteid()) {
+            $this->aTblcliente = null;
+        }
+        if ($this->aUsuarios !== null && $this->usuarioid !== $this->aUsuarios->getIdUsuario()) {
+            $this->aUsuarios = null;
+        }
+        if ($this->aTblmetodopago !== null && $this->metodopagoid !== $this->aTblmetodopago->getMetodopagoid()) {
+            $this->aTblmetodopago = null;
+        }
     } // ensureConsistency
 
     /**
@@ -628,6 +808,9 @@ abstract class Tblfactura implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aTblcliente = null;
+            $this->aTblmetodopago = null;
+            $this->aUsuarios = null;
             $this->collTblfacturadetalles = null;
 
         } // if (deep)
@@ -733,6 +916,32 @@ abstract class Tblfactura implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aTblcliente !== null) {
+                if ($this->aTblcliente->isModified() || $this->aTblcliente->isNew()) {
+                    $affectedRows += $this->aTblcliente->save($con);
+                }
+                $this->setTblcliente($this->aTblcliente);
+            }
+
+            if ($this->aTblmetodopago !== null) {
+                if ($this->aTblmetodopago->isModified() || $this->aTblmetodopago->isNew()) {
+                    $affectedRows += $this->aTblmetodopago->save($con);
+                }
+                $this->setTblmetodopago($this->aTblmetodopago);
+            }
+
+            if ($this->aUsuarios !== null) {
+                if ($this->aUsuarios->isModified() || $this->aUsuarios->isNew()) {
+                    $affectedRows += $this->aUsuarios->save($con);
+                }
+                $this->setUsuarios($this->aUsuarios);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -746,9 +955,10 @@ abstract class Tblfactura implements ActiveRecordInterface
 
             if ($this->tblfacturadetallesScheduledForDeletion !== null) {
                 if (!$this->tblfacturadetallesScheduledForDeletion->isEmpty()) {
-                    \propel\propel\TblfacturadetalleQuery::create()
-                        ->filterByPrimaryKeys($this->tblfacturadetallesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
+                    foreach ($this->tblfacturadetallesScheduledForDeletion as $tblfacturadetalle) {
+                        // need to save related object because we set the relation to null
+                        $tblfacturadetalle->save($con);
+                    }
                     $this->tblfacturadetallesScheduledForDeletion = null;
                 }
             }
@@ -799,8 +1009,17 @@ abstract class Tblfactura implements ActiveRecordInterface
         if ($this->isColumnModified(TblfacturaTableMap::COL_FECHA)) {
             $modifiedColumns[':p' . $index++]  = 'fecha';
         }
-        if ($this->isColumnModified(TblfacturaTableMap::COL_TBLCLIENTE_CLIENTEID)) {
-            $modifiedColumns[':p' . $index++]  = 'tblcliente_clienteId';
+        if ($this->isColumnModified(TblfacturaTableMap::COL_ESTADO)) {
+            $modifiedColumns[':p' . $index++]  = 'estado';
+        }
+        if ($this->isColumnModified(TblfacturaTableMap::COL_USUARIOID)) {
+            $modifiedColumns[':p' . $index++]  = 'usuarioId';
+        }
+        if ($this->isColumnModified(TblfacturaTableMap::COL_TOTATPAGADO)) {
+            $modifiedColumns[':p' . $index++]  = 'totatPagado';
+        }
+        if ($this->isColumnModified(TblfacturaTableMap::COL_METODOPAGOID)) {
+            $modifiedColumns[':p' . $index++]  = 'metodoPagoId';
         }
 
         $sql = sprintf(
@@ -825,8 +1044,17 @@ abstract class Tblfactura implements ActiveRecordInterface
                     case 'fecha':
                         $stmt->bindValue($identifier, $this->fecha ? $this->fecha->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
                         break;
-                    case 'tblcliente_clienteId':
-                        $stmt->bindValue($identifier, $this->tblcliente_clienteid, PDO::PARAM_INT);
+                    case 'estado':
+                        $stmt->bindValue($identifier, $this->estado, PDO::PARAM_STR);
+                        break;
+                    case 'usuarioId':
+                        $stmt->bindValue($identifier, $this->usuarioid, PDO::PARAM_INT);
+                        break;
+                    case 'totatPagado':
+                        $stmt->bindValue($identifier, $this->totatpagado, PDO::PARAM_INT);
+                        break;
+                    case 'metodoPagoId':
+                        $stmt->bindValue($identifier, $this->metodopagoid, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -903,7 +1131,16 @@ abstract class Tblfactura implements ActiveRecordInterface
                 return $this->getFecha();
                 break;
             case 4:
-                return $this->getTblclienteClienteid();
+                return $this->getEstado();
+                break;
+            case 5:
+                return $this->getUsuarioid();
+                break;
+            case 6:
+                return $this->getTotatpagado();
+                break;
+            case 7:
+                return $this->getMetodopagoid();
                 break;
             default:
                 return null;
@@ -939,7 +1176,10 @@ abstract class Tblfactura implements ActiveRecordInterface
             $keys[1] => $this->getNumero(),
             $keys[2] => $this->getClienteid(),
             $keys[3] => $this->getFecha(),
-            $keys[4] => $this->getTblclienteClienteid(),
+            $keys[4] => $this->getEstado(),
+            $keys[5] => $this->getUsuarioid(),
+            $keys[6] => $this->getTotatpagado(),
+            $keys[7] => $this->getMetodopagoid(),
         );
         if ($result[$keys[3]] instanceof \DateTimeInterface) {
             $result[$keys[3]] = $result[$keys[3]]->format('c');
@@ -951,6 +1191,51 @@ abstract class Tblfactura implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
+            if (null !== $this->aTblcliente) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'tblcliente';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'tblcliente';
+                        break;
+                    default:
+                        $key = 'Tblcliente';
+                }
+
+                $result[$key] = $this->aTblcliente->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aTblmetodopago) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'tblmetodopago';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'tblmetodopago';
+                        break;
+                    default:
+                        $key = 'Tblmetodopago';
+                }
+
+                $result[$key] = $this->aTblmetodopago->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aUsuarios) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'usuarios';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'usuarios';
+                        break;
+                    default:
+                        $key = 'Usuarios';
+                }
+
+                $result[$key] = $this->aUsuarios->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
             if (null !== $this->collTblfacturadetalles) {
 
                 switch ($keyType) {
@@ -1013,7 +1298,16 @@ abstract class Tblfactura implements ActiveRecordInterface
                 $this->setFecha($value);
                 break;
             case 4:
-                $this->setTblclienteClienteid($value);
+                $this->setEstado($value);
+                break;
+            case 5:
+                $this->setUsuarioid($value);
+                break;
+            case 6:
+                $this->setTotatpagado($value);
+                break;
+            case 7:
+                $this->setMetodopagoid($value);
                 break;
         } // switch()
 
@@ -1054,7 +1348,16 @@ abstract class Tblfactura implements ActiveRecordInterface
             $this->setFecha($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setTblclienteClienteid($arr[$keys[4]]);
+            $this->setEstado($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setUsuarioid($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setTotatpagado($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setMetodopagoid($arr[$keys[7]]);
         }
     }
 
@@ -1109,8 +1412,17 @@ abstract class Tblfactura implements ActiveRecordInterface
         if ($this->isColumnModified(TblfacturaTableMap::COL_FECHA)) {
             $criteria->add(TblfacturaTableMap::COL_FECHA, $this->fecha);
         }
-        if ($this->isColumnModified(TblfacturaTableMap::COL_TBLCLIENTE_CLIENTEID)) {
-            $criteria->add(TblfacturaTableMap::COL_TBLCLIENTE_CLIENTEID, $this->tblcliente_clienteid);
+        if ($this->isColumnModified(TblfacturaTableMap::COL_ESTADO)) {
+            $criteria->add(TblfacturaTableMap::COL_ESTADO, $this->estado);
+        }
+        if ($this->isColumnModified(TblfacturaTableMap::COL_USUARIOID)) {
+            $criteria->add(TblfacturaTableMap::COL_USUARIOID, $this->usuarioid);
+        }
+        if ($this->isColumnModified(TblfacturaTableMap::COL_TOTATPAGADO)) {
+            $criteria->add(TblfacturaTableMap::COL_TOTATPAGADO, $this->totatpagado);
+        }
+        if ($this->isColumnModified(TblfacturaTableMap::COL_METODOPAGOID)) {
+            $criteria->add(TblfacturaTableMap::COL_METODOPAGOID, $this->metodopagoid);
         }
 
         return $criteria;
@@ -1201,7 +1513,10 @@ abstract class Tblfactura implements ActiveRecordInterface
         $copyObj->setNumero($this->getNumero());
         $copyObj->setClienteid($this->getClienteid());
         $copyObj->setFecha($this->getFecha());
-        $copyObj->setTblclienteClienteid($this->getTblclienteClienteid());
+        $copyObj->setEstado($this->getEstado());
+        $copyObj->setUsuarioid($this->getUsuarioid());
+        $copyObj->setTotatpagado($this->getTotatpagado());
+        $copyObj->setMetodopagoid($this->getMetodopagoid());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1242,6 +1557,159 @@ abstract class Tblfactura implements ActiveRecordInterface
         $this->copyInto($copyObj, $deepCopy);
 
         return $copyObj;
+    }
+
+    /**
+     * Declares an association between this object and a ChildTblcliente object.
+     *
+     * @param  ChildTblcliente $v
+     * @return $this|\propel\propel\Tblfactura The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setTblcliente(ChildTblcliente $v = null)
+    {
+        if ($v === null) {
+            $this->setClienteid(NULL);
+        } else {
+            $this->setClienteid($v->getClienteid());
+        }
+
+        $this->aTblcliente = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildTblcliente object, it will not be re-added.
+        if ($v !== null) {
+            $v->addTblfactura($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildTblcliente object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildTblcliente The associated ChildTblcliente object.
+     * @throws PropelException
+     */
+    public function getTblcliente(ConnectionInterface $con = null)
+    {
+        if ($this->aTblcliente === null && (($this->clienteid !== "" && $this->clienteid !== null))) {
+            $this->aTblcliente = ChildTblclienteQuery::create()->findPk($this->clienteid, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aTblcliente->addTblfacturas($this);
+             */
+        }
+
+        return $this->aTblcliente;
+    }
+
+    /**
+     * Declares an association between this object and a ChildTblmetodopago object.
+     *
+     * @param  ChildTblmetodopago $v
+     * @return $this|\propel\propel\Tblfactura The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setTblmetodopago(ChildTblmetodopago $v = null)
+    {
+        if ($v === null) {
+            $this->setMetodopagoid(NULL);
+        } else {
+            $this->setMetodopagoid($v->getMetodopagoid());
+        }
+
+        $this->aTblmetodopago = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildTblmetodopago object, it will not be re-added.
+        if ($v !== null) {
+            $v->addTblfactura($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildTblmetodopago object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildTblmetodopago The associated ChildTblmetodopago object.
+     * @throws PropelException
+     */
+    public function getTblmetodopago(ConnectionInterface $con = null)
+    {
+        if ($this->aTblmetodopago === null && ($this->metodopagoid != 0)) {
+            $this->aTblmetodopago = ChildTblmetodopagoQuery::create()->findPk($this->metodopagoid, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aTblmetodopago->addTblfacturas($this);
+             */
+        }
+
+        return $this->aTblmetodopago;
+    }
+
+    /**
+     * Declares an association between this object and a ChildUsuarios object.
+     *
+     * @param  ChildUsuarios $v
+     * @return $this|\propel\propel\Tblfactura The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setUsuarios(ChildUsuarios $v = null)
+    {
+        if ($v === null) {
+            $this->setUsuarioid(NULL);
+        } else {
+            $this->setUsuarioid($v->getIdUsuario());
+        }
+
+        $this->aUsuarios = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildUsuarios object, it will not be re-added.
+        if ($v !== null) {
+            $v->addTblfactura($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildUsuarios object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildUsuarios The associated ChildUsuarios object.
+     * @throws PropelException
+     */
+    public function getUsuarios(ConnectionInterface $con = null)
+    {
+        if ($this->aUsuarios === null && (($this->usuarioid !== "" && $this->usuarioid !== null))) {
+            $this->aUsuarios = ChildUsuariosQuery::create()->findPk($this->usuarioid, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUsuarios->addTblfacturas($this);
+             */
+        }
+
+        return $this->aUsuarios;
     }
 
 
@@ -1479,7 +1947,7 @@ abstract class Tblfactura implements ActiveRecordInterface
                 $this->tblfacturadetallesScheduledForDeletion = clone $this->collTblfacturadetalles;
                 $this->tblfacturadetallesScheduledForDeletion->clear();
             }
-            $this->tblfacturadetallesScheduledForDeletion[]= clone $tblfacturadetalle;
+            $this->tblfacturadetallesScheduledForDeletion[]= $tblfacturadetalle;
             $tblfacturadetalle->setTblfactura(null);
         }
 
@@ -1518,13 +1986,26 @@ abstract class Tblfactura implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aTblcliente) {
+            $this->aTblcliente->removeTblfactura($this);
+        }
+        if (null !== $this->aTblmetodopago) {
+            $this->aTblmetodopago->removeTblfactura($this);
+        }
+        if (null !== $this->aUsuarios) {
+            $this->aUsuarios->removeTblfactura($this);
+        }
         $this->facturaid = null;
         $this->numero = null;
         $this->clienteid = null;
         $this->fecha = null;
-        $this->tblcliente_clienteid = null;
+        $this->estado = null;
+        $this->usuarioid = null;
+        $this->totatpagado = null;
+        $this->metodopagoid = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -1549,6 +2030,9 @@ abstract class Tblfactura implements ActiveRecordInterface
         } // if ($deep)
 
         $this->collTblfacturadetalles = null;
+        $this->aTblcliente = null;
+        $this->aTblmetodopago = null;
+        $this->aUsuarios = null;
     }
 
     /**

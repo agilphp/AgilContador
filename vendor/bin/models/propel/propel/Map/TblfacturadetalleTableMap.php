@@ -59,7 +59,7 @@ class TblfacturadetalleTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 5;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class TblfacturadetalleTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 5;
 
     /**
      * the column name for the facturaDetalleId field
@@ -97,16 +97,6 @@ class TblfacturadetalleTableMap extends TableMap
     const COL_PRECIO = 'tblfacturadetalle.precio';
 
     /**
-     * the column name for the tblfactura_facturaId field
-     */
-    const COL_TBLFACTURA_FACTURAID = 'tblfacturadetalle.tblfactura_facturaId';
-
-    /**
-     * the column name for the TblProductos_productoId field
-     */
-    const COL_TBLPRODUCTOS_PRODUCTOID = 'tblfacturadetalle.TblProductos_productoId';
-
-    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -118,11 +108,11 @@ class TblfacturadetalleTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Facturadetalleid', 'Facturaid', 'Productoid', 'Cantidad', 'Precio', 'TblfacturaFacturaid', 'TblproductosProductoid', ),
-        self::TYPE_CAMELNAME     => array('facturadetalleid', 'facturaid', 'productoid', 'cantidad', 'precio', 'tblfacturaFacturaid', 'tblproductosProductoid', ),
-        self::TYPE_COLNAME       => array(TblfacturadetalleTableMap::COL_FACTURADETALLEID, TblfacturadetalleTableMap::COL_FACTURAID, TblfacturadetalleTableMap::COL_PRODUCTOID, TblfacturadetalleTableMap::COL_CANTIDAD, TblfacturadetalleTableMap::COL_PRECIO, TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID, TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, ),
-        self::TYPE_FIELDNAME     => array('facturaDetalleId', 'facturaId', 'productoId', 'cantidad', 'precio', 'tblfactura_facturaId', 'TblProductos_productoId', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Facturadetalleid', 'Facturaid', 'Productoid', 'Cantidad', 'Precio', ),
+        self::TYPE_CAMELNAME     => array('facturadetalleid', 'facturaid', 'productoid', 'cantidad', 'precio', ),
+        self::TYPE_COLNAME       => array(TblfacturadetalleTableMap::COL_FACTURADETALLEID, TblfacturadetalleTableMap::COL_FACTURAID, TblfacturadetalleTableMap::COL_PRODUCTOID, TblfacturadetalleTableMap::COL_CANTIDAD, TblfacturadetalleTableMap::COL_PRECIO, ),
+        self::TYPE_FIELDNAME     => array('facturaDetalleId', 'facturaId', 'productoId', 'cantidad', 'precio', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -132,11 +122,11 @@ class TblfacturadetalleTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Facturadetalleid' => 0, 'Facturaid' => 1, 'Productoid' => 2, 'Cantidad' => 3, 'Precio' => 4, 'TblfacturaFacturaid' => 5, 'TblproductosProductoid' => 6, ),
-        self::TYPE_CAMELNAME     => array('facturadetalleid' => 0, 'facturaid' => 1, 'productoid' => 2, 'cantidad' => 3, 'precio' => 4, 'tblfacturaFacturaid' => 5, 'tblproductosProductoid' => 6, ),
-        self::TYPE_COLNAME       => array(TblfacturadetalleTableMap::COL_FACTURADETALLEID => 0, TblfacturadetalleTableMap::COL_FACTURAID => 1, TblfacturadetalleTableMap::COL_PRODUCTOID => 2, TblfacturadetalleTableMap::COL_CANTIDAD => 3, TblfacturadetalleTableMap::COL_PRECIO => 4, TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID => 5, TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID => 6, ),
-        self::TYPE_FIELDNAME     => array('facturaDetalleId' => 0, 'facturaId' => 1, 'productoId' => 2, 'cantidad' => 3, 'precio' => 4, 'tblfactura_facturaId' => 5, 'TblProductos_productoId' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Facturadetalleid' => 0, 'Facturaid' => 1, 'Productoid' => 2, 'Cantidad' => 3, 'Precio' => 4, ),
+        self::TYPE_CAMELNAME     => array('facturadetalleid' => 0, 'facturaid' => 1, 'productoid' => 2, 'cantidad' => 3, 'precio' => 4, ),
+        self::TYPE_COLNAME       => array(TblfacturadetalleTableMap::COL_FACTURADETALLEID => 0, TblfacturadetalleTableMap::COL_FACTURAID => 1, TblfacturadetalleTableMap::COL_PRODUCTOID => 2, TblfacturadetalleTableMap::COL_CANTIDAD => 3, TblfacturadetalleTableMap::COL_PRECIO => 4, ),
+        self::TYPE_FIELDNAME     => array('facturaDetalleId' => 0, 'facturaId' => 1, 'productoId' => 2, 'cantidad' => 3, 'precio' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -157,12 +147,10 @@ class TblfacturadetalleTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('facturaDetalleId', 'Facturadetalleid', 'BIGINT', true, null, null);
-        $this->addColumn('facturaId', 'Facturaid', 'BIGINT', false, null, null);
-        $this->addColumn('productoId', 'Productoid', 'BIGINT', false, null, null);
+        $this->addForeignKey('facturaId', 'Facturaid', 'BIGINT', 'tblfactura', 'facturaId', false, null, null);
+        $this->addForeignKey('productoId', 'Productoid', 'BIGINT', 'tblproductos', 'productoId', false, null, null);
         $this->addColumn('cantidad', 'Cantidad', 'DECIMAL', false, 10, null);
         $this->addColumn('precio', 'Precio', 'DECIMAL', false, 10, null);
-        $this->addForeignKey('tblfactura_facturaId', 'TblfacturaFacturaid', 'BIGINT', 'tblfactura', 'facturaId', true, null, null);
-        $this->addForeignKey('TblProductos_productoId', 'TblproductosProductoid', 'BIGINT', 'tblproductos', 'productoId', true, null, null);
     } // initialize()
 
     /**
@@ -170,18 +158,18 @@ class TblfacturadetalleTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Tblproductos', '\\propel\\propel\\Tblproductos', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':TblProductos_productoId',
-    1 => ':productoId',
-  ),
-), null, null, null, false);
         $this->addRelation('Tblfactura', '\\propel\\propel\\Tblfactura', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
-    0 => ':tblfactura_facturaId',
+    0 => ':facturaId',
     1 => ':facturaId',
+  ),
+), null, null, null, false);
+        $this->addRelation('Tblproductos', '\\propel\\propel\\Tblproductos', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':productoId',
+    1 => ':productoId',
   ),
 ), null, null, null, false);
     } // buildRelations()
@@ -332,16 +320,12 @@ class TblfacturadetalleTableMap extends TableMap
             $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_PRODUCTOID);
             $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_CANTIDAD);
             $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_PRECIO);
-            $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID);
-            $criteria->addSelectColumn(TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID);
         } else {
             $criteria->addSelectColumn($alias . '.facturaDetalleId');
             $criteria->addSelectColumn($alias . '.facturaId');
             $criteria->addSelectColumn($alias . '.productoId');
             $criteria->addSelectColumn($alias . '.cantidad');
             $criteria->addSelectColumn($alias . '.precio');
-            $criteria->addSelectColumn($alias . '.tblfactura_facturaId');
-            $criteria->addSelectColumn($alias . '.TblProductos_productoId');
         }
     }
 

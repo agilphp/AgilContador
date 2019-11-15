@@ -333,17 +333,17 @@
     },
     {
         "name": "monolog/monolog",
-        "version": "1.25.1",
-        "version_normalized": "1.25.1.0",
+        "version": "1.25.2",
+        "version_normalized": "1.25.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
-            "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf"
+            "reference": "d5e2fb341cb44f7e2ab639d12a1e5901091ec287"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
-            "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d5e2fb341cb44f7e2ab639d12a1e5901091ec287",
+            "reference": "d5e2fb341cb44f7e2ab639d12a1e5901091ec287",
             "shasum": ""
         },
         "require": {
@@ -379,7 +379,7 @@
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
             "sentry/sentry": "Allow sending log messages to a Sentry server"
         },
-        "time": "2019-09-06T13:49:17+00:00",
+        "time": "2019-11-13T10:00:05+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -908,17 +908,17 @@
     },
     {
         "name": "symfony/config",
-        "version": "v3.4.33",
-        "version_normalized": "3.4.33.0",
+        "version": "v3.4.35",
+        "version_normalized": "3.4.35.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/config.git",
-            "reference": "c111091db748ed394fd8c3e473a90ad3b80e08ad"
+            "reference": "c3a30587de97263d2813a3c81b74126c58b67a4f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/config/zipball/c111091db748ed394fd8c3e473a90ad3b80e08ad",
-            "reference": "c111091db748ed394fd8c3e473a90ad3b80e08ad",
+            "url": "https://api.github.com/repos/symfony/config/zipball/c3a30587de97263d2813a3c81b74126c58b67a4f",
+            "reference": "c3a30587de97263d2813a3c81b74126c58b67a4f",
             "shasum": ""
         },
         "require": {
@@ -939,7 +939,7 @@
         "suggest": {
             "symfony/yaml": "To use the yaml reference dumper"
         },
-        "time": "2019-10-30T12:46:47+00:00",
+        "time": "2019-11-08T08:28:59+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -974,17 +974,17 @@
     },
     {
         "name": "symfony/console",
-        "version": "v3.4.33",
-        "version_normalized": "3.4.33.0",
+        "version": "v3.4.35",
+        "version_normalized": "3.4.35.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/console.git",
-            "reference": "c7edffb26b29cae972ca4afccb610a38ce8d0ccf"
+            "reference": "17b154f932c5874cdbda6d05796b6490eec9f9f7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/console/zipball/c7edffb26b29cae972ca4afccb610a38ce8d0ccf",
-            "reference": "c7edffb26b29cae972ca4afccb610a38ce8d0ccf",
+            "url": "https://api.github.com/repos/symfony/console/zipball/17b154f932c5874cdbda6d05796b6490eec9f9f7",
+            "reference": "17b154f932c5874cdbda6d05796b6490eec9f9f7",
             "shasum": ""
         },
         "require": {
@@ -1013,7 +1013,7 @@
             "symfony/lock": "",
             "symfony/process": ""
         },
-        "time": "2019-10-24T15:33:53+00:00",
+        "time": "2019-11-13T07:12:39+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1048,8 +1048,8 @@
     },
     {
         "name": "symfony/debug",
-        "version": "v3.4.33",
-        "version_normalized": "3.4.33.0",
+        "version": "v3.4.35",
+        "version_normalized": "3.4.35.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/debug.git",
@@ -1106,8 +1106,8 @@
     },
     {
         "name": "symfony/filesystem",
-        "version": "v3.4.33",
-        "version_normalized": "3.4.33.0",
+        "version": "v3.4.35",
+        "version_normalized": "3.4.35.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/filesystem.git",
@@ -1158,8 +1158,8 @@
     },
     {
         "name": "symfony/finder",
-        "version": "v3.4.33",
-        "version_normalized": "3.4.33.0",
+        "version": "v3.4.35",
+        "version_normalized": "3.4.35.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/finder.git",
@@ -1330,8 +1330,8 @@
     },
     {
         "name": "symfony/translation",
-        "version": "v3.4.33",
-        "version_normalized": "3.4.33.0",
+        "version": "v3.4.35",
+        "version_normalized": "3.4.35.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/translation.git",
@@ -1402,17 +1402,17 @@
     },
     {
         "name": "symfony/validator",
-        "version": "v3.4.33",
-        "version_normalized": "3.4.33.0",
+        "version": "v3.4.35",
+        "version_normalized": "3.4.35.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/validator.git",
-            "reference": "da7e9114a7821ce18e73851eac6e55589f1b3663"
+            "reference": "b11f45742c5c9a228cedc46b70c6317780a1ac80"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/validator/zipball/da7e9114a7821ce18e73851eac6e55589f1b3663",
-            "reference": "da7e9114a7821ce18e73851eac6e55589f1b3663",
+            "url": "https://api.github.com/repos/symfony/validator/zipball/b11f45742c5c9a228cedc46b70c6317780a1ac80",
+            "reference": "b11f45742c5c9a228cedc46b70c6317780a1ac80",
             "shasum": ""
         },
         "require": {
@@ -1455,7 +1455,7 @@
             "symfony/property-access": "For accessing properties within comparison constraints",
             "symfony/yaml": ""
         },
-        "time": "2019-10-25T13:07:00+00:00",
+        "time": "2019-11-05T22:03:38+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1490,8 +1490,8 @@
     },
     {
         "name": "symfony/yaml",
-        "version": "v3.4.33",
-        "version_normalized": "3.4.33.0",
+        "version": "v3.4.35",
+        "version_normalized": "3.4.35.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/yaml.git",

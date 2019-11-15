@@ -24,13 +24,19 @@ use propel\propel\Map\TblfacturaTableMap;
  * @method     ChildTblfacturaQuery orderByNumero($order = Criteria::ASC) Order by the numero column
  * @method     ChildTblfacturaQuery orderByClienteid($order = Criteria::ASC) Order by the clienteId column
  * @method     ChildTblfacturaQuery orderByFecha($order = Criteria::ASC) Order by the fecha column
- * @method     ChildTblfacturaQuery orderByTblclienteClienteid($order = Criteria::ASC) Order by the tblcliente_clienteId column
+ * @method     ChildTblfacturaQuery orderByEstado($order = Criteria::ASC) Order by the estado column
+ * @method     ChildTblfacturaQuery orderByUsuarioid($order = Criteria::ASC) Order by the usuarioId column
+ * @method     ChildTblfacturaQuery orderByTotatpagado($order = Criteria::ASC) Order by the totatPagado column
+ * @method     ChildTblfacturaQuery orderByMetodopagoid($order = Criteria::ASC) Order by the metodoPagoId column
  *
  * @method     ChildTblfacturaQuery groupByFacturaid() Group by the facturaId column
  * @method     ChildTblfacturaQuery groupByNumero() Group by the numero column
  * @method     ChildTblfacturaQuery groupByClienteid() Group by the clienteId column
  * @method     ChildTblfacturaQuery groupByFecha() Group by the fecha column
- * @method     ChildTblfacturaQuery groupByTblclienteClienteid() Group by the tblcliente_clienteId column
+ * @method     ChildTblfacturaQuery groupByEstado() Group by the estado column
+ * @method     ChildTblfacturaQuery groupByUsuarioid() Group by the usuarioId column
+ * @method     ChildTblfacturaQuery groupByTotatpagado() Group by the totatPagado column
+ * @method     ChildTblfacturaQuery groupByMetodopagoid() Group by the metodoPagoId column
  *
  * @method     ChildTblfacturaQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildTblfacturaQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -39,6 +45,36 @@ use propel\propel\Map\TblfacturaTableMap;
  * @method     ChildTblfacturaQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
  * @method     ChildTblfacturaQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildTblfacturaQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
+ *
+ * @method     ChildTblfacturaQuery leftJoinTblcliente($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblcliente relation
+ * @method     ChildTblfacturaQuery rightJoinTblcliente($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblcliente relation
+ * @method     ChildTblfacturaQuery innerJoinTblcliente($relationAlias = null) Adds a INNER JOIN clause to the query using the Tblcliente relation
+ *
+ * @method     ChildTblfacturaQuery joinWithTblcliente($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tblcliente relation
+ *
+ * @method     ChildTblfacturaQuery leftJoinWithTblcliente() Adds a LEFT JOIN clause and with to the query using the Tblcliente relation
+ * @method     ChildTblfacturaQuery rightJoinWithTblcliente() Adds a RIGHT JOIN clause and with to the query using the Tblcliente relation
+ * @method     ChildTblfacturaQuery innerJoinWithTblcliente() Adds a INNER JOIN clause and with to the query using the Tblcliente relation
+ *
+ * @method     ChildTblfacturaQuery leftJoinTblmetodopago($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblmetodopago relation
+ * @method     ChildTblfacturaQuery rightJoinTblmetodopago($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblmetodopago relation
+ * @method     ChildTblfacturaQuery innerJoinTblmetodopago($relationAlias = null) Adds a INNER JOIN clause to the query using the Tblmetodopago relation
+ *
+ * @method     ChildTblfacturaQuery joinWithTblmetodopago($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tblmetodopago relation
+ *
+ * @method     ChildTblfacturaQuery leftJoinWithTblmetodopago() Adds a LEFT JOIN clause and with to the query using the Tblmetodopago relation
+ * @method     ChildTblfacturaQuery rightJoinWithTblmetodopago() Adds a RIGHT JOIN clause and with to the query using the Tblmetodopago relation
+ * @method     ChildTblfacturaQuery innerJoinWithTblmetodopago() Adds a INNER JOIN clause and with to the query using the Tblmetodopago relation
+ *
+ * @method     ChildTblfacturaQuery leftJoinUsuarios($relationAlias = null) Adds a LEFT JOIN clause to the query using the Usuarios relation
+ * @method     ChildTblfacturaQuery rightJoinUsuarios($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Usuarios relation
+ * @method     ChildTblfacturaQuery innerJoinUsuarios($relationAlias = null) Adds a INNER JOIN clause to the query using the Usuarios relation
+ *
+ * @method     ChildTblfacturaQuery joinWithUsuarios($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Usuarios relation
+ *
+ * @method     ChildTblfacturaQuery leftJoinWithUsuarios() Adds a LEFT JOIN clause and with to the query using the Usuarios relation
+ * @method     ChildTblfacturaQuery rightJoinWithUsuarios() Adds a RIGHT JOIN clause and with to the query using the Usuarios relation
+ * @method     ChildTblfacturaQuery innerJoinWithUsuarios() Adds a INNER JOIN clause and with to the query using the Usuarios relation
  *
  * @method     ChildTblfacturaQuery leftJoinTblfacturadetalle($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblfacturadetalle relation
  * @method     ChildTblfacturaQuery rightJoinTblfacturadetalle($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblfacturadetalle relation
@@ -50,7 +86,7 @@ use propel\propel\Map\TblfacturaTableMap;
  * @method     ChildTblfacturaQuery rightJoinWithTblfacturadetalle() Adds a RIGHT JOIN clause and with to the query using the Tblfacturadetalle relation
  * @method     ChildTblfacturaQuery innerJoinWithTblfacturadetalle() Adds a INNER JOIN clause and with to the query using the Tblfacturadetalle relation
  *
- * @method     \propel\propel\TblfacturadetalleQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \propel\propel\TblclienteQuery|\propel\propel\TblmetodopagoQuery|\propel\propel\UsuariosQuery|\propel\propel\TblfacturadetalleQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildTblfactura findOne(ConnectionInterface $con = null) Return the first ChildTblfactura matching the query
  * @method     ChildTblfactura findOneOrCreate(ConnectionInterface $con = null) Return the first ChildTblfactura matching the query, or a new ChildTblfactura object populated from the query conditions when no match is found
@@ -59,7 +95,10 @@ use propel\propel\Map\TblfacturaTableMap;
  * @method     ChildTblfactura findOneByNumero(string $numero) Return the first ChildTblfactura filtered by the numero column
  * @method     ChildTblfactura findOneByClienteid(string $clienteId) Return the first ChildTblfactura filtered by the clienteId column
  * @method     ChildTblfactura findOneByFecha(string $fecha) Return the first ChildTblfactura filtered by the fecha column
- * @method     ChildTblfactura findOneByTblclienteClienteid(string $tblcliente_clienteId) Return the first ChildTblfactura filtered by the tblcliente_clienteId column *
+ * @method     ChildTblfactura findOneByEstado(string $estado) Return the first ChildTblfactura filtered by the estado column
+ * @method     ChildTblfactura findOneByUsuarioid(string $usuarioId) Return the first ChildTblfactura filtered by the usuarioId column
+ * @method     ChildTblfactura findOneByTotatpagado(int $totatPagado) Return the first ChildTblfactura filtered by the totatPagado column
+ * @method     ChildTblfactura findOneByMetodopagoid(int $metodoPagoId) Return the first ChildTblfactura filtered by the metodoPagoId column *
 
  * @method     ChildTblfactura requirePk($key, ConnectionInterface $con = null) Return the ChildTblfactura by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblfactura requireOne(ConnectionInterface $con = null) Return the first ChildTblfactura matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -68,14 +107,20 @@ use propel\propel\Map\TblfacturaTableMap;
  * @method     ChildTblfactura requireOneByNumero(string $numero) Return the first ChildTblfactura filtered by the numero column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblfactura requireOneByClienteid(string $clienteId) Return the first ChildTblfactura filtered by the clienteId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblfactura requireOneByFecha(string $fecha) Return the first ChildTblfactura filtered by the fecha column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTblfactura requireOneByTblclienteClienteid(string $tblcliente_clienteId) Return the first ChildTblfactura filtered by the tblcliente_clienteId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTblfactura requireOneByEstado(string $estado) Return the first ChildTblfactura filtered by the estado column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTblfactura requireOneByUsuarioid(string $usuarioId) Return the first ChildTblfactura filtered by the usuarioId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTblfactura requireOneByTotatpagado(int $totatPagado) Return the first ChildTblfactura filtered by the totatPagado column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTblfactura requireOneByMetodopagoid(int $metodoPagoId) Return the first ChildTblfactura filtered by the metodoPagoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildTblfactura[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildTblfactura objects based on current ModelCriteria
  * @method     ChildTblfactura[]|ObjectCollection findByFacturaid(string $facturaId) Return ChildTblfactura objects filtered by the facturaId column
  * @method     ChildTblfactura[]|ObjectCollection findByNumero(string $numero) Return ChildTblfactura objects filtered by the numero column
  * @method     ChildTblfactura[]|ObjectCollection findByClienteid(string $clienteId) Return ChildTblfactura objects filtered by the clienteId column
  * @method     ChildTblfactura[]|ObjectCollection findByFecha(string $fecha) Return ChildTblfactura objects filtered by the fecha column
- * @method     ChildTblfactura[]|ObjectCollection findByTblclienteClienteid(string $tblcliente_clienteId) Return ChildTblfactura objects filtered by the tblcliente_clienteId column
+ * @method     ChildTblfactura[]|ObjectCollection findByEstado(string $estado) Return ChildTblfactura objects filtered by the estado column
+ * @method     ChildTblfactura[]|ObjectCollection findByUsuarioid(string $usuarioId) Return ChildTblfactura objects filtered by the usuarioId column
+ * @method     ChildTblfactura[]|ObjectCollection findByTotatpagado(int $totatPagado) Return ChildTblfactura objects filtered by the totatPagado column
+ * @method     ChildTblfactura[]|ObjectCollection findByMetodopagoid(int $metodoPagoId) Return ChildTblfactura objects filtered by the metodoPagoId column
  * @method     ChildTblfactura[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -174,7 +219,7 @@ abstract class TblfacturaQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT facturaId, numero, clienteId, fecha, tblcliente_clienteId FROM tblfactura WHERE facturaId = :p0';
+        $sql = 'SELECT facturaId, numero, clienteId, fecha, estado, usuarioId, totatPagado, metodoPagoId FROM tblfactura WHERE facturaId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -356,6 +401,8 @@ abstract class TblfacturaQuery extends ModelCriteria
      * $query->filterByClienteid(array('min' => 12)); // WHERE clienteId > 12
      * </code>
      *
+     * @see       filterByTblcliente()
+     *
      * @param     mixed $clienteid The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
@@ -431,16 +478,43 @@ abstract class TblfacturaQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the tblcliente_clienteId column
+     * Filter the query on the estado column
      *
      * Example usage:
      * <code>
-     * $query->filterByTblclienteClienteid(1234); // WHERE tblcliente_clienteId = 1234
-     * $query->filterByTblclienteClienteid(array(12, 34)); // WHERE tblcliente_clienteId IN (12, 34)
-     * $query->filterByTblclienteClienteid(array('min' => 12)); // WHERE tblcliente_clienteId > 12
+     * $query->filterByEstado('fooValue');   // WHERE estado = 'fooValue'
+     * $query->filterByEstado('%fooValue%', Criteria::LIKE); // WHERE estado LIKE '%fooValue%'
      * </code>
      *
-     * @param     mixed $tblclienteClienteid The value to use as filter.
+     * @param     string $estado The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildTblfacturaQuery The current query, for fluid interface
+     */
+    public function filterByEstado($estado = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($estado)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(TblfacturaTableMap::COL_ESTADO, $estado, $comparison);
+    }
+
+    /**
+     * Filter the query on the usuarioId column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByUsuarioid(1234); // WHERE usuarioId = 1234
+     * $query->filterByUsuarioid(array(12, 34)); // WHERE usuarioId IN (12, 34)
+     * $query->filterByUsuarioid(array('min' => 12)); // WHERE usuarioId > 12
+     * </code>
+     *
+     * @see       filterByUsuarios()
+     *
+     * @param     mixed $usuarioid The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -448,16 +522,16 @@ abstract class TblfacturaQuery extends ModelCriteria
      *
      * @return $this|ChildTblfacturaQuery The current query, for fluid interface
      */
-    public function filterByTblclienteClienteid($tblclienteClienteid = null, $comparison = null)
+    public function filterByUsuarioid($usuarioid = null, $comparison = null)
     {
-        if (is_array($tblclienteClienteid)) {
+        if (is_array($usuarioid)) {
             $useMinMax = false;
-            if (isset($tblclienteClienteid['min'])) {
-                $this->addUsingAlias(TblfacturaTableMap::COL_TBLCLIENTE_CLIENTEID, $tblclienteClienteid['min'], Criteria::GREATER_EQUAL);
+            if (isset($usuarioid['min'])) {
+                $this->addUsingAlias(TblfacturaTableMap::COL_USUARIOID, $usuarioid['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($tblclienteClienteid['max'])) {
-                $this->addUsingAlias(TblfacturaTableMap::COL_TBLCLIENTE_CLIENTEID, $tblclienteClienteid['max'], Criteria::LESS_EQUAL);
+            if (isset($usuarioid['max'])) {
+                $this->addUsingAlias(TblfacturaTableMap::COL_USUARIOID, $usuarioid['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -468,7 +542,322 @@ abstract class TblfacturaQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(TblfacturaTableMap::COL_TBLCLIENTE_CLIENTEID, $tblclienteClienteid, $comparison);
+        return $this->addUsingAlias(TblfacturaTableMap::COL_USUARIOID, $usuarioid, $comparison);
+    }
+
+    /**
+     * Filter the query on the totatPagado column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTotatpagado(1234); // WHERE totatPagado = 1234
+     * $query->filterByTotatpagado(array(12, 34)); // WHERE totatPagado IN (12, 34)
+     * $query->filterByTotatpagado(array('min' => 12)); // WHERE totatPagado > 12
+     * </code>
+     *
+     * @param     mixed $totatpagado The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildTblfacturaQuery The current query, for fluid interface
+     */
+    public function filterByTotatpagado($totatpagado = null, $comparison = null)
+    {
+        if (is_array($totatpagado)) {
+            $useMinMax = false;
+            if (isset($totatpagado['min'])) {
+                $this->addUsingAlias(TblfacturaTableMap::COL_TOTATPAGADO, $totatpagado['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($totatpagado['max'])) {
+                $this->addUsingAlias(TblfacturaTableMap::COL_TOTATPAGADO, $totatpagado['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(TblfacturaTableMap::COL_TOTATPAGADO, $totatpagado, $comparison);
+    }
+
+    /**
+     * Filter the query on the metodoPagoId column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByMetodopagoid(1234); // WHERE metodoPagoId = 1234
+     * $query->filterByMetodopagoid(array(12, 34)); // WHERE metodoPagoId IN (12, 34)
+     * $query->filterByMetodopagoid(array('min' => 12)); // WHERE metodoPagoId > 12
+     * </code>
+     *
+     * @see       filterByTblmetodopago()
+     *
+     * @param     mixed $metodopagoid The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildTblfacturaQuery The current query, for fluid interface
+     */
+    public function filterByMetodopagoid($metodopagoid = null, $comparison = null)
+    {
+        if (is_array($metodopagoid)) {
+            $useMinMax = false;
+            if (isset($metodopagoid['min'])) {
+                $this->addUsingAlias(TblfacturaTableMap::COL_METODOPAGOID, $metodopagoid['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($metodopagoid['max'])) {
+                $this->addUsingAlias(TblfacturaTableMap::COL_METODOPAGOID, $metodopagoid['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(TblfacturaTableMap::COL_METODOPAGOID, $metodopagoid, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \propel\propel\Tblcliente object
+     *
+     * @param \propel\propel\Tblcliente|ObjectCollection $tblcliente The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildTblfacturaQuery The current query, for fluid interface
+     */
+    public function filterByTblcliente($tblcliente, $comparison = null)
+    {
+        if ($tblcliente instanceof \propel\propel\Tblcliente) {
+            return $this
+                ->addUsingAlias(TblfacturaTableMap::COL_CLIENTEID, $tblcliente->getClienteid(), $comparison);
+        } elseif ($tblcliente instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(TblfacturaTableMap::COL_CLIENTEID, $tblcliente->toKeyValue('PrimaryKey', 'Clienteid'), $comparison);
+        } else {
+            throw new PropelException('filterByTblcliente() only accepts arguments of type \propel\propel\Tblcliente or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Tblcliente relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildTblfacturaQuery The current query, for fluid interface
+     */
+    public function joinTblcliente($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Tblcliente');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Tblcliente');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Tblcliente relation Tblcliente object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \propel\propel\TblclienteQuery A secondary query class using the current class as primary query
+     */
+    public function useTblclienteQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinTblcliente($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Tblcliente', '\propel\propel\TblclienteQuery');
+    }
+
+    /**
+     * Filter the query by a related \propel\propel\Tblmetodopago object
+     *
+     * @param \propel\propel\Tblmetodopago|ObjectCollection $tblmetodopago The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildTblfacturaQuery The current query, for fluid interface
+     */
+    public function filterByTblmetodopago($tblmetodopago, $comparison = null)
+    {
+        if ($tblmetodopago instanceof \propel\propel\Tblmetodopago) {
+            return $this
+                ->addUsingAlias(TblfacturaTableMap::COL_METODOPAGOID, $tblmetodopago->getMetodopagoid(), $comparison);
+        } elseif ($tblmetodopago instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(TblfacturaTableMap::COL_METODOPAGOID, $tblmetodopago->toKeyValue('PrimaryKey', 'Metodopagoid'), $comparison);
+        } else {
+            throw new PropelException('filterByTblmetodopago() only accepts arguments of type \propel\propel\Tblmetodopago or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Tblmetodopago relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildTblfacturaQuery The current query, for fluid interface
+     */
+    public function joinTblmetodopago($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Tblmetodopago');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Tblmetodopago');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Tblmetodopago relation Tblmetodopago object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \propel\propel\TblmetodopagoQuery A secondary query class using the current class as primary query
+     */
+    public function useTblmetodopagoQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinTblmetodopago($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Tblmetodopago', '\propel\propel\TblmetodopagoQuery');
+    }
+
+    /**
+     * Filter the query by a related \propel\propel\Usuarios object
+     *
+     * @param \propel\propel\Usuarios|ObjectCollection $usuarios The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildTblfacturaQuery The current query, for fluid interface
+     */
+    public function filterByUsuarios($usuarios, $comparison = null)
+    {
+        if ($usuarios instanceof \propel\propel\Usuarios) {
+            return $this
+                ->addUsingAlias(TblfacturaTableMap::COL_USUARIOID, $usuarios->getIdUsuario(), $comparison);
+        } elseif ($usuarios instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(TblfacturaTableMap::COL_USUARIOID, $usuarios->toKeyValue('PrimaryKey', 'IdUsuario'), $comparison);
+        } else {
+            throw new PropelException('filterByUsuarios() only accepts arguments of type \propel\propel\Usuarios or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Usuarios relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildTblfacturaQuery The current query, for fluid interface
+     */
+    public function joinUsuarios($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Usuarios');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Usuarios');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Usuarios relation Usuarios object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \propel\propel\UsuariosQuery A secondary query class using the current class as primary query
+     */
+    public function useUsuariosQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinUsuarios($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Usuarios', '\propel\propel\UsuariosQuery');
     }
 
     /**
@@ -483,7 +872,7 @@ abstract class TblfacturaQuery extends ModelCriteria
     {
         if ($tblfacturadetalle instanceof \propel\propel\Tblfacturadetalle) {
             return $this
-                ->addUsingAlias(TblfacturaTableMap::COL_FACTURAID, $tblfacturadetalle->getTblfacturaFacturaid(), $comparison);
+                ->addUsingAlias(TblfacturaTableMap::COL_FACTURAID, $tblfacturadetalle->getFacturaid(), $comparison);
         } elseif ($tblfacturadetalle instanceof ObjectCollection) {
             return $this
                 ->useTblfacturadetalleQuery()
@@ -502,7 +891,7 @@ abstract class TblfacturaQuery extends ModelCriteria
      *
      * @return $this|ChildTblfacturaQuery The current query, for fluid interface
      */
-    public function joinTblfacturadetalle($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblfacturadetalle($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblfacturadetalle');
@@ -537,7 +926,7 @@ abstract class TblfacturaQuery extends ModelCriteria
      *
      * @return \propel\propel\TblfacturadetalleQuery A secondary query class using the current class as primary query
      */
-    public function useTblfacturadetalleQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblfacturadetalleQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblfacturadetalle($relationAlias, $joinType)

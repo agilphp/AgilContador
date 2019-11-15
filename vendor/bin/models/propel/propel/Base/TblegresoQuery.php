@@ -421,7 +421,7 @@ abstract class TblegresoQuery extends ModelCriteria
     {
         if ($tblegresodetalle instanceof \propel\propel\Tblegresodetalle) {
             return $this
-                ->addUsingAlias(TblegresoTableMap::COL_EGRESOID, $tblegresodetalle->getTblegresoEgresoid(), $comparison);
+                ->addUsingAlias(TblegresoTableMap::COL_EGRESOID, $tblegresodetalle->getEgresoid(), $comparison);
         } elseif ($tblegresodetalle instanceof ObjectCollection) {
             return $this
                 ->useTblegresodetalleQuery()
@@ -440,7 +440,7 @@ abstract class TblegresoQuery extends ModelCriteria
      *
      * @return $this|ChildTblegresoQuery The current query, for fluid interface
      */
-    public function joinTblegresodetalle($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblegresodetalle($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblegresodetalle');
@@ -475,7 +475,7 @@ abstract class TblegresoQuery extends ModelCriteria
      *
      * @return \propel\propel\TblegresodetalleQuery A secondary query class using the current class as primary query
      */
-    public function useTblegresodetalleQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblegresodetalleQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblegresodetalle($relationAlias, $joinType)

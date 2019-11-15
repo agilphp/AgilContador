@@ -12,7 +12,7 @@
     <propel>
         <paths>
             <!-- The directory where Propel expects to find your `schema.xml` file. -->
-            <schemaDir>data</schemaDir>
+            <schemaDir>C:\wamp64New\www\AgilContador\vendor\bin</schemaDir>
             <!-- The directory where Propel should output generated object model classes. -->
             <phpDir>models</phpDir>
         </paths>
@@ -22,7 +22,7 @@
             <connections>
                 <connection id="default">
                     <adapter>mysql</adapter>
-                    <dsn>mysql:host=localhost;port=3306;dbname=contador</dsn>
+                    <dsn>mysql:host=localhost;port=3306;dbname=agilcontador</dsn>
                     <user>root</user>
                     <password></password>
                     <settings>

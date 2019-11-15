@@ -11,94 +11,99 @@ use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use propel\propel\Tbllinea as ChildTbllinea;
-use propel\propel\TbllineaQuery as ChildTbllineaQuery;
-use propel\propel\Map\TbllineaTableMap;
+use propel\propel\Tblcategoria as ChildTblcategoria;
+use propel\propel\TblcategoriaQuery as ChildTblcategoriaQuery;
+use propel\propel\Map\TblcategoriaTableMap;
 
 /**
- * Base class that represents a query for the 'tbllinea' table.
+ * Base class that represents a query for the 'tblcategoria' table.
  *
  *
  *
- * @method     ChildTbllineaQuery orderByLineaid($order = Criteria::ASC) Order by the LineaId column
- * @method     ChildTbllineaQuery orderByCodigo($order = Criteria::ASC) Order by the codigo column
- * @method     ChildTbllineaQuery orderByNombre($order = Criteria::ASC) Order by the nombre column
+ * @method     ChildTblcategoriaQuery orderByLineaid($order = Criteria::ASC) Order by the LineaId column
+ * @method     ChildTblcategoriaQuery orderByCodigo($order = Criteria::ASC) Order by the codigo column
+ * @method     ChildTblcategoriaQuery orderByNombre($order = Criteria::ASC) Order by the nombre column
+ * @method     ChildTblcategoriaQuery orderByDescripcion($order = Criteria::ASC) Order by the descripcion column
  *
- * @method     ChildTbllineaQuery groupByLineaid() Group by the LineaId column
- * @method     ChildTbllineaQuery groupByCodigo() Group by the codigo column
- * @method     ChildTbllineaQuery groupByNombre() Group by the nombre column
+ * @method     ChildTblcategoriaQuery groupByLineaid() Group by the LineaId column
+ * @method     ChildTblcategoriaQuery groupByCodigo() Group by the codigo column
+ * @method     ChildTblcategoriaQuery groupByNombre() Group by the nombre column
+ * @method     ChildTblcategoriaQuery groupByDescripcion() Group by the descripcion column
  *
- * @method     ChildTbllineaQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ChildTbllineaQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ChildTbllineaQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     ChildTblcategoriaQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     ChildTblcategoriaQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     ChildTblcategoriaQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildTbllineaQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
- * @method     ChildTbllineaQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
- * @method     ChildTbllineaQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
+ * @method     ChildTblcategoriaQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
+ * @method     ChildTblcategoriaQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
+ * @method     ChildTblcategoriaQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildTbllineaQuery leftJoinTblproductos($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblproductos relation
- * @method     ChildTbllineaQuery rightJoinTblproductos($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblproductos relation
- * @method     ChildTbllineaQuery innerJoinTblproductos($relationAlias = null) Adds a INNER JOIN clause to the query using the Tblproductos relation
+ * @method     ChildTblcategoriaQuery leftJoinTblproductos($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblproductos relation
+ * @method     ChildTblcategoriaQuery rightJoinTblproductos($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblproductos relation
+ * @method     ChildTblcategoriaQuery innerJoinTblproductos($relationAlias = null) Adds a INNER JOIN clause to the query using the Tblproductos relation
  *
- * @method     ChildTbllineaQuery joinWithTblproductos($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tblproductos relation
+ * @method     ChildTblcategoriaQuery joinWithTblproductos($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tblproductos relation
  *
- * @method     ChildTbllineaQuery leftJoinWithTblproductos() Adds a LEFT JOIN clause and with to the query using the Tblproductos relation
- * @method     ChildTbllineaQuery rightJoinWithTblproductos() Adds a RIGHT JOIN clause and with to the query using the Tblproductos relation
- * @method     ChildTbllineaQuery innerJoinWithTblproductos() Adds a INNER JOIN clause and with to the query using the Tblproductos relation
+ * @method     ChildTblcategoriaQuery leftJoinWithTblproductos() Adds a LEFT JOIN clause and with to the query using the Tblproductos relation
+ * @method     ChildTblcategoriaQuery rightJoinWithTblproductos() Adds a RIGHT JOIN clause and with to the query using the Tblproductos relation
+ * @method     ChildTblcategoriaQuery innerJoinWithTblproductos() Adds a INNER JOIN clause and with to the query using the Tblproductos relation
  *
  * @method     \propel\propel\TblproductosQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
- * @method     ChildTbllinea findOne(ConnectionInterface $con = null) Return the first ChildTbllinea matching the query
- * @method     ChildTbllinea findOneOrCreate(ConnectionInterface $con = null) Return the first ChildTbllinea matching the query, or a new ChildTbllinea object populated from the query conditions when no match is found
+ * @method     ChildTblcategoria findOne(ConnectionInterface $con = null) Return the first ChildTblcategoria matching the query
+ * @method     ChildTblcategoria findOneOrCreate(ConnectionInterface $con = null) Return the first ChildTblcategoria matching the query, or a new ChildTblcategoria object populated from the query conditions when no match is found
  *
- * @method     ChildTbllinea findOneByLineaid(int $LineaId) Return the first ChildTbllinea filtered by the LineaId column
- * @method     ChildTbllinea findOneByCodigo(string $codigo) Return the first ChildTbllinea filtered by the codigo column
- * @method     ChildTbllinea findOneByNombre(string $nombre) Return the first ChildTbllinea filtered by the nombre column *
+ * @method     ChildTblcategoria findOneByLineaid(int $LineaId) Return the first ChildTblcategoria filtered by the LineaId column
+ * @method     ChildTblcategoria findOneByCodigo(string $codigo) Return the first ChildTblcategoria filtered by the codigo column
+ * @method     ChildTblcategoria findOneByNombre(string $nombre) Return the first ChildTblcategoria filtered by the nombre column
+ * @method     ChildTblcategoria findOneByDescripcion(string $descripcion) Return the first ChildTblcategoria filtered by the descripcion column *
 
- * @method     ChildTbllinea requirePk($key, ConnectionInterface $con = null) Return the ChildTbllinea by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTbllinea requireOne(ConnectionInterface $con = null) Return the first ChildTbllinea matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTblcategoria requirePk($key, ConnectionInterface $con = null) Return the ChildTblcategoria by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTblcategoria requireOne(ConnectionInterface $con = null) Return the first ChildTblcategoria matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildTbllinea requireOneByLineaid(int $LineaId) Return the first ChildTbllinea filtered by the LineaId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTbllinea requireOneByCodigo(string $codigo) Return the first ChildTbllinea filtered by the codigo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTbllinea requireOneByNombre(string $nombre) Return the first ChildTbllinea filtered by the nombre column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTblcategoria requireOneByLineaid(int $LineaId) Return the first ChildTblcategoria filtered by the LineaId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTblcategoria requireOneByCodigo(string $codigo) Return the first ChildTblcategoria filtered by the codigo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTblcategoria requireOneByNombre(string $nombre) Return the first ChildTblcategoria filtered by the nombre column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTblcategoria requireOneByDescripcion(string $descripcion) Return the first ChildTblcategoria filtered by the descripcion column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildTbllinea[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildTbllinea objects based on current ModelCriteria
- * @method     ChildTbllinea[]|ObjectCollection findByLineaid(int $LineaId) Return ChildTbllinea objects filtered by the LineaId column
- * @method     ChildTbllinea[]|ObjectCollection findByCodigo(string $codigo) Return ChildTbllinea objects filtered by the codigo column
- * @method     ChildTbllinea[]|ObjectCollection findByNombre(string $nombre) Return ChildTbllinea objects filtered by the nombre column
- * @method     ChildTbllinea[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildTblcategoria[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildTblcategoria objects based on current ModelCriteria
+ * @method     ChildTblcategoria[]|ObjectCollection findByLineaid(int $LineaId) Return ChildTblcategoria objects filtered by the LineaId column
+ * @method     ChildTblcategoria[]|ObjectCollection findByCodigo(string $codigo) Return ChildTblcategoria objects filtered by the codigo column
+ * @method     ChildTblcategoria[]|ObjectCollection findByNombre(string $nombre) Return ChildTblcategoria objects filtered by the nombre column
+ * @method     ChildTblcategoria[]|ObjectCollection findByDescripcion(string $descripcion) Return ChildTblcategoria objects filtered by the descripcion column
+ * @method     ChildTblcategoria[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
-abstract class TbllineaQuery extends ModelCriteria
+abstract class TblcategoriaQuery extends ModelCriteria
 {
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \propel\propel\Base\TbllineaQuery object.
+     * Initializes internal state of \propel\propel\Base\TblcategoriaQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'default', $modelName = '\\propel\\propel\\Tbllinea', $modelAlias = null)
+    public function __construct($dbName = 'default', $modelName = '\\propel\\propel\\Tblcategoria', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }
 
     /**
-     * Returns a new ChildTbllineaQuery object.
+     * Returns a new ChildTblcategoriaQuery object.
      *
      * @param     string $modelAlias The alias of a model in the query
      * @param     Criteria $criteria Optional Criteria to build the query from
      *
-     * @return ChildTbllineaQuery
+     * @return ChildTblcategoriaQuery
      */
     public static function create($modelAlias = null, Criteria $criteria = null)
     {
-        if ($criteria instanceof ChildTbllineaQuery) {
+        if ($criteria instanceof ChildTblcategoriaQuery) {
             return $criteria;
         }
-        $query = new ChildTbllineaQuery();
+        $query = new ChildTblcategoriaQuery();
         if (null !== $modelAlias) {
             $query->setModelAlias($modelAlias);
         }
@@ -121,7 +126,7 @@ abstract class TbllineaQuery extends ModelCriteria
      * @param mixed $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
-     * @return ChildTbllinea|array|mixed the result, formatted by the current formatter
+     * @return ChildTblcategoria|array|mixed the result, formatted by the current formatter
      */
     public function findPk($key, ConnectionInterface $con = null)
     {
@@ -130,7 +135,7 @@ abstract class TbllineaQuery extends ModelCriteria
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(TbllineaTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(TblcategoriaTableMap::DATABASE_NAME);
         }
 
         $this->basePreSelect($con);
@@ -143,7 +148,7 @@ abstract class TbllineaQuery extends ModelCriteria
             return $this->findPkComplex($key, $con);
         }
 
-        if ((null !== ($obj = TbllineaTableMap::getInstanceFromPool(null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key)))) {
+        if ((null !== ($obj = TblcategoriaTableMap::getInstanceFromPool(null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key)))) {
             // the object is already in the instance pool
             return $obj;
         }
@@ -160,11 +165,11 @@ abstract class TbllineaQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildTbllinea A model object, or null if the key is not found
+     * @return ChildTblcategoria A model object, or null if the key is not found
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT LineaId, codigo, nombre FROM tbllinea WHERE LineaId = :p0';
+        $sql = 'SELECT LineaId, codigo, nombre, descripcion FROM tblcategoria WHERE LineaId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -175,10 +180,10 @@ abstract class TbllineaQuery extends ModelCriteria
         }
         $obj = null;
         if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
-            /** @var ChildTbllinea $obj */
-            $obj = new ChildTbllinea();
+            /** @var ChildTblcategoria $obj */
+            $obj = new ChildTblcategoria();
             $obj->hydrate($row);
-            TbllineaTableMap::addInstanceToPool($obj, null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key);
+            TblcategoriaTableMap::addInstanceToPool($obj, null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key);
         }
         $stmt->closeCursor();
 
@@ -191,7 +196,7 @@ abstract class TbllineaQuery extends ModelCriteria
      * @param     mixed $key Primary key to use for the query
      * @param     ConnectionInterface $con A connection object
      *
-     * @return ChildTbllinea|array|mixed the result, formatted by the current formatter
+     * @return ChildTblcategoria|array|mixed the result, formatted by the current formatter
      */
     protected function findPkComplex($key, ConnectionInterface $con)
     {
@@ -233,12 +238,12 @@ abstract class TbllineaQuery extends ModelCriteria
      *
      * @param     mixed $key Primary key to use for the query
      *
-     * @return $this|ChildTbllineaQuery The current query, for fluid interface
+     * @return $this|ChildTblcategoriaQuery The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(TbllineaTableMap::COL_LINEAID, $key, Criteria::EQUAL);
+        return $this->addUsingAlias(TblcategoriaTableMap::COL_LINEAID, $key, Criteria::EQUAL);
     }
 
     /**
@@ -246,12 +251,12 @@ abstract class TbllineaQuery extends ModelCriteria
      *
      * @param     array $keys The list of primary key to use for the query
      *
-     * @return $this|ChildTbllineaQuery The current query, for fluid interface
+     * @return $this|ChildTblcategoriaQuery The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(TbllineaTableMap::COL_LINEAID, $keys, Criteria::IN);
+        return $this->addUsingAlias(TblcategoriaTableMap::COL_LINEAID, $keys, Criteria::IN);
     }
 
     /**
@@ -270,18 +275,18 @@ abstract class TbllineaQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildTbllineaQuery The current query, for fluid interface
+     * @return $this|ChildTblcategoriaQuery The current query, for fluid interface
      */
     public function filterByLineaid($lineaid = null, $comparison = null)
     {
         if (is_array($lineaid)) {
             $useMinMax = false;
             if (isset($lineaid['min'])) {
-                $this->addUsingAlias(TbllineaTableMap::COL_LINEAID, $lineaid['min'], Criteria::GREATER_EQUAL);
+                $this->addUsingAlias(TblcategoriaTableMap::COL_LINEAID, $lineaid['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
             if (isset($lineaid['max'])) {
-                $this->addUsingAlias(TbllineaTableMap::COL_LINEAID, $lineaid['max'], Criteria::LESS_EQUAL);
+                $this->addUsingAlias(TblcategoriaTableMap::COL_LINEAID, $lineaid['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -292,7 +297,7 @@ abstract class TbllineaQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(TbllineaTableMap::COL_LINEAID, $lineaid, $comparison);
+        return $this->addUsingAlias(TblcategoriaTableMap::COL_LINEAID, $lineaid, $comparison);
     }
 
     /**
@@ -307,7 +312,7 @@ abstract class TbllineaQuery extends ModelCriteria
      * @param     string $codigo The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildTbllineaQuery The current query, for fluid interface
+     * @return $this|ChildTblcategoriaQuery The current query, for fluid interface
      */
     public function filterByCodigo($codigo = null, $comparison = null)
     {
@@ -317,7 +322,7 @@ abstract class TbllineaQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(TbllineaTableMap::COL_CODIGO, $codigo, $comparison);
+        return $this->addUsingAlias(TblcategoriaTableMap::COL_CODIGO, $codigo, $comparison);
     }
 
     /**
@@ -332,7 +337,7 @@ abstract class TbllineaQuery extends ModelCriteria
      * @param     string $nombre The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildTbllineaQuery The current query, for fluid interface
+     * @return $this|ChildTblcategoriaQuery The current query, for fluid interface
      */
     public function filterByNombre($nombre = null, $comparison = null)
     {
@@ -342,7 +347,32 @@ abstract class TbllineaQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(TbllineaTableMap::COL_NOMBRE, $nombre, $comparison);
+        return $this->addUsingAlias(TblcategoriaTableMap::COL_NOMBRE, $nombre, $comparison);
+    }
+
+    /**
+     * Filter the query on the descripcion column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDescripcion('fooValue');   // WHERE descripcion = 'fooValue'
+     * $query->filterByDescripcion('%fooValue%', Criteria::LIKE); // WHERE descripcion LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $descripcion The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildTblcategoriaQuery The current query, for fluid interface
+     */
+    public function filterByDescripcion($descripcion = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($descripcion)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(TblcategoriaTableMap::COL_DESCRIPCION, $descripcion, $comparison);
     }
 
     /**
@@ -351,13 +381,13 @@ abstract class TbllineaQuery extends ModelCriteria
      * @param \propel\propel\Tblproductos|ObjectCollection $tblproductos the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return ChildTbllineaQuery The current query, for fluid interface
+     * @return ChildTblcategoriaQuery The current query, for fluid interface
      */
     public function filterByTblproductos($tblproductos, $comparison = null)
     {
         if ($tblproductos instanceof \propel\propel\Tblproductos) {
             return $this
-                ->addUsingAlias(TbllineaTableMap::COL_LINEAID, $tblproductos->getTbllineaLineaid(), $comparison);
+                ->addUsingAlias(TblcategoriaTableMap::COL_LINEAID, $tblproductos->getLineaid(), $comparison);
         } elseif ($tblproductos instanceof ObjectCollection) {
             return $this
                 ->useTblproductosQuery()
@@ -374,9 +404,9 @@ abstract class TbllineaQuery extends ModelCriteria
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildTbllineaQuery The current query, for fluid interface
+     * @return $this|ChildTblcategoriaQuery The current query, for fluid interface
      */
-    public function joinTblproductos($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblproductos($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblproductos');
@@ -411,7 +441,7 @@ abstract class TbllineaQuery extends ModelCriteria
      *
      * @return \propel\propel\TblproductosQuery A secondary query class using the current class as primary query
      */
-    public function useTblproductosQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblproductosQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblproductos($relationAlias, $joinType)
@@ -421,21 +451,21 @@ abstract class TbllineaQuery extends ModelCriteria
     /**
      * Exclude object from result
      *
-     * @param   ChildTbllinea $tbllinea Object to remove from the list of results
+     * @param   ChildTblcategoria $tblcategoria Object to remove from the list of results
      *
-     * @return $this|ChildTbllineaQuery The current query, for fluid interface
+     * @return $this|ChildTblcategoriaQuery The current query, for fluid interface
      */
-    public function prune($tbllinea = null)
+    public function prune($tblcategoria = null)
     {
-        if ($tbllinea) {
-            $this->addUsingAlias(TbllineaTableMap::COL_LINEAID, $tbllinea->getLineaid(), Criteria::NOT_EQUAL);
+        if ($tblcategoria) {
+            $this->addUsingAlias(TblcategoriaTableMap::COL_LINEAID, $tblcategoria->getLineaid(), Criteria::NOT_EQUAL);
         }
 
         return $this;
     }
 
     /**
-     * Deletes all rows from the tbllinea table.
+     * Deletes all rows from the tblcategoria table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
@@ -443,7 +473,7 @@ abstract class TbllineaQuery extends ModelCriteria
     public function doDeleteAll(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TbllineaTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblcategoriaTableMap::DATABASE_NAME);
         }
 
         // use transaction because $criteria could contain info
@@ -454,8 +484,8 @@ abstract class TbllineaQuery extends ModelCriteria
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            TbllineaTableMap::clearInstancePool();
-            TbllineaTableMap::clearRelatedInstancePool();
+            TblcategoriaTableMap::clearInstancePool();
+            TblcategoriaTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
@@ -473,26 +503,26 @@ abstract class TbllineaQuery extends ModelCriteria
     public function delete(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TbllineaTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblcategoriaTableMap::DATABASE_NAME);
         }
 
         $criteria = $this;
 
         // Set the correct dbName
-        $criteria->setDbName(TbllineaTableMap::DATABASE_NAME);
+        $criteria->setDbName(TblcategoriaTableMap::DATABASE_NAME);
 
         // use transaction because $criteria could contain info
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
 
-            TbllineaTableMap::removeInstanceFromPool($criteria);
+            TblcategoriaTableMap::removeInstanceFromPool($criteria);
 
             $affectedRows += ModelCriteria::delete($con);
-            TbllineaTableMap::clearRelatedInstancePool();
+            TblcategoriaTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
     }
 
-} // TbllineaQuery
+} // TblcategoriaQuery

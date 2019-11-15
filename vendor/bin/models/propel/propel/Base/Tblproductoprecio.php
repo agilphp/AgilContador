@@ -92,13 +92,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
     protected $fecha;
 
     /**
-     * The value for the tblproductos_productoid field.
-     *
-     * @var        string
-     */
-    protected $tblproductos_productoid;
-
-    /**
      * @var        ChildTblproductos
      */
     protected $aTblproductos;
@@ -387,16 +380,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
     }
 
     /**
-     * Get the [tblproductos_productoid] column value.
-     *
-     * @return string
-     */
-    public function getTblproductosProductoid()
-    {
-        return $this->tblproductos_productoid;
-    }
-
-    /**
      * Set the value of [productoprecioid] column.
      *
      * @param string $v new value
@@ -431,6 +414,10 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
         if ($this->productoid !== $v) {
             $this->productoid = $v;
             $this->modifiedColumns[TblproductoprecioTableMap::COL_PRODUCTOID] = true;
+        }
+
+        if ($this->aTblproductos !== null && $this->aTblproductos->getProductoid() !== $v) {
+            $this->aTblproductos = null;
         }
 
         return $this;
@@ -475,30 +462,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
 
         return $this;
     } // setFecha()
-
-    /**
-     * Set the value of [tblproductos_productoid] column.
-     *
-     * @param string $v new value
-     * @return $this|\propel\propel\Tblproductoprecio The current object (for fluent API support)
-     */
-    public function setTblproductosProductoid($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->tblproductos_productoid !== $v) {
-            $this->tblproductos_productoid = $v;
-            $this->modifiedColumns[TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID] = true;
-        }
-
-        if ($this->aTblproductos !== null && $this->aTblproductos->getProductoid() !== $v) {
-            $this->aTblproductos = null;
-        }
-
-        return $this;
-    } // setTblproductosProductoid()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -550,9 +513,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
                 $col = null;
             }
             $this->fecha = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : TblproductoprecioTableMap::translateFieldName('TblproductosProductoid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tblproductos_productoid = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -561,7 +521,7 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = TblproductoprecioTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = TblproductoprecioTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Tblproductoprecio'), 0, $e);
@@ -583,7 +543,7 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aTblproductos !== null && $this->tblproductos_productoid !== $this->aTblproductos->getProductoid()) {
+        if ($this->aTblproductos !== null && $this->productoid !== $this->aTblproductos->getProductoid()) {
             $this->aTblproductos = null;
         }
     } // ensureConsistency
@@ -790,9 +750,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
         if ($this->isColumnModified(TblproductoprecioTableMap::COL_FECHA)) {
             $modifiedColumns[':p' . $index++]  = 'fecha';
         }
-        if ($this->isColumnModified(TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID)) {
-            $modifiedColumns[':p' . $index++]  = 'TblProductos_productoId';
-        }
 
         $sql = sprintf(
             'INSERT INTO tblproductoprecio (%s) VALUES (%s)',
@@ -815,9 +772,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
                         break;
                     case 'fecha':
                         $stmt->bindValue($identifier, $this->fecha ? $this->fecha->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
-                        break;
-                    case 'TblProductos_productoId':
-                        $stmt->bindValue($identifier, $this->tblproductos_productoid, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -893,9 +847,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
             case 3:
                 return $this->getFecha();
                 break;
-            case 4:
-                return $this->getTblproductosProductoid();
-                break;
             default:
                 return null;
                 break;
@@ -930,7 +881,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
             $keys[1] => $this->getProductoid(),
             $keys[2] => $this->getPrecio(),
             $keys[3] => $this->getFecha(),
-            $keys[4] => $this->getTblproductosProductoid(),
         );
         if ($result[$keys[3]] instanceof \DateTimeInterface) {
             $result[$keys[3]] = $result[$keys[3]]->format('c');
@@ -1003,9 +953,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
             case 3:
                 $this->setFecha($value);
                 break;
-            case 4:
-                $this->setTblproductosProductoid($value);
-                break;
         } // switch()
 
         return $this;
@@ -1043,9 +990,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
         }
         if (array_key_exists($keys[3], $arr)) {
             $this->setFecha($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setTblproductosProductoid($arr[$keys[4]]);
         }
     }
 
@@ -1099,9 +1043,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
         }
         if ($this->isColumnModified(TblproductoprecioTableMap::COL_FECHA)) {
             $criteria->add(TblproductoprecioTableMap::COL_FECHA, $this->fecha);
-        }
-        if ($this->isColumnModified(TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID)) {
-            $criteria->add(TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $this->tblproductos_productoid);
         }
 
         return $criteria;
@@ -1192,7 +1133,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
         $copyObj->setProductoid($this->getProductoid());
         $copyObj->setPrecio($this->getPrecio());
         $copyObj->setFecha($this->getFecha());
-        $copyObj->setTblproductosProductoid($this->getTblproductosProductoid());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setProductoprecioid(NULL); // this is a auto-increment column, so set to default value
@@ -1231,9 +1171,9 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
     public function setTblproductos(ChildTblproductos $v = null)
     {
         if ($v === null) {
-            $this->setTblproductosProductoid(NULL);
+            $this->setProductoid(NULL);
         } else {
-            $this->setTblproductosProductoid($v->getProductoid());
+            $this->setProductoid($v->getProductoid());
         }
 
         $this->aTblproductos = $v;
@@ -1258,8 +1198,8 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
      */
     public function getTblproductos(ConnectionInterface $con = null)
     {
-        if ($this->aTblproductos === null && (($this->tblproductos_productoid !== "" && $this->tblproductos_productoid !== null))) {
-            $this->aTblproductos = ChildTblproductosQuery::create()->findPk($this->tblproductos_productoid, $con);
+        if ($this->aTblproductos === null && (($this->productoid !== "" && $this->productoid !== null))) {
+            $this->aTblproductos = ChildTblproductosQuery::create()->findPk($this->productoid, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
@@ -1286,7 +1226,6 @@ abstract class Tblproductoprecio implements ActiveRecordInterface
         $this->productoid = null;
         $this->precio = null;
         $this->fecha = null;
-        $this->tblproductos_productoid = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

@@ -16,14 +16,14 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
+use propel\propel\Tblcategoria as ChildTblcategoria;
+use propel\propel\TblcategoriaQuery as ChildTblcategoriaQuery;
 use propel\propel\Tblegresodetalle as ChildTblegresodetalle;
 use propel\propel\TblegresodetalleQuery as ChildTblegresodetalleQuery;
 use propel\propel\Tblfacturadetalle as ChildTblfacturadetalle;
 use propel\propel\TblfacturadetalleQuery as ChildTblfacturadetalleQuery;
 use propel\propel\Tblingresodetalle as ChildTblingresodetalle;
 use propel\propel\TblingresodetalleQuery as ChildTblingresodetalleQuery;
-use propel\propel\Tbllinea as ChildTbllinea;
-use propel\propel\TbllineaQuery as ChildTbllineaQuery;
 use propel\propel\Tblproductocosto as ChildTblproductocosto;
 use propel\propel\TblproductocostoQuery as ChildTblproductocostoQuery;
 use propel\propel\Tblproductoprecio as ChildTblproductoprecio;
@@ -107,16 +107,9 @@ abstract class Tblproductos implements ActiveRecordInterface
     protected $lineaid;
 
     /**
-     * The value for the tbllinea_lineaid field.
-     *
-     * @var        int
+     * @var        ChildTblcategoria
      */
-    protected $tbllinea_lineaid;
-
-    /**
-     * @var        ChildTbllinea
-     */
-    protected $aTbllinea;
+    protected $aTblcategoria;
 
     /**
      * @var        ObjectCollection|ChildTblegresodetalle[] Collection to store aggregation of ChildTblegresodetalle objects.
@@ -452,16 +445,6 @@ abstract class Tblproductos implements ActiveRecordInterface
     }
 
     /**
-     * Get the [tbllinea_lineaid] column value.
-     *
-     * @return int
-     */
-    public function getTbllineaLineaid()
-    {
-        return $this->tbllinea_lineaid;
-    }
-
-    /**
      * Set the value of [productoid] column.
      *
      * @param string $v new value
@@ -538,32 +521,12 @@ abstract class Tblproductos implements ActiveRecordInterface
             $this->modifiedColumns[TblproductosTableMap::COL_LINEAID] = true;
         }
 
+        if ($this->aTblcategoria !== null && $this->aTblcategoria->getLineaid() !== $v) {
+            $this->aTblcategoria = null;
+        }
+
         return $this;
     } // setLineaid()
-
-    /**
-     * Set the value of [tbllinea_lineaid] column.
-     *
-     * @param int $v new value
-     * @return $this|\propel\propel\Tblproductos The current object (for fluent API support)
-     */
-    public function setTbllineaLineaid($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->tbllinea_lineaid !== $v) {
-            $this->tbllinea_lineaid = $v;
-            $this->modifiedColumns[TblproductosTableMap::COL_TBLLINEA_LINEAID] = true;
-        }
-
-        if ($this->aTbllinea !== null && $this->aTbllinea->getLineaid() !== $v) {
-            $this->aTbllinea = null;
-        }
-
-        return $this;
-    } // setTbllineaLineaid()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -612,9 +575,6 @@ abstract class Tblproductos implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : TblproductosTableMap::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)];
             $this->lineaid = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : TblproductosTableMap::translateFieldName('TbllineaLineaid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tbllinea_lineaid = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -623,7 +583,7 @@ abstract class Tblproductos implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = TblproductosTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = TblproductosTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\propel\\propel\\Tblproductos'), 0, $e);
@@ -645,8 +605,8 @@ abstract class Tblproductos implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aTbllinea !== null && $this->tbllinea_lineaid !== $this->aTbllinea->getLineaid()) {
-            $this->aTbllinea = null;
+        if ($this->aTblcategoria !== null && $this->lineaid !== $this->aTblcategoria->getLineaid()) {
+            $this->aTblcategoria = null;
         }
     } // ensureConsistency
 
@@ -687,7 +647,7 @@ abstract class Tblproductos implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aTbllinea = null;
+            $this->aTblcategoria = null;
             $this->collTblegresodetalles = null;
 
             $this->collTblfacturadetalles = null;
@@ -806,11 +766,11 @@ abstract class Tblproductos implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aTbllinea !== null) {
-                if ($this->aTbllinea->isModified() || $this->aTbllinea->isNew()) {
-                    $affectedRows += $this->aTbllinea->save($con);
+            if ($this->aTblcategoria !== null) {
+                if ($this->aTblcategoria->isModified() || $this->aTblcategoria->isNew()) {
+                    $affectedRows += $this->aTblcategoria->save($con);
                 }
-                $this->setTbllinea($this->aTbllinea);
+                $this->setTblcategoria($this->aTblcategoria);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -826,9 +786,10 @@ abstract class Tblproductos implements ActiveRecordInterface
 
             if ($this->tblegresodetallesScheduledForDeletion !== null) {
                 if (!$this->tblegresodetallesScheduledForDeletion->isEmpty()) {
-                    \propel\propel\TblegresodetalleQuery::create()
-                        ->filterByPrimaryKeys($this->tblegresodetallesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
+                    foreach ($this->tblegresodetallesScheduledForDeletion as $tblegresodetalle) {
+                        // need to save related object because we set the relation to null
+                        $tblegresodetalle->save($con);
+                    }
                     $this->tblegresodetallesScheduledForDeletion = null;
                 }
             }
@@ -843,9 +804,10 @@ abstract class Tblproductos implements ActiveRecordInterface
 
             if ($this->tblfacturadetallesScheduledForDeletion !== null) {
                 if (!$this->tblfacturadetallesScheduledForDeletion->isEmpty()) {
-                    \propel\propel\TblfacturadetalleQuery::create()
-                        ->filterByPrimaryKeys($this->tblfacturadetallesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
+                    foreach ($this->tblfacturadetallesScheduledForDeletion as $tblfacturadetalle) {
+                        // need to save related object because we set the relation to null
+                        $tblfacturadetalle->save($con);
+                    }
                     $this->tblfacturadetallesScheduledForDeletion = null;
                 }
             }
@@ -860,9 +822,10 @@ abstract class Tblproductos implements ActiveRecordInterface
 
             if ($this->tblingresodetallesScheduledForDeletion !== null) {
                 if (!$this->tblingresodetallesScheduledForDeletion->isEmpty()) {
-                    \propel\propel\TblingresodetalleQuery::create()
-                        ->filterByPrimaryKeys($this->tblingresodetallesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
+                    foreach ($this->tblingresodetallesScheduledForDeletion as $tblingresodetalle) {
+                        // need to save related object because we set the relation to null
+                        $tblingresodetalle->save($con);
+                    }
                     $this->tblingresodetallesScheduledForDeletion = null;
                 }
             }
@@ -877,9 +840,10 @@ abstract class Tblproductos implements ActiveRecordInterface
 
             if ($this->tblproductocostosScheduledForDeletion !== null) {
                 if (!$this->tblproductocostosScheduledForDeletion->isEmpty()) {
-                    \propel\propel\TblproductocostoQuery::create()
-                        ->filterByPrimaryKeys($this->tblproductocostosScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
+                    foreach ($this->tblproductocostosScheduledForDeletion as $tblproductocosto) {
+                        // need to save related object because we set the relation to null
+                        $tblproductocosto->save($con);
+                    }
                     $this->tblproductocostosScheduledForDeletion = null;
                 }
             }
@@ -894,9 +858,10 @@ abstract class Tblproductos implements ActiveRecordInterface
 
             if ($this->tblproductopreciosScheduledForDeletion !== null) {
                 if (!$this->tblproductopreciosScheduledForDeletion->isEmpty()) {
-                    \propel\propel\TblproductoprecioQuery::create()
-                        ->filterByPrimaryKeys($this->tblproductopreciosScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
+                    foreach ($this->tblproductopreciosScheduledForDeletion as $tblproductoprecio) {
+                        // need to save related object because we set the relation to null
+                        $tblproductoprecio->save($con);
+                    }
                     $this->tblproductopreciosScheduledForDeletion = null;
                 }
             }
@@ -947,9 +912,6 @@ abstract class Tblproductos implements ActiveRecordInterface
         if ($this->isColumnModified(TblproductosTableMap::COL_LINEAID)) {
             $modifiedColumns[':p' . $index++]  = 'lineaId';
         }
-        if ($this->isColumnModified(TblproductosTableMap::COL_TBLLINEA_LINEAID)) {
-            $modifiedColumns[':p' . $index++]  = 'TblLinea_LineaId';
-        }
 
         $sql = sprintf(
             'INSERT INTO tblproductos (%s) VALUES (%s)',
@@ -972,9 +934,6 @@ abstract class Tblproductos implements ActiveRecordInterface
                         break;
                     case 'lineaId':
                         $stmt->bindValue($identifier, $this->lineaid, PDO::PARAM_INT);
-                        break;
-                    case 'TblLinea_LineaId':
-                        $stmt->bindValue($identifier, $this->tbllinea_lineaid, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -1050,9 +1009,6 @@ abstract class Tblproductos implements ActiveRecordInterface
             case 3:
                 return $this->getLineaid();
                 break;
-            case 4:
-                return $this->getTbllineaLineaid();
-                break;
             default:
                 return null;
                 break;
@@ -1087,7 +1043,6 @@ abstract class Tblproductos implements ActiveRecordInterface
             $keys[1] => $this->getCodigo(),
             $keys[2] => $this->getNombre(),
             $keys[3] => $this->getLineaid(),
-            $keys[4] => $this->getTbllineaLineaid(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1095,20 +1050,20 @@ abstract class Tblproductos implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aTbllinea) {
+            if (null !== $this->aTblcategoria) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'tbllinea';
+                        $key = 'tblcategoria';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'tbllinea';
+                        $key = 'tblcategoria';
                         break;
                     default:
-                        $key = 'Tbllinea';
+                        $key = 'Tblcategoria';
                 }
 
-                $result[$key] = $this->aTbllinea->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aTblcategoria->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collTblegresodetalles) {
 
@@ -1231,9 +1186,6 @@ abstract class Tblproductos implements ActiveRecordInterface
             case 3:
                 $this->setLineaid($value);
                 break;
-            case 4:
-                $this->setTbllineaLineaid($value);
-                break;
         } // switch()
 
         return $this;
@@ -1271,9 +1223,6 @@ abstract class Tblproductos implements ActiveRecordInterface
         }
         if (array_key_exists($keys[3], $arr)) {
             $this->setLineaid($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setTbllineaLineaid($arr[$keys[4]]);
         }
     }
 
@@ -1327,9 +1276,6 @@ abstract class Tblproductos implements ActiveRecordInterface
         }
         if ($this->isColumnModified(TblproductosTableMap::COL_LINEAID)) {
             $criteria->add(TblproductosTableMap::COL_LINEAID, $this->lineaid);
-        }
-        if ($this->isColumnModified(TblproductosTableMap::COL_TBLLINEA_LINEAID)) {
-            $criteria->add(TblproductosTableMap::COL_TBLLINEA_LINEAID, $this->tbllinea_lineaid);
         }
 
         return $criteria;
@@ -1420,7 +1366,6 @@ abstract class Tblproductos implements ActiveRecordInterface
         $copyObj->setCodigo($this->getCodigo());
         $copyObj->setNombre($this->getNombre());
         $copyObj->setLineaid($this->getLineaid());
-        $copyObj->setTbllineaLineaid($this->getTbllineaLineaid());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1488,24 +1433,24 @@ abstract class Tblproductos implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildTbllinea object.
+     * Declares an association between this object and a ChildTblcategoria object.
      *
-     * @param  ChildTbllinea $v
+     * @param  ChildTblcategoria $v
      * @return $this|\propel\propel\Tblproductos The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setTbllinea(ChildTbllinea $v = null)
+    public function setTblcategoria(ChildTblcategoria $v = null)
     {
         if ($v === null) {
-            $this->setTbllineaLineaid(NULL);
+            $this->setLineaid(NULL);
         } else {
-            $this->setTbllineaLineaid($v->getLineaid());
+            $this->setLineaid($v->getLineaid());
         }
 
-        $this->aTbllinea = $v;
+        $this->aTblcategoria = $v;
 
         // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildTbllinea object, it will not be re-added.
+        // If this object has already been added to the ChildTblcategoria object, it will not be re-added.
         if ($v !== null) {
             $v->addTblproductos($this);
         }
@@ -1516,26 +1461,26 @@ abstract class Tblproductos implements ActiveRecordInterface
 
 
     /**
-     * Get the associated ChildTbllinea object
+     * Get the associated ChildTblcategoria object
      *
      * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildTbllinea The associated ChildTbllinea object.
+     * @return ChildTblcategoria The associated ChildTblcategoria object.
      * @throws PropelException
      */
-    public function getTbllinea(ConnectionInterface $con = null)
+    public function getTblcategoria(ConnectionInterface $con = null)
     {
-        if ($this->aTbllinea === null && ($this->tbllinea_lineaid != 0)) {
-            $this->aTbllinea = ChildTbllineaQuery::create()->findPk($this->tbllinea_lineaid, $con);
+        if ($this->aTblcategoria === null && ($this->lineaid != 0)) {
+            $this->aTblcategoria = ChildTblcategoriaQuery::create()->findPk($this->lineaid, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aTbllinea->addTblproductoss($this);
+                $this->aTblcategoria->addTblproductoss($this);
              */
         }
 
-        return $this->aTbllinea;
+        return $this->aTblcategoria;
     }
 
 
@@ -1789,7 +1734,7 @@ abstract class Tblproductos implements ActiveRecordInterface
                 $this->tblegresodetallesScheduledForDeletion = clone $this->collTblegresodetalles;
                 $this->tblegresodetallesScheduledForDeletion->clear();
             }
-            $this->tblegresodetallesScheduledForDeletion[]= clone $tblegresodetalle;
+            $this->tblegresodetallesScheduledForDeletion[]= $tblegresodetalle;
             $tblegresodetalle->setTblproductos(null);
         }
 
@@ -2039,7 +1984,7 @@ abstract class Tblproductos implements ActiveRecordInterface
                 $this->tblfacturadetallesScheduledForDeletion = clone $this->collTblfacturadetalles;
                 $this->tblfacturadetallesScheduledForDeletion->clear();
             }
-            $this->tblfacturadetallesScheduledForDeletion[]= clone $tblfacturadetalle;
+            $this->tblfacturadetallesScheduledForDeletion[]= $tblfacturadetalle;
             $tblfacturadetalle->setTblproductos(null);
         }
 
@@ -2289,7 +2234,7 @@ abstract class Tblproductos implements ActiveRecordInterface
                 $this->tblingresodetallesScheduledForDeletion = clone $this->collTblingresodetalles;
                 $this->tblingresodetallesScheduledForDeletion->clear();
             }
-            $this->tblingresodetallesScheduledForDeletion[]= clone $tblingresodetalle;
+            $this->tblingresodetallesScheduledForDeletion[]= $tblingresodetalle;
             $tblingresodetalle->setTblproductos(null);
         }
 
@@ -2539,7 +2484,7 @@ abstract class Tblproductos implements ActiveRecordInterface
                 $this->tblproductocostosScheduledForDeletion = clone $this->collTblproductocostos;
                 $this->tblproductocostosScheduledForDeletion->clear();
             }
-            $this->tblproductocostosScheduledForDeletion[]= clone $tblproductocosto;
+            $this->tblproductocostosScheduledForDeletion[]= $tblproductocosto;
             $tblproductocosto->setTblproductos(null);
         }
 
@@ -2764,7 +2709,7 @@ abstract class Tblproductos implements ActiveRecordInterface
                 $this->tblproductopreciosScheduledForDeletion = clone $this->collTblproductoprecios;
                 $this->tblproductopreciosScheduledForDeletion->clear();
             }
-            $this->tblproductopreciosScheduledForDeletion[]= clone $tblproductoprecio;
+            $this->tblproductopreciosScheduledForDeletion[]= $tblproductoprecio;
             $tblproductoprecio->setTblproductos(null);
         }
 
@@ -2778,14 +2723,13 @@ abstract class Tblproductos implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aTbllinea) {
-            $this->aTbllinea->removeTblproductos($this);
+        if (null !== $this->aTblcategoria) {
+            $this->aTblcategoria->removeTblproductos($this);
         }
         $this->productoid = null;
         $this->codigo = null;
         $this->nombre = null;
         $this->lineaid = null;
-        $this->tbllinea_lineaid = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -2836,7 +2780,7 @@ abstract class Tblproductos implements ActiveRecordInterface
         $this->collTblingresodetalles = null;
         $this->collTblproductocostos = null;
         $this->collTblproductoprecios = null;
-        $this->aTbllinea = null;
+        $this->aTblcategoria = null;
     }
 
     /**

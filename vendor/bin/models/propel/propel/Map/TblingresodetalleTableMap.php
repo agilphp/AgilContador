@@ -59,7 +59,7 @@ class TblingresodetalleTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class TblingresodetalleTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the ingresoDetalleId field
@@ -92,16 +92,6 @@ class TblingresodetalleTableMap extends TableMap
     const COL_CANTIDAD = 'tblingresodetalle.cantidad';
 
     /**
-     * the column name for the TblProductos_productoId field
-     */
-    const COL_TBLPRODUCTOS_PRODUCTOID = 'tblingresodetalle.TblProductos_productoId';
-
-    /**
-     * the column name for the TblIngreso_ingresoId field
-     */
-    const COL_TBLINGRESO_INGRESOID = 'tblingresodetalle.TblIngreso_ingresoId';
-
-    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -113,11 +103,11 @@ class TblingresodetalleTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Ingresodetalleid', 'Ingresoid', 'Productoid', 'Cantidad', 'TblproductosProductoid', 'TblingresoIngresoid', ),
-        self::TYPE_CAMELNAME     => array('ingresodetalleid', 'ingresoid', 'productoid', 'cantidad', 'tblproductosProductoid', 'tblingresoIngresoid', ),
-        self::TYPE_COLNAME       => array(TblingresodetalleTableMap::COL_INGRESODETALLEID, TblingresodetalleTableMap::COL_INGRESOID, TblingresodetalleTableMap::COL_PRODUCTOID, TblingresodetalleTableMap::COL_CANTIDAD, TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID, ),
-        self::TYPE_FIELDNAME     => array('ingresoDetalleId', 'ingresoId', 'productoId', 'cantidad', 'TblProductos_productoId', 'TblIngreso_ingresoId', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Ingresodetalleid', 'Ingresoid', 'Productoid', 'Cantidad', ),
+        self::TYPE_CAMELNAME     => array('ingresodetalleid', 'ingresoid', 'productoid', 'cantidad', ),
+        self::TYPE_COLNAME       => array(TblingresodetalleTableMap::COL_INGRESODETALLEID, TblingresodetalleTableMap::COL_INGRESOID, TblingresodetalleTableMap::COL_PRODUCTOID, TblingresodetalleTableMap::COL_CANTIDAD, ),
+        self::TYPE_FIELDNAME     => array('ingresoDetalleId', 'ingresoId', 'productoId', 'cantidad', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -127,11 +117,11 @@ class TblingresodetalleTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Ingresodetalleid' => 0, 'Ingresoid' => 1, 'Productoid' => 2, 'Cantidad' => 3, 'TblproductosProductoid' => 4, 'TblingresoIngresoid' => 5, ),
-        self::TYPE_CAMELNAME     => array('ingresodetalleid' => 0, 'ingresoid' => 1, 'productoid' => 2, 'cantidad' => 3, 'tblproductosProductoid' => 4, 'tblingresoIngresoid' => 5, ),
-        self::TYPE_COLNAME       => array(TblingresodetalleTableMap::COL_INGRESODETALLEID => 0, TblingresodetalleTableMap::COL_INGRESOID => 1, TblingresodetalleTableMap::COL_PRODUCTOID => 2, TblingresodetalleTableMap::COL_CANTIDAD => 3, TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID => 4, TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID => 5, ),
-        self::TYPE_FIELDNAME     => array('ingresoDetalleId' => 0, 'ingresoId' => 1, 'productoId' => 2, 'cantidad' => 3, 'TblProductos_productoId' => 4, 'TblIngreso_ingresoId' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Ingresodetalleid' => 0, 'Ingresoid' => 1, 'Productoid' => 2, 'Cantidad' => 3, ),
+        self::TYPE_CAMELNAME     => array('ingresodetalleid' => 0, 'ingresoid' => 1, 'productoid' => 2, 'cantidad' => 3, ),
+        self::TYPE_COLNAME       => array(TblingresodetalleTableMap::COL_INGRESODETALLEID => 0, TblingresodetalleTableMap::COL_INGRESOID => 1, TblingresodetalleTableMap::COL_PRODUCTOID => 2, TblingresodetalleTableMap::COL_CANTIDAD => 3, ),
+        self::TYPE_FIELDNAME     => array('ingresoDetalleId' => 0, 'ingresoId' => 1, 'productoId' => 2, 'cantidad' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -152,11 +142,9 @@ class TblingresodetalleTableMap extends TableMap
         $this->setUseIdGenerator(false);
         // columns
         $this->addPrimaryKey('ingresoDetalleId', 'Ingresodetalleid', 'BIGINT', true, null, null);
-        $this->addColumn('ingresoId', 'Ingresoid', 'BIGINT', false, null, null);
-        $this->addColumn('productoId', 'Productoid', 'BIGINT', false, null, null);
+        $this->addForeignKey('ingresoId', 'Ingresoid', 'BIGINT', 'tblingreso', 'ingresoId', false, null, null);
+        $this->addForeignKey('productoId', 'Productoid', 'BIGINT', 'tblproductos', 'productoId', false, null, null);
         $this->addColumn('cantidad', 'Cantidad', 'DECIMAL', false, 10, null);
-        $this->addForeignKey('TblProductos_productoId', 'TblproductosProductoid', 'BIGINT', 'tblproductos', 'productoId', true, null, null);
-        $this->addForeignKey('TblIngreso_ingresoId', 'TblingresoIngresoid', 'BIGINT', 'tblingreso', 'ingresoId', true, null, null);
     } // initialize()
 
     /**
@@ -167,14 +155,14 @@ class TblingresodetalleTableMap extends TableMap
         $this->addRelation('Tblingreso', '\\propel\\propel\\Tblingreso', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
-    0 => ':TblIngreso_ingresoId',
+    0 => ':ingresoId',
     1 => ':ingresoId',
   ),
 ), null, null, null, false);
         $this->addRelation('Tblproductos', '\\propel\\propel\\Tblproductos', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
-    0 => ':TblProductos_productoId',
+    0 => ':productoId',
     1 => ':productoId',
   ),
 ), null, null, null, false);
@@ -325,15 +313,11 @@ class TblingresodetalleTableMap extends TableMap
             $criteria->addSelectColumn(TblingresodetalleTableMap::COL_INGRESOID);
             $criteria->addSelectColumn(TblingresodetalleTableMap::COL_PRODUCTOID);
             $criteria->addSelectColumn(TblingresodetalleTableMap::COL_CANTIDAD);
-            $criteria->addSelectColumn(TblingresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID);
-            $criteria->addSelectColumn(TblingresodetalleTableMap::COL_TBLINGRESO_INGRESOID);
         } else {
             $criteria->addSelectColumn($alias . '.ingresoDetalleId');
             $criteria->addSelectColumn($alias . '.ingresoId');
             $criteria->addSelectColumn($alias . '.productoId');
             $criteria->addSelectColumn($alias . '.cantidad');
-            $criteria->addSelectColumn($alias . '.TblProductos_productoId');
-            $criteria->addSelectColumn($alias . '.TblIngreso_ingresoId');
         }
     }
 

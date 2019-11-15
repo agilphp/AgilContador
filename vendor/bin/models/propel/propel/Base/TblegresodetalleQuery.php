@@ -24,15 +24,11 @@ use propel\propel\Map\TblegresodetalleTableMap;
  * @method     ChildTblegresodetalleQuery orderByEgresoid($order = Criteria::ASC) Order by the egresoId column
  * @method     ChildTblegresodetalleQuery orderByProductoid($order = Criteria::ASC) Order by the productoId column
  * @method     ChildTblegresodetalleQuery orderByCantidad($order = Criteria::ASC) Order by the cantidad column
- * @method     ChildTblegresodetalleQuery orderByTblegresoEgresoid($order = Criteria::ASC) Order by the TblEgreso_egresoId column
- * @method     ChildTblegresodetalleQuery orderByTblproductosProductoid($order = Criteria::ASC) Order by the TblProductos_productoId column
  *
  * @method     ChildTblegresodetalleQuery groupByEgresodetalleid() Group by the egresoDetalleId column
  * @method     ChildTblegresodetalleQuery groupByEgresoid() Group by the egresoId column
  * @method     ChildTblegresodetalleQuery groupByProductoid() Group by the productoId column
  * @method     ChildTblegresodetalleQuery groupByCantidad() Group by the cantidad column
- * @method     ChildTblegresodetalleQuery groupByTblegresoEgresoid() Group by the TblEgreso_egresoId column
- * @method     ChildTblegresodetalleQuery groupByTblproductosProductoid() Group by the TblProductos_productoId column
  *
  * @method     ChildTblegresodetalleQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildTblegresodetalleQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -70,9 +66,7 @@ use propel\propel\Map\TblegresodetalleTableMap;
  * @method     ChildTblegresodetalle findOneByEgresodetalleid(string $egresoDetalleId) Return the first ChildTblegresodetalle filtered by the egresoDetalleId column
  * @method     ChildTblegresodetalle findOneByEgresoid(string $egresoId) Return the first ChildTblegresodetalle filtered by the egresoId column
  * @method     ChildTblegresodetalle findOneByProductoid(string $productoId) Return the first ChildTblegresodetalle filtered by the productoId column
- * @method     ChildTblegresodetalle findOneByCantidad(string $cantidad) Return the first ChildTblegresodetalle filtered by the cantidad column
- * @method     ChildTblegresodetalle findOneByTblegresoEgresoid(string $TblEgreso_egresoId) Return the first ChildTblegresodetalle filtered by the TblEgreso_egresoId column
- * @method     ChildTblegresodetalle findOneByTblproductosProductoid(string $TblProductos_productoId) Return the first ChildTblegresodetalle filtered by the TblProductos_productoId column *
+ * @method     ChildTblegresodetalle findOneByCantidad(string $cantidad) Return the first ChildTblegresodetalle filtered by the cantidad column *
 
  * @method     ChildTblegresodetalle requirePk($key, ConnectionInterface $con = null) Return the ChildTblegresodetalle by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblegresodetalle requireOne(ConnectionInterface $con = null) Return the first ChildTblegresodetalle matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -81,16 +75,12 @@ use propel\propel\Map\TblegresodetalleTableMap;
  * @method     ChildTblegresodetalle requireOneByEgresoid(string $egresoId) Return the first ChildTblegresodetalle filtered by the egresoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblegresodetalle requireOneByProductoid(string $productoId) Return the first ChildTblegresodetalle filtered by the productoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblegresodetalle requireOneByCantidad(string $cantidad) Return the first ChildTblegresodetalle filtered by the cantidad column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTblegresodetalle requireOneByTblegresoEgresoid(string $TblEgreso_egresoId) Return the first ChildTblegresodetalle filtered by the TblEgreso_egresoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTblegresodetalle requireOneByTblproductosProductoid(string $TblProductos_productoId) Return the first ChildTblegresodetalle filtered by the TblProductos_productoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildTblegresodetalle[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildTblegresodetalle objects based on current ModelCriteria
  * @method     ChildTblegresodetalle[]|ObjectCollection findByEgresodetalleid(string $egresoDetalleId) Return ChildTblegresodetalle objects filtered by the egresoDetalleId column
  * @method     ChildTblegresodetalle[]|ObjectCollection findByEgresoid(string $egresoId) Return ChildTblegresodetalle objects filtered by the egresoId column
  * @method     ChildTblegresodetalle[]|ObjectCollection findByProductoid(string $productoId) Return ChildTblegresodetalle objects filtered by the productoId column
  * @method     ChildTblegresodetalle[]|ObjectCollection findByCantidad(string $cantidad) Return ChildTblegresodetalle objects filtered by the cantidad column
- * @method     ChildTblegresodetalle[]|ObjectCollection findByTblegresoEgresoid(string $TblEgreso_egresoId) Return ChildTblegresodetalle objects filtered by the TblEgreso_egresoId column
- * @method     ChildTblegresodetalle[]|ObjectCollection findByTblproductosProductoid(string $TblProductos_productoId) Return ChildTblegresodetalle objects filtered by the TblProductos_productoId column
  * @method     ChildTblegresodetalle[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -189,7 +179,7 @@ abstract class TblegresodetalleQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT egresoDetalleId, egresoId, productoId, cantidad, TblEgreso_egresoId, TblProductos_productoId FROM tblegresodetalle WHERE egresoDetalleId = :p0';
+        $sql = 'SELECT egresoDetalleId, egresoId, productoId, cantidad FROM tblegresodetalle WHERE egresoDetalleId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -330,6 +320,8 @@ abstract class TblegresodetalleQuery extends ModelCriteria
      * $query->filterByEgresoid(array('min' => 12)); // WHERE egresoId > 12
      * </code>
      *
+     * @see       filterByTblegreso()
+     *
      * @param     mixed $egresoid The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
@@ -370,6 +362,8 @@ abstract class TblegresodetalleQuery extends ModelCriteria
      * $query->filterByProductoid(array(12, 34)); // WHERE productoId IN (12, 34)
      * $query->filterByProductoid(array('min' => 12)); // WHERE productoId > 12
      * </code>
+     *
+     * @see       filterByTblproductos()
      *
      * @param     mixed $productoid The value to use as filter.
      *              Use scalar values for equality.
@@ -444,92 +438,6 @@ abstract class TblegresodetalleQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the TblEgreso_egresoId column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByTblegresoEgresoid(1234); // WHERE TblEgreso_egresoId = 1234
-     * $query->filterByTblegresoEgresoid(array(12, 34)); // WHERE TblEgreso_egresoId IN (12, 34)
-     * $query->filterByTblegresoEgresoid(array('min' => 12)); // WHERE TblEgreso_egresoId > 12
-     * </code>
-     *
-     * @see       filterByTblegreso()
-     *
-     * @param     mixed $tblegresoEgresoid The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildTblegresodetalleQuery The current query, for fluid interface
-     */
-    public function filterByTblegresoEgresoid($tblegresoEgresoid = null, $comparison = null)
-    {
-        if (is_array($tblegresoEgresoid)) {
-            $useMinMax = false;
-            if (isset($tblegresoEgresoid['min'])) {
-                $this->addUsingAlias(TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID, $tblegresoEgresoid['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($tblegresoEgresoid['max'])) {
-                $this->addUsingAlias(TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID, $tblegresoEgresoid['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID, $tblegresoEgresoid, $comparison);
-    }
-
-    /**
-     * Filter the query on the TblProductos_productoId column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByTblproductosProductoid(1234); // WHERE TblProductos_productoId = 1234
-     * $query->filterByTblproductosProductoid(array(12, 34)); // WHERE TblProductos_productoId IN (12, 34)
-     * $query->filterByTblproductosProductoid(array('min' => 12)); // WHERE TblProductos_productoId > 12
-     * </code>
-     *
-     * @see       filterByTblproductos()
-     *
-     * @param     mixed $tblproductosProductoid The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildTblegresodetalleQuery The current query, for fluid interface
-     */
-    public function filterByTblproductosProductoid($tblproductosProductoid = null, $comparison = null)
-    {
-        if (is_array($tblproductosProductoid)) {
-            $useMinMax = false;
-            if (isset($tblproductosProductoid['min'])) {
-                $this->addUsingAlias(TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($tblproductosProductoid['max'])) {
-                $this->addUsingAlias(TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid, $comparison);
-    }
-
-    /**
      * Filter the query by a related \propel\propel\Tblegreso object
      *
      * @param \propel\propel\Tblegreso|ObjectCollection $tblegreso The related object(s) to use as filter
@@ -543,14 +451,14 @@ abstract class TblegresodetalleQuery extends ModelCriteria
     {
         if ($tblegreso instanceof \propel\propel\Tblegreso) {
             return $this
-                ->addUsingAlias(TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID, $tblegreso->getEgresoid(), $comparison);
+                ->addUsingAlias(TblegresodetalleTableMap::COL_EGRESOID, $tblegreso->getEgresoid(), $comparison);
         } elseif ($tblegreso instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID, $tblegreso->toKeyValue('PrimaryKey', 'Egresoid'), $comparison);
+                ->addUsingAlias(TblegresodetalleTableMap::COL_EGRESOID, $tblegreso->toKeyValue('PrimaryKey', 'Egresoid'), $comparison);
         } else {
             throw new PropelException('filterByTblegreso() only accepts arguments of type \propel\propel\Tblegreso or Collection');
         }
@@ -564,7 +472,7 @@ abstract class TblegresodetalleQuery extends ModelCriteria
      *
      * @return $this|ChildTblegresodetalleQuery The current query, for fluid interface
      */
-    public function joinTblegreso($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblegreso($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblegreso');
@@ -599,7 +507,7 @@ abstract class TblegresodetalleQuery extends ModelCriteria
      *
      * @return \propel\propel\TblegresoQuery A secondary query class using the current class as primary query
      */
-    public function useTblegresoQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblegresoQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblegreso($relationAlias, $joinType)
@@ -620,14 +528,14 @@ abstract class TblegresodetalleQuery extends ModelCriteria
     {
         if ($tblproductos instanceof \propel\propel\Tblproductos) {
             return $this
-                ->addUsingAlias(TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductos->getProductoid(), $comparison);
+                ->addUsingAlias(TblegresodetalleTableMap::COL_PRODUCTOID, $tblproductos->getProductoid(), $comparison);
         } elseif ($tblproductos instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductos->toKeyValue('PrimaryKey', 'Productoid'), $comparison);
+                ->addUsingAlias(TblegresodetalleTableMap::COL_PRODUCTOID, $tblproductos->toKeyValue('PrimaryKey', 'Productoid'), $comparison);
         } else {
             throw new PropelException('filterByTblproductos() only accepts arguments of type \propel\propel\Tblproductos or Collection');
         }
@@ -641,7 +549,7 @@ abstract class TblegresodetalleQuery extends ModelCriteria
      *
      * @return $this|ChildTblegresodetalleQuery The current query, for fluid interface
      */
-    public function joinTblproductos($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblproductos($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblproductos');
@@ -676,7 +584,7 @@ abstract class TblegresodetalleQuery extends ModelCriteria
      *
      * @return \propel\propel\TblproductosQuery A secondary query class using the current class as primary query
      */
-    public function useTblproductosQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblproductosQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblproductos($relationAlias, $joinType)

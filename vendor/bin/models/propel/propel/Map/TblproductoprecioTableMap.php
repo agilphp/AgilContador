@@ -59,7 +59,7 @@ class TblproductoprecioTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class TblproductoprecioTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the productoPrecioId field
@@ -92,11 +92,6 @@ class TblproductoprecioTableMap extends TableMap
     const COL_FECHA = 'tblproductoprecio.fecha';
 
     /**
-     * the column name for the TblProductos_productoId field
-     */
-    const COL_TBLPRODUCTOS_PRODUCTOID = 'tblproductoprecio.TblProductos_productoId';
-
-    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -108,11 +103,11 @@ class TblproductoprecioTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Productoprecioid', 'Productoid', 'Precio', 'Fecha', 'TblproductosProductoid', ),
-        self::TYPE_CAMELNAME     => array('productoprecioid', 'productoid', 'precio', 'fecha', 'tblproductosProductoid', ),
-        self::TYPE_COLNAME       => array(TblproductoprecioTableMap::COL_PRODUCTOPRECIOID, TblproductoprecioTableMap::COL_PRODUCTOID, TblproductoprecioTableMap::COL_PRECIO, TblproductoprecioTableMap::COL_FECHA, TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID, ),
-        self::TYPE_FIELDNAME     => array('productoPrecioId', 'productoId', 'precio', 'fecha', 'TblProductos_productoId', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Productoprecioid', 'Productoid', 'Precio', 'Fecha', ),
+        self::TYPE_CAMELNAME     => array('productoprecioid', 'productoid', 'precio', 'fecha', ),
+        self::TYPE_COLNAME       => array(TblproductoprecioTableMap::COL_PRODUCTOPRECIOID, TblproductoprecioTableMap::COL_PRODUCTOID, TblproductoprecioTableMap::COL_PRECIO, TblproductoprecioTableMap::COL_FECHA, ),
+        self::TYPE_FIELDNAME     => array('productoPrecioId', 'productoId', 'precio', 'fecha', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -122,11 +117,11 @@ class TblproductoprecioTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Productoprecioid' => 0, 'Productoid' => 1, 'Precio' => 2, 'Fecha' => 3, 'TblproductosProductoid' => 4, ),
-        self::TYPE_CAMELNAME     => array('productoprecioid' => 0, 'productoid' => 1, 'precio' => 2, 'fecha' => 3, 'tblproductosProductoid' => 4, ),
-        self::TYPE_COLNAME       => array(TblproductoprecioTableMap::COL_PRODUCTOPRECIOID => 0, TblproductoprecioTableMap::COL_PRODUCTOID => 1, TblproductoprecioTableMap::COL_PRECIO => 2, TblproductoprecioTableMap::COL_FECHA => 3, TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID => 4, ),
-        self::TYPE_FIELDNAME     => array('productoPrecioId' => 0, 'productoId' => 1, 'precio' => 2, 'fecha' => 3, 'TblProductos_productoId' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Productoprecioid' => 0, 'Productoid' => 1, 'Precio' => 2, 'Fecha' => 3, ),
+        self::TYPE_CAMELNAME     => array('productoprecioid' => 0, 'productoid' => 1, 'precio' => 2, 'fecha' => 3, ),
+        self::TYPE_COLNAME       => array(TblproductoprecioTableMap::COL_PRODUCTOPRECIOID => 0, TblproductoprecioTableMap::COL_PRODUCTOID => 1, TblproductoprecioTableMap::COL_PRECIO => 2, TblproductoprecioTableMap::COL_FECHA => 3, ),
+        self::TYPE_FIELDNAME     => array('productoPrecioId' => 0, 'productoId' => 1, 'precio' => 2, 'fecha' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -147,10 +142,9 @@ class TblproductoprecioTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('productoPrecioId', 'Productoprecioid', 'BIGINT', true, null, null);
-        $this->addColumn('productoId', 'Productoid', 'BIGINT', false, null, null);
+        $this->addForeignKey('productoId', 'Productoid', 'BIGINT', 'tblproductos', 'productoId', false, null, null);
         $this->addColumn('precio', 'Precio', 'DECIMAL', false, 10, null);
         $this->addColumn('fecha', 'Fecha', 'TIMESTAMP', false, null, null);
-        $this->addForeignKey('TblProductos_productoId', 'TblproductosProductoid', 'BIGINT', 'tblproductos', 'productoId', true, null, null);
     } // initialize()
 
     /**
@@ -161,7 +155,7 @@ class TblproductoprecioTableMap extends TableMap
         $this->addRelation('Tblproductos', '\\propel\\propel\\Tblproductos', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
-    0 => ':TblProductos_productoId',
+    0 => ':productoId',
     1 => ':productoId',
   ),
 ), null, null, null, false);
@@ -312,13 +306,11 @@ class TblproductoprecioTableMap extends TableMap
             $criteria->addSelectColumn(TblproductoprecioTableMap::COL_PRODUCTOID);
             $criteria->addSelectColumn(TblproductoprecioTableMap::COL_PRECIO);
             $criteria->addSelectColumn(TblproductoprecioTableMap::COL_FECHA);
-            $criteria->addSelectColumn(TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID);
         } else {
             $criteria->addSelectColumn($alias . '.productoPrecioId');
             $criteria->addSelectColumn($alias . '.productoId');
             $criteria->addSelectColumn($alias . '.precio');
             $criteria->addSelectColumn($alias . '.fecha');
-            $criteria->addSelectColumn($alias . '.TblProductos_productoId');
         }
     }
 

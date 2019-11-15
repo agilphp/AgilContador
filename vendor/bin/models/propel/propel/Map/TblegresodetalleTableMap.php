@@ -59,7 +59,7 @@ class TblegresodetalleTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class TblegresodetalleTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the egresoDetalleId field
@@ -92,16 +92,6 @@ class TblegresodetalleTableMap extends TableMap
     const COL_CANTIDAD = 'tblegresodetalle.cantidad';
 
     /**
-     * the column name for the TblEgreso_egresoId field
-     */
-    const COL_TBLEGRESO_EGRESOID = 'tblegresodetalle.TblEgreso_egresoId';
-
-    /**
-     * the column name for the TblProductos_productoId field
-     */
-    const COL_TBLPRODUCTOS_PRODUCTOID = 'tblegresodetalle.TblProductos_productoId';
-
-    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -113,11 +103,11 @@ class TblegresodetalleTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Egresodetalleid', 'Egresoid', 'Productoid', 'Cantidad', 'TblegresoEgresoid', 'TblproductosProductoid', ),
-        self::TYPE_CAMELNAME     => array('egresodetalleid', 'egresoid', 'productoid', 'cantidad', 'tblegresoEgresoid', 'tblproductosProductoid', ),
-        self::TYPE_COLNAME       => array(TblegresodetalleTableMap::COL_EGRESODETALLEID, TblegresodetalleTableMap::COL_EGRESOID, TblegresodetalleTableMap::COL_PRODUCTOID, TblegresodetalleTableMap::COL_CANTIDAD, TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID, TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, ),
-        self::TYPE_FIELDNAME     => array('egresoDetalleId', 'egresoId', 'productoId', 'cantidad', 'TblEgreso_egresoId', 'TblProductos_productoId', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Egresodetalleid', 'Egresoid', 'Productoid', 'Cantidad', ),
+        self::TYPE_CAMELNAME     => array('egresodetalleid', 'egresoid', 'productoid', 'cantidad', ),
+        self::TYPE_COLNAME       => array(TblegresodetalleTableMap::COL_EGRESODETALLEID, TblegresodetalleTableMap::COL_EGRESOID, TblegresodetalleTableMap::COL_PRODUCTOID, TblegresodetalleTableMap::COL_CANTIDAD, ),
+        self::TYPE_FIELDNAME     => array('egresoDetalleId', 'egresoId', 'productoId', 'cantidad', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -127,11 +117,11 @@ class TblegresodetalleTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Egresodetalleid' => 0, 'Egresoid' => 1, 'Productoid' => 2, 'Cantidad' => 3, 'TblegresoEgresoid' => 4, 'TblproductosProductoid' => 5, ),
-        self::TYPE_CAMELNAME     => array('egresodetalleid' => 0, 'egresoid' => 1, 'productoid' => 2, 'cantidad' => 3, 'tblegresoEgresoid' => 4, 'tblproductosProductoid' => 5, ),
-        self::TYPE_COLNAME       => array(TblegresodetalleTableMap::COL_EGRESODETALLEID => 0, TblegresodetalleTableMap::COL_EGRESOID => 1, TblegresodetalleTableMap::COL_PRODUCTOID => 2, TblegresodetalleTableMap::COL_CANTIDAD => 3, TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID => 4, TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID => 5, ),
-        self::TYPE_FIELDNAME     => array('egresoDetalleId' => 0, 'egresoId' => 1, 'productoId' => 2, 'cantidad' => 3, 'TblEgreso_egresoId' => 4, 'TblProductos_productoId' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Egresodetalleid' => 0, 'Egresoid' => 1, 'Productoid' => 2, 'Cantidad' => 3, ),
+        self::TYPE_CAMELNAME     => array('egresodetalleid' => 0, 'egresoid' => 1, 'productoid' => 2, 'cantidad' => 3, ),
+        self::TYPE_COLNAME       => array(TblegresodetalleTableMap::COL_EGRESODETALLEID => 0, TblegresodetalleTableMap::COL_EGRESOID => 1, TblegresodetalleTableMap::COL_PRODUCTOID => 2, TblegresodetalleTableMap::COL_CANTIDAD => 3, ),
+        self::TYPE_FIELDNAME     => array('egresoDetalleId' => 0, 'egresoId' => 1, 'productoId' => 2, 'cantidad' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -152,11 +142,9 @@ class TblegresodetalleTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('egresoDetalleId', 'Egresodetalleid', 'BIGINT', true, null, null);
-        $this->addColumn('egresoId', 'Egresoid', 'BIGINT', false, null, null);
-        $this->addColumn('productoId', 'Productoid', 'BIGINT', false, null, null);
+        $this->addForeignKey('egresoId', 'Egresoid', 'BIGINT', 'tblegreso', 'egresoId', false, null, null);
+        $this->addForeignKey('productoId', 'Productoid', 'BIGINT', 'tblproductos', 'productoId', false, null, null);
         $this->addColumn('cantidad', 'Cantidad', 'DECIMAL', false, 10, null);
-        $this->addForeignKey('TblEgreso_egresoId', 'TblegresoEgresoid', 'BIGINT', 'tblegreso', 'egresoId', true, null, null);
-        $this->addForeignKey('TblProductos_productoId', 'TblproductosProductoid', 'BIGINT', 'tblproductos', 'productoId', true, null, null);
     } // initialize()
 
     /**
@@ -167,14 +155,14 @@ class TblegresodetalleTableMap extends TableMap
         $this->addRelation('Tblegreso', '\\propel\\propel\\Tblegreso', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
-    0 => ':TblEgreso_egresoId',
+    0 => ':egresoId',
     1 => ':egresoId',
   ),
 ), null, null, null, false);
         $this->addRelation('Tblproductos', '\\propel\\propel\\Tblproductos', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
-    0 => ':TblProductos_productoId',
+    0 => ':productoId',
     1 => ':productoId',
   ),
 ), null, null, null, false);
@@ -325,15 +313,11 @@ class TblegresodetalleTableMap extends TableMap
             $criteria->addSelectColumn(TblegresodetalleTableMap::COL_EGRESOID);
             $criteria->addSelectColumn(TblegresodetalleTableMap::COL_PRODUCTOID);
             $criteria->addSelectColumn(TblegresodetalleTableMap::COL_CANTIDAD);
-            $criteria->addSelectColumn(TblegresodetalleTableMap::COL_TBLEGRESO_EGRESOID);
-            $criteria->addSelectColumn(TblegresodetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID);
         } else {
             $criteria->addSelectColumn($alias . '.egresoDetalleId');
             $criteria->addSelectColumn($alias . '.egresoId');
             $criteria->addSelectColumn($alias . '.productoId');
             $criteria->addSelectColumn($alias . '.cantidad');
-            $criteria->addSelectColumn($alias . '.TblEgreso_egresoId');
-            $criteria->addSelectColumn($alias . '.TblProductos_productoId');
         }
     }
 

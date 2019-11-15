@@ -24,13 +24,11 @@ use propel\propel\Map\TblproductoprecioTableMap;
  * @method     ChildTblproductoprecioQuery orderByProductoid($order = Criteria::ASC) Order by the productoId column
  * @method     ChildTblproductoprecioQuery orderByPrecio($order = Criteria::ASC) Order by the precio column
  * @method     ChildTblproductoprecioQuery orderByFecha($order = Criteria::ASC) Order by the fecha column
- * @method     ChildTblproductoprecioQuery orderByTblproductosProductoid($order = Criteria::ASC) Order by the TblProductos_productoId column
  *
  * @method     ChildTblproductoprecioQuery groupByProductoprecioid() Group by the productoPrecioId column
  * @method     ChildTblproductoprecioQuery groupByProductoid() Group by the productoId column
  * @method     ChildTblproductoprecioQuery groupByPrecio() Group by the precio column
  * @method     ChildTblproductoprecioQuery groupByFecha() Group by the fecha column
- * @method     ChildTblproductoprecioQuery groupByTblproductosProductoid() Group by the TblProductos_productoId column
  *
  * @method     ChildTblproductoprecioQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildTblproductoprecioQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -58,8 +56,7 @@ use propel\propel\Map\TblproductoprecioTableMap;
  * @method     ChildTblproductoprecio findOneByProductoprecioid(string $productoPrecioId) Return the first ChildTblproductoprecio filtered by the productoPrecioId column
  * @method     ChildTblproductoprecio findOneByProductoid(string $productoId) Return the first ChildTblproductoprecio filtered by the productoId column
  * @method     ChildTblproductoprecio findOneByPrecio(string $precio) Return the first ChildTblproductoprecio filtered by the precio column
- * @method     ChildTblproductoprecio findOneByFecha(string $fecha) Return the first ChildTblproductoprecio filtered by the fecha column
- * @method     ChildTblproductoprecio findOneByTblproductosProductoid(string $TblProductos_productoId) Return the first ChildTblproductoprecio filtered by the TblProductos_productoId column *
+ * @method     ChildTblproductoprecio findOneByFecha(string $fecha) Return the first ChildTblproductoprecio filtered by the fecha column *
 
  * @method     ChildTblproductoprecio requirePk($key, ConnectionInterface $con = null) Return the ChildTblproductoprecio by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblproductoprecio requireOne(ConnectionInterface $con = null) Return the first ChildTblproductoprecio matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -68,14 +65,12 @@ use propel\propel\Map\TblproductoprecioTableMap;
  * @method     ChildTblproductoprecio requireOneByProductoid(string $productoId) Return the first ChildTblproductoprecio filtered by the productoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblproductoprecio requireOneByPrecio(string $precio) Return the first ChildTblproductoprecio filtered by the precio column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblproductoprecio requireOneByFecha(string $fecha) Return the first ChildTblproductoprecio filtered by the fecha column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTblproductoprecio requireOneByTblproductosProductoid(string $TblProductos_productoId) Return the first ChildTblproductoprecio filtered by the TblProductos_productoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildTblproductoprecio[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildTblproductoprecio objects based on current ModelCriteria
  * @method     ChildTblproductoprecio[]|ObjectCollection findByProductoprecioid(string $productoPrecioId) Return ChildTblproductoprecio objects filtered by the productoPrecioId column
  * @method     ChildTblproductoprecio[]|ObjectCollection findByProductoid(string $productoId) Return ChildTblproductoprecio objects filtered by the productoId column
  * @method     ChildTblproductoprecio[]|ObjectCollection findByPrecio(string $precio) Return ChildTblproductoprecio objects filtered by the precio column
  * @method     ChildTblproductoprecio[]|ObjectCollection findByFecha(string $fecha) Return ChildTblproductoprecio objects filtered by the fecha column
- * @method     ChildTblproductoprecio[]|ObjectCollection findByTblproductosProductoid(string $TblProductos_productoId) Return ChildTblproductoprecio objects filtered by the TblProductos_productoId column
  * @method     ChildTblproductoprecio[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -174,7 +169,7 @@ abstract class TblproductoprecioQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT productoPrecioId, productoId, precio, fecha, TblProductos_productoId FROM tblproductoprecio WHERE productoPrecioId = :p0';
+        $sql = 'SELECT productoPrecioId, productoId, precio, fecha FROM tblproductoprecio WHERE productoPrecioId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -315,6 +310,8 @@ abstract class TblproductoprecioQuery extends ModelCriteria
      * $query->filterByProductoid(array('min' => 12)); // WHERE productoId > 12
      * </code>
      *
+     * @see       filterByTblproductos()
+     *
      * @param     mixed $productoid The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
@@ -431,49 +428,6 @@ abstract class TblproductoprecioQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the TblProductos_productoId column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByTblproductosProductoid(1234); // WHERE TblProductos_productoId = 1234
-     * $query->filterByTblproductosProductoid(array(12, 34)); // WHERE TblProductos_productoId IN (12, 34)
-     * $query->filterByTblproductosProductoid(array('min' => 12)); // WHERE TblProductos_productoId > 12
-     * </code>
-     *
-     * @see       filterByTblproductos()
-     *
-     * @param     mixed $tblproductosProductoid The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildTblproductoprecioQuery The current query, for fluid interface
-     */
-    public function filterByTblproductosProductoid($tblproductosProductoid = null, $comparison = null)
-    {
-        if (is_array($tblproductosProductoid)) {
-            $useMinMax = false;
-            if (isset($tblproductosProductoid['min'])) {
-                $this->addUsingAlias(TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($tblproductosProductoid['max'])) {
-                $this->addUsingAlias(TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid, $comparison);
-    }
-
-    /**
      * Filter the query by a related \propel\propel\Tblproductos object
      *
      * @param \propel\propel\Tblproductos|ObjectCollection $tblproductos The related object(s) to use as filter
@@ -487,14 +441,14 @@ abstract class TblproductoprecioQuery extends ModelCriteria
     {
         if ($tblproductos instanceof \propel\propel\Tblproductos) {
             return $this
-                ->addUsingAlias(TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductos->getProductoid(), $comparison);
+                ->addUsingAlias(TblproductoprecioTableMap::COL_PRODUCTOID, $tblproductos->getProductoid(), $comparison);
         } elseif ($tblproductos instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(TblproductoprecioTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductos->toKeyValue('PrimaryKey', 'Productoid'), $comparison);
+                ->addUsingAlias(TblproductoprecioTableMap::COL_PRODUCTOID, $tblproductos->toKeyValue('PrimaryKey', 'Productoid'), $comparison);
         } else {
             throw new PropelException('filterByTblproductos() only accepts arguments of type \propel\propel\Tblproductos or Collection');
         }
@@ -508,7 +462,7 @@ abstract class TblproductoprecioQuery extends ModelCriteria
      *
      * @return $this|ChildTblproductoprecioQuery The current query, for fluid interface
      */
-    public function joinTblproductos($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblproductos($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblproductos');
@@ -543,7 +497,7 @@ abstract class TblproductoprecioQuery extends ModelCriteria
      *
      * @return \propel\propel\TblproductosQuery A secondary query class using the current class as primary query
      */
-    public function useTblproductosQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblproductosQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblproductos($relationAlias, $joinType)

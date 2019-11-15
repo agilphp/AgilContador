@@ -421,7 +421,7 @@ abstract class TblingresoQuery extends ModelCriteria
     {
         if ($tblingresodetalle instanceof \propel\propel\Tblingresodetalle) {
             return $this
-                ->addUsingAlias(TblingresoTableMap::COL_INGRESOID, $tblingresodetalle->getTblingresoIngresoid(), $comparison);
+                ->addUsingAlias(TblingresoTableMap::COL_INGRESOID, $tblingresodetalle->getIngresoid(), $comparison);
         } elseif ($tblingresodetalle instanceof ObjectCollection) {
             return $this
                 ->useTblingresodetalleQuery()
@@ -440,7 +440,7 @@ abstract class TblingresoQuery extends ModelCriteria
      *
      * @return $this|ChildTblingresoQuery The current query, for fluid interface
      */
-    public function joinTblingresodetalle($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblingresodetalle($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblingresodetalle');
@@ -475,7 +475,7 @@ abstract class TblingresoQuery extends ModelCriteria
      *
      * @return \propel\propel\TblingresodetalleQuery A secondary query class using the current class as primary query
      */
-    public function useTblingresodetalleQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblingresodetalleQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblingresodetalle($relationAlias, $joinType)

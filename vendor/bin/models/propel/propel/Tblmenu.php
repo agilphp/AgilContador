@@ -2,10 +2,10 @@
 
 namespace propel\propel;
 
-use propel\propel\Base\SesionUsuario as BaseSesionUsuario;
+use propel\propel\Base\Tblmenu as BaseTblmenu;
 
 /**
- * Skeleton subclass for representing a row from the 'sesion_usuario' table.
+ * Skeleton subclass for representing a row from the 'tblmenu' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use propel\propel\Base\SesionUsuario as BaseSesionUsuario;
  * long as it does not already exist in the output directory.
  *
  */
-class SesionUsuario extends BaseSesionUsuario
+class Tblmenu extends BaseTblmenu
 {
 
 }

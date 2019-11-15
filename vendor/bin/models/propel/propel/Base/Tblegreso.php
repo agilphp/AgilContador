@@ -706,9 +706,10 @@ abstract class Tblegreso implements ActiveRecordInterface
 
             if ($this->tblegresodetallesScheduledForDeletion !== null) {
                 if (!$this->tblegresodetallesScheduledForDeletion->isEmpty()) {
-                    \propel\propel\TblegresodetalleQuery::create()
-                        ->filterByPrimaryKeys($this->tblegresodetallesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
+                    foreach ($this->tblegresodetallesScheduledForDeletion as $tblegresodetalle) {
+                        // need to save related object because we set the relation to null
+                        $tblegresodetalle->save($con);
+                    }
                     $this->tblegresodetallesScheduledForDeletion = null;
                 }
             }
@@ -1419,7 +1420,7 @@ abstract class Tblegreso implements ActiveRecordInterface
                 $this->tblegresodetallesScheduledForDeletion = clone $this->collTblegresodetalles;
                 $this->tblegresodetallesScheduledForDeletion->clear();
             }
-            $this->tblegresodetallesScheduledForDeletion[]= clone $tblegresodetalle;
+            $this->tblegresodetallesScheduledForDeletion[]= $tblegresodetalle;
             $tblegresodetalle->setTblegreso(null);
         }
 

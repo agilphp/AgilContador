@@ -25,16 +25,12 @@ use propel\propel\Map\TblfacturadetalleTableMap;
  * @method     ChildTblfacturadetalleQuery orderByProductoid($order = Criteria::ASC) Order by the productoId column
  * @method     ChildTblfacturadetalleQuery orderByCantidad($order = Criteria::ASC) Order by the cantidad column
  * @method     ChildTblfacturadetalleQuery orderByPrecio($order = Criteria::ASC) Order by the precio column
- * @method     ChildTblfacturadetalleQuery orderByTblfacturaFacturaid($order = Criteria::ASC) Order by the tblfactura_facturaId column
- * @method     ChildTblfacturadetalleQuery orderByTblproductosProductoid($order = Criteria::ASC) Order by the TblProductos_productoId column
  *
  * @method     ChildTblfacturadetalleQuery groupByFacturadetalleid() Group by the facturaDetalleId column
  * @method     ChildTblfacturadetalleQuery groupByFacturaid() Group by the facturaId column
  * @method     ChildTblfacturadetalleQuery groupByProductoid() Group by the productoId column
  * @method     ChildTblfacturadetalleQuery groupByCantidad() Group by the cantidad column
  * @method     ChildTblfacturadetalleQuery groupByPrecio() Group by the precio column
- * @method     ChildTblfacturadetalleQuery groupByTblfacturaFacturaid() Group by the tblfactura_facturaId column
- * @method     ChildTblfacturadetalleQuery groupByTblproductosProductoid() Group by the TblProductos_productoId column
  *
  * @method     ChildTblfacturadetalleQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildTblfacturadetalleQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -43,16 +39,6 @@ use propel\propel\Map\TblfacturadetalleTableMap;
  * @method     ChildTblfacturadetalleQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
  * @method     ChildTblfacturadetalleQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildTblfacturadetalleQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
- *
- * @method     ChildTblfacturadetalleQuery leftJoinTblproductos($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblproductos relation
- * @method     ChildTblfacturadetalleQuery rightJoinTblproductos($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblproductos relation
- * @method     ChildTblfacturadetalleQuery innerJoinTblproductos($relationAlias = null) Adds a INNER JOIN clause to the query using the Tblproductos relation
- *
- * @method     ChildTblfacturadetalleQuery joinWithTblproductos($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tblproductos relation
- *
- * @method     ChildTblfacturadetalleQuery leftJoinWithTblproductos() Adds a LEFT JOIN clause and with to the query using the Tblproductos relation
- * @method     ChildTblfacturadetalleQuery rightJoinWithTblproductos() Adds a RIGHT JOIN clause and with to the query using the Tblproductos relation
- * @method     ChildTblfacturadetalleQuery innerJoinWithTblproductos() Adds a INNER JOIN clause and with to the query using the Tblproductos relation
  *
  * @method     ChildTblfacturadetalleQuery leftJoinTblfactura($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblfactura relation
  * @method     ChildTblfacturadetalleQuery rightJoinTblfactura($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblfactura relation
@@ -64,7 +50,17 @@ use propel\propel\Map\TblfacturadetalleTableMap;
  * @method     ChildTblfacturadetalleQuery rightJoinWithTblfactura() Adds a RIGHT JOIN clause and with to the query using the Tblfactura relation
  * @method     ChildTblfacturadetalleQuery innerJoinWithTblfactura() Adds a INNER JOIN clause and with to the query using the Tblfactura relation
  *
- * @method     \propel\propel\TblproductosQuery|\propel\propel\TblfacturaQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildTblfacturadetalleQuery leftJoinTblproductos($relationAlias = null) Adds a LEFT JOIN clause to the query using the Tblproductos relation
+ * @method     ChildTblfacturadetalleQuery rightJoinTblproductos($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Tblproductos relation
+ * @method     ChildTblfacturadetalleQuery innerJoinTblproductos($relationAlias = null) Adds a INNER JOIN clause to the query using the Tblproductos relation
+ *
+ * @method     ChildTblfacturadetalleQuery joinWithTblproductos($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Tblproductos relation
+ *
+ * @method     ChildTblfacturadetalleQuery leftJoinWithTblproductos() Adds a LEFT JOIN clause and with to the query using the Tblproductos relation
+ * @method     ChildTblfacturadetalleQuery rightJoinWithTblproductos() Adds a RIGHT JOIN clause and with to the query using the Tblproductos relation
+ * @method     ChildTblfacturadetalleQuery innerJoinWithTblproductos() Adds a INNER JOIN clause and with to the query using the Tblproductos relation
+ *
+ * @method     \propel\propel\TblfacturaQuery|\propel\propel\TblproductosQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildTblfacturadetalle findOne(ConnectionInterface $con = null) Return the first ChildTblfacturadetalle matching the query
  * @method     ChildTblfacturadetalle findOneOrCreate(ConnectionInterface $con = null) Return the first ChildTblfacturadetalle matching the query, or a new ChildTblfacturadetalle object populated from the query conditions when no match is found
@@ -73,9 +69,7 @@ use propel\propel\Map\TblfacturadetalleTableMap;
  * @method     ChildTblfacturadetalle findOneByFacturaid(string $facturaId) Return the first ChildTblfacturadetalle filtered by the facturaId column
  * @method     ChildTblfacturadetalle findOneByProductoid(string $productoId) Return the first ChildTblfacturadetalle filtered by the productoId column
  * @method     ChildTblfacturadetalle findOneByCantidad(string $cantidad) Return the first ChildTblfacturadetalle filtered by the cantidad column
- * @method     ChildTblfacturadetalle findOneByPrecio(string $precio) Return the first ChildTblfacturadetalle filtered by the precio column
- * @method     ChildTblfacturadetalle findOneByTblfacturaFacturaid(string $tblfactura_facturaId) Return the first ChildTblfacturadetalle filtered by the tblfactura_facturaId column
- * @method     ChildTblfacturadetalle findOneByTblproductosProductoid(string $TblProductos_productoId) Return the first ChildTblfacturadetalle filtered by the TblProductos_productoId column *
+ * @method     ChildTblfacturadetalle findOneByPrecio(string $precio) Return the first ChildTblfacturadetalle filtered by the precio column *
 
  * @method     ChildTblfacturadetalle requirePk($key, ConnectionInterface $con = null) Return the ChildTblfacturadetalle by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblfacturadetalle requireOne(ConnectionInterface $con = null) Return the first ChildTblfacturadetalle matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -85,8 +79,6 @@ use propel\propel\Map\TblfacturadetalleTableMap;
  * @method     ChildTblfacturadetalle requireOneByProductoid(string $productoId) Return the first ChildTblfacturadetalle filtered by the productoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblfacturadetalle requireOneByCantidad(string $cantidad) Return the first ChildTblfacturadetalle filtered by the cantidad column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildTblfacturadetalle requireOneByPrecio(string $precio) Return the first ChildTblfacturadetalle filtered by the precio column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTblfacturadetalle requireOneByTblfacturaFacturaid(string $tblfactura_facturaId) Return the first ChildTblfacturadetalle filtered by the tblfactura_facturaId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildTblfacturadetalle requireOneByTblproductosProductoid(string $TblProductos_productoId) Return the first ChildTblfacturadetalle filtered by the TblProductos_productoId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildTblfacturadetalle[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildTblfacturadetalle objects based on current ModelCriteria
  * @method     ChildTblfacturadetalle[]|ObjectCollection findByFacturadetalleid(string $facturaDetalleId) Return ChildTblfacturadetalle objects filtered by the facturaDetalleId column
@@ -94,8 +86,6 @@ use propel\propel\Map\TblfacturadetalleTableMap;
  * @method     ChildTblfacturadetalle[]|ObjectCollection findByProductoid(string $productoId) Return ChildTblfacturadetalle objects filtered by the productoId column
  * @method     ChildTblfacturadetalle[]|ObjectCollection findByCantidad(string $cantidad) Return ChildTblfacturadetalle objects filtered by the cantidad column
  * @method     ChildTblfacturadetalle[]|ObjectCollection findByPrecio(string $precio) Return ChildTblfacturadetalle objects filtered by the precio column
- * @method     ChildTblfacturadetalle[]|ObjectCollection findByTblfacturaFacturaid(string $tblfactura_facturaId) Return ChildTblfacturadetalle objects filtered by the tblfactura_facturaId column
- * @method     ChildTblfacturadetalle[]|ObjectCollection findByTblproductosProductoid(string $TblProductos_productoId) Return ChildTblfacturadetalle objects filtered by the TblProductos_productoId column
  * @method     ChildTblfacturadetalle[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -194,7 +184,7 @@ abstract class TblfacturadetalleQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT facturaDetalleId, facturaId, productoId, cantidad, precio, tblfactura_facturaId, TblProductos_productoId FROM tblfacturadetalle WHERE facturaDetalleId = :p0';
+        $sql = 'SELECT facturaDetalleId, facturaId, productoId, cantidad, precio FROM tblfacturadetalle WHERE facturaDetalleId = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -335,6 +325,8 @@ abstract class TblfacturadetalleQuery extends ModelCriteria
      * $query->filterByFacturaid(array('min' => 12)); // WHERE facturaId > 12
      * </code>
      *
+     * @see       filterByTblfactura()
+     *
      * @param     mixed $facturaid The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
@@ -375,6 +367,8 @@ abstract class TblfacturadetalleQuery extends ModelCriteria
      * $query->filterByProductoid(array(12, 34)); // WHERE productoId IN (12, 34)
      * $query->filterByProductoid(array('min' => 12)); // WHERE productoId > 12
      * </code>
+     *
+     * @see       filterByTblproductos()
      *
      * @param     mixed $productoid The value to use as filter.
      *              Use scalar values for equality.
@@ -490,169 +484,6 @@ abstract class TblfacturadetalleQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the tblfactura_facturaId column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByTblfacturaFacturaid(1234); // WHERE tblfactura_facturaId = 1234
-     * $query->filterByTblfacturaFacturaid(array(12, 34)); // WHERE tblfactura_facturaId IN (12, 34)
-     * $query->filterByTblfacturaFacturaid(array('min' => 12)); // WHERE tblfactura_facturaId > 12
-     * </code>
-     *
-     * @see       filterByTblfactura()
-     *
-     * @param     mixed $tblfacturaFacturaid The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildTblfacturadetalleQuery The current query, for fluid interface
-     */
-    public function filterByTblfacturaFacturaid($tblfacturaFacturaid = null, $comparison = null)
-    {
-        if (is_array($tblfacturaFacturaid)) {
-            $useMinMax = false;
-            if (isset($tblfacturaFacturaid['min'])) {
-                $this->addUsingAlias(TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID, $tblfacturaFacturaid['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($tblfacturaFacturaid['max'])) {
-                $this->addUsingAlias(TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID, $tblfacturaFacturaid['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID, $tblfacturaFacturaid, $comparison);
-    }
-
-    /**
-     * Filter the query on the TblProductos_productoId column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByTblproductosProductoid(1234); // WHERE TblProductos_productoId = 1234
-     * $query->filterByTblproductosProductoid(array(12, 34)); // WHERE TblProductos_productoId IN (12, 34)
-     * $query->filterByTblproductosProductoid(array('min' => 12)); // WHERE TblProductos_productoId > 12
-     * </code>
-     *
-     * @see       filterByTblproductos()
-     *
-     * @param     mixed $tblproductosProductoid The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildTblfacturadetalleQuery The current query, for fluid interface
-     */
-    public function filterByTblproductosProductoid($tblproductosProductoid = null, $comparison = null)
-    {
-        if (is_array($tblproductosProductoid)) {
-            $useMinMax = false;
-            if (isset($tblproductosProductoid['min'])) {
-                $this->addUsingAlias(TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($tblproductosProductoid['max'])) {
-                $this->addUsingAlias(TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductosProductoid, $comparison);
-    }
-
-    /**
-     * Filter the query by a related \propel\propel\Tblproductos object
-     *
-     * @param \propel\propel\Tblproductos|ObjectCollection $tblproductos The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildTblfacturadetalleQuery The current query, for fluid interface
-     */
-    public function filterByTblproductos($tblproductos, $comparison = null)
-    {
-        if ($tblproductos instanceof \propel\propel\Tblproductos) {
-            return $this
-                ->addUsingAlias(TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductos->getProductoid(), $comparison);
-        } elseif ($tblproductos instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(TblfacturadetalleTableMap::COL_TBLPRODUCTOS_PRODUCTOID, $tblproductos->toKeyValue('PrimaryKey', 'Productoid'), $comparison);
-        } else {
-            throw new PropelException('filterByTblproductos() only accepts arguments of type \propel\propel\Tblproductos or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Tblproductos relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildTblfacturadetalleQuery The current query, for fluid interface
-     */
-    public function joinTblproductos($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Tblproductos');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Tblproductos');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Tblproductos relation Tblproductos object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \propel\propel\TblproductosQuery A secondary query class using the current class as primary query
-     */
-    public function useTblproductosQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinTblproductos($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Tblproductos', '\propel\propel\TblproductosQuery');
-    }
-
-    /**
      * Filter the query by a related \propel\propel\Tblfactura object
      *
      * @param \propel\propel\Tblfactura|ObjectCollection $tblfactura The related object(s) to use as filter
@@ -666,14 +497,14 @@ abstract class TblfacturadetalleQuery extends ModelCriteria
     {
         if ($tblfactura instanceof \propel\propel\Tblfactura) {
             return $this
-                ->addUsingAlias(TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID, $tblfactura->getFacturaid(), $comparison);
+                ->addUsingAlias(TblfacturadetalleTableMap::COL_FACTURAID, $tblfactura->getFacturaid(), $comparison);
         } elseif ($tblfactura instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(TblfacturadetalleTableMap::COL_TBLFACTURA_FACTURAID, $tblfactura->toKeyValue('PrimaryKey', 'Facturaid'), $comparison);
+                ->addUsingAlias(TblfacturadetalleTableMap::COL_FACTURAID, $tblfactura->toKeyValue('PrimaryKey', 'Facturaid'), $comparison);
         } else {
             throw new PropelException('filterByTblfactura() only accepts arguments of type \propel\propel\Tblfactura or Collection');
         }
@@ -687,7 +518,7 @@ abstract class TblfacturadetalleQuery extends ModelCriteria
      *
      * @return $this|ChildTblfacturadetalleQuery The current query, for fluid interface
      */
-    public function joinTblfactura($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinTblfactura($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Tblfactura');
@@ -722,11 +553,88 @@ abstract class TblfacturadetalleQuery extends ModelCriteria
      *
      * @return \propel\propel\TblfacturaQuery A secondary query class using the current class as primary query
      */
-    public function useTblfacturaQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useTblfacturaQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinTblfactura($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Tblfactura', '\propel\propel\TblfacturaQuery');
+    }
+
+    /**
+     * Filter the query by a related \propel\propel\Tblproductos object
+     *
+     * @param \propel\propel\Tblproductos|ObjectCollection $tblproductos The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildTblfacturadetalleQuery The current query, for fluid interface
+     */
+    public function filterByTblproductos($tblproductos, $comparison = null)
+    {
+        if ($tblproductos instanceof \propel\propel\Tblproductos) {
+            return $this
+                ->addUsingAlias(TblfacturadetalleTableMap::COL_PRODUCTOID, $tblproductos->getProductoid(), $comparison);
+        } elseif ($tblproductos instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(TblfacturadetalleTableMap::COL_PRODUCTOID, $tblproductos->toKeyValue('PrimaryKey', 'Productoid'), $comparison);
+        } else {
+            throw new PropelException('filterByTblproductos() only accepts arguments of type \propel\propel\Tblproductos or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Tblproductos relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildTblfacturadetalleQuery The current query, for fluid interface
+     */
+    public function joinTblproductos($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Tblproductos');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Tblproductos');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Tblproductos relation Tblproductos object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \propel\propel\TblproductosQuery A secondary query class using the current class as primary query
+     */
+    public function useTblproductosQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinTblproductos($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Tblproductos', '\propel\propel\TblproductosQuery');
     }
 
     /**

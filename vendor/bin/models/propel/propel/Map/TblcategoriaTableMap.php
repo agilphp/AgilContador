@@ -7,17 +7,16 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
-use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Map\TableMapTrait;
-use propel\propel\Menu;
-use propel\propel\MenuQuery;
+use propel\propel\Tblcategoria;
+use propel\propel\TblcategoriaQuery;
 
 
 /**
- * This class defines the structure of the 'menu' table.
+ * This class defines the structure of the 'tblcategoria' table.
  *
  *
  *
@@ -27,7 +26,7 @@ use propel\propel\MenuQuery;
  * (i.e. if it's a text column type).
  *
  */
-class MenuTableMap extends TableMap
+class TblcategoriaTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -35,7 +34,7 @@ class MenuTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'propel.propel.Map.MenuTableMap';
+    const CLASS_NAME = 'propel.propel.Map.TblcategoriaTableMap';
 
     /**
      * The default database name for this class
@@ -45,22 +44,22 @@ class MenuTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'menu';
+    const TABLE_NAME = 'tblcategoria';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\propel\\propel\\Menu';
+    const OM_CLASS = '\\propel\\propel\\Tblcategoria';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'propel.propel.Menu';
+    const CLASS_DEFAULT = 'propel.propel.Tblcategoria';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -70,22 +69,27 @@ class MenuTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
-     * the column name for the id field
+     * the column name for the LineaId field
      */
-    const COL_ID = 'menu.id';
+    const COL_LINEAID = 'tblcategoria.LineaId';
 
     /**
-     * the column name for the menu field
+     * the column name for the codigo field
      */
-    const COL_MENU = 'menu.menu';
+    const COL_CODIGO = 'tblcategoria.codigo';
 
     /**
-     * the column name for the url field
+     * the column name for the nombre field
      */
-    const COL_URL = 'menu.url';
+    const COL_NOMBRE = 'tblcategoria.nombre';
+
+    /**
+     * the column name for the descripcion field
+     */
+    const COL_DESCRIPCION = 'tblcategoria.descripcion';
 
     /**
      * The default string format for model objects of the related table
@@ -99,11 +103,11 @@ class MenuTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Menu', 'Url', ),
-        self::TYPE_CAMELNAME     => array('id', 'menu', 'url', ),
-        self::TYPE_COLNAME       => array(MenuTableMap::COL_ID, MenuTableMap::COL_MENU, MenuTableMap::COL_URL, ),
-        self::TYPE_FIELDNAME     => array('id', 'menu', 'url', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Lineaid', 'Codigo', 'Nombre', 'Descripcion', ),
+        self::TYPE_CAMELNAME     => array('lineaid', 'codigo', 'nombre', 'descripcion', ),
+        self::TYPE_COLNAME       => array(TblcategoriaTableMap::COL_LINEAID, TblcategoriaTableMap::COL_CODIGO, TblcategoriaTableMap::COL_NOMBRE, TblcategoriaTableMap::COL_DESCRIPCION, ),
+        self::TYPE_FIELDNAME     => array('LineaId', 'codigo', 'nombre', 'descripcion', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -113,11 +117,11 @@ class MenuTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Menu' => 1, 'Url' => 2, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'menu' => 1, 'url' => 2, ),
-        self::TYPE_COLNAME       => array(MenuTableMap::COL_ID => 0, MenuTableMap::COL_MENU => 1, MenuTableMap::COL_URL => 2, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'menu' => 1, 'url' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Lineaid' => 0, 'Codigo' => 1, 'Nombre' => 2, 'Descripcion' => 3, ),
+        self::TYPE_CAMELNAME     => array('lineaid' => 0, 'codigo' => 1, 'nombre' => 2, 'descripcion' => 3, ),
+        self::TYPE_COLNAME       => array(TblcategoriaTableMap::COL_LINEAID => 0, TblcategoriaTableMap::COL_CODIGO => 1, TblcategoriaTableMap::COL_NOMBRE => 2, TblcategoriaTableMap::COL_DESCRIPCION => 3, ),
+        self::TYPE_FIELDNAME     => array('LineaId' => 0, 'codigo' => 1, 'nombre' => 2, 'descripcion' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -130,16 +134,17 @@ class MenuTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('menu');
-        $this->setPhpName('Menu');
+        $this->setName('tblcategoria');
+        $this->setPhpName('Tblcategoria');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\propel\\propel\\Menu');
+        $this->setClassName('\\propel\\propel\\Tblcategoria');
         $this->setPackage('propel.propel');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
-        $this->addColumn('id', 'Id', 'INTEGER', true, 5, null);
-        $this->addColumn('menu', 'Menu', 'VARCHAR', true, 50, null);
-        $this->addColumn('url', 'Url', 'VARCHAR', true, 120, null);
+        $this->addPrimaryKey('LineaId', 'Lineaid', 'INTEGER', true, 5, null);
+        $this->addColumn('codigo', 'Codigo', 'VARCHAR', false, 45, null);
+        $this->addColumn('nombre', 'Nombre', 'VARCHAR', false, 45, null);
+        $this->addColumn('descripcion', 'Descripcion', 'LONGVARCHAR', false, null, null);
     } // initialize()
 
     /**
@@ -147,6 +152,13 @@ class MenuTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Tblproductos', '\\propel\\propel\\Tblproductos', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':lineaId',
+    1 => ':LineaId',
+  ),
+), null, null, 'Tblproductoss', false);
     } // buildRelations()
 
     /**
@@ -164,7 +176,12 @@ class MenuTableMap extends TableMap
      */
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return null;
+        // If the PK cannot be derived from the row, return NULL.
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+            return null;
+        }
+
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -181,7 +198,11 @@ class MenuTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return '';
+        return (int) $row[
+            $indexType == TableMap::TYPE_NUM
+                ? 0 + $offset
+                : self::translateFieldName('Lineaid', TableMap::TYPE_PHPNAME, $indexType)
+        ];
     }
 
     /**
@@ -197,7 +218,7 @@ class MenuTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? MenuTableMap::CLASS_DEFAULT : MenuTableMap::OM_CLASS;
+        return $withPrefix ? TblcategoriaTableMap::CLASS_DEFAULT : TblcategoriaTableMap::OM_CLASS;
     }
 
     /**
@@ -211,22 +232,22 @@ class MenuTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Menu object, last column rank)
+     * @return array           (Tblcategoria object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = MenuTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = MenuTableMap::getInstanceFromPool($key))) {
+        $key = TblcategoriaTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = TblcategoriaTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + MenuTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + TblcategoriaTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = MenuTableMap::OM_CLASS;
-            /** @var Menu $obj */
+            $cls = TblcategoriaTableMap::OM_CLASS;
+            /** @var Tblcategoria $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            MenuTableMap::addInstanceToPool($obj, $key);
+            TblcategoriaTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -249,18 +270,18 @@ class MenuTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = MenuTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = MenuTableMap::getInstanceFromPool($key))) {
+            $key = TblcategoriaTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = TblcategoriaTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Menu $obj */
+                /** @var Tblcategoria $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                MenuTableMap::addInstanceToPool($obj, $key);
+                TblcategoriaTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -281,13 +302,15 @@ class MenuTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(MenuTableMap::COL_ID);
-            $criteria->addSelectColumn(MenuTableMap::COL_MENU);
-            $criteria->addSelectColumn(MenuTableMap::COL_URL);
+            $criteria->addSelectColumn(TblcategoriaTableMap::COL_LINEAID);
+            $criteria->addSelectColumn(TblcategoriaTableMap::COL_CODIGO);
+            $criteria->addSelectColumn(TblcategoriaTableMap::COL_NOMBRE);
+            $criteria->addSelectColumn(TblcategoriaTableMap::COL_DESCRIPCION);
         } else {
-            $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.menu');
-            $criteria->addSelectColumn($alias . '.url');
+            $criteria->addSelectColumn($alias . '.LineaId');
+            $criteria->addSelectColumn($alias . '.codigo');
+            $criteria->addSelectColumn($alias . '.nombre');
+            $criteria->addSelectColumn($alias . '.descripcion');
         }
     }
 
@@ -300,7 +323,7 @@ class MenuTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(MenuTableMap::DATABASE_NAME)->getTable(MenuTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(TblcategoriaTableMap::DATABASE_NAME)->getTable(TblcategoriaTableMap::TABLE_NAME);
     }
 
     /**
@@ -308,16 +331,16 @@ class MenuTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(MenuTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(MenuTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new MenuTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(TblcategoriaTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(TblcategoriaTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new TblcategoriaTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Menu or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Tblcategoria or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Menu object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Tblcategoria object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -328,26 +351,27 @@ class MenuTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MenuTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblcategoriaTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \propel\propel\Menu) { // it's a model object
-            // create criteria based on pk value
-            $criteria = $values->buildCriteria();
+        } elseif ($values instanceof \propel\propel\Tblcategoria) { // it's a model object
+            // create criteria based on pk values
+            $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            throw new LogicException('The Menu object has no primary key');
+            $criteria = new Criteria(TblcategoriaTableMap::DATABASE_NAME);
+            $criteria->add(TblcategoriaTableMap::COL_LINEAID, (array) $values, Criteria::IN);
         }
 
-        $query = MenuQuery::create()->mergeWith($criteria);
+        $query = TblcategoriaQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            MenuTableMap::clearInstancePool();
+            TblcategoriaTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                MenuTableMap::removeInstanceFromPool($singleval);
+                TblcategoriaTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -355,20 +379,20 @@ class MenuTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the menu table.
+     * Deletes all rows from the tblcategoria table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return MenuQuery::create()->doDeleteAll($con);
+        return TblcategoriaQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Menu or Criteria object.
+     * Performs an INSERT on the database, given a Tblcategoria or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Menu object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Tblcategoria object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -377,18 +401,22 @@ class MenuTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MenuTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TblcategoriaTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Menu object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Tblcategoria object
+        }
+
+        if ($criteria->containsKey(TblcategoriaTableMap::COL_LINEAID) && $criteria->keyContainsValue(TblcategoriaTableMap::COL_LINEAID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.TblcategoriaTableMap::COL_LINEAID.')');
         }
 
 
         // Set the correct dbName
-        $query = MenuQuery::create()->mergeWith($criteria);
+        $query = TblcategoriaQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -397,7 +425,7 @@ class MenuTableMap extends TableMap
         });
     }
 
-} // MenuTableMap
+} // TblcategoriaTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-MenuTableMap::buildTableMap();
+TblcategoriaTableMap::buildTableMap();
