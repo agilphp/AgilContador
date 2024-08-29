@@ -41,7 +41,7 @@
                 "propel/propel": "2.0.0-alpha8",
                 "swiftmailer/swiftmailer": "5.*",
                 "setasign/fpdf": "1.*",
-                "phpoffice/phpspreadsheet": "1.*",               
+                "phpoffice/phpspreadsheet": "2.*",               
                 "league/csv": "7.*",
                 "siriusphp/upload": "2.*",                                
 		"monolog/monolog":  "*",
